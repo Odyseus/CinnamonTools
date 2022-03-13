@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """Feeds Manager GUI.
 
@@ -16,7 +16,6 @@ APPLICATION_NAME : str
 XLET_DIR : str
     Path to the xlet folder.
 """
-
 import argparse
 import csv
 import gettext

@@ -1,0 +1,6 @@
+{
+    "external-configuration-app": "settings.py",
+    "description": "Displays RSS news feeds.",
+    "name": "Feeds Reader (Fork By Odyseus)",
+    "max-instances": "-1"
+}

@@ -1,77 +1,78 @@
 {
-    "pref_overlay_key": {
+    "info_label_1": {
+        "type": "label",
+        "description": "This window isn't this xlet's \"real\" configuration window."
+    },
+    "settings_button": {
+        "type": "button",
+        "callback": "__openXletSettings",
+        "description": "Open the \"real\" preference window"
+    },
+    "toggle_menu_keybinding": {
         "type": "generic",
         "default": ""
     },
-    "pref_new_feed_icon": {
+    "new_feed_icon": {
         "type": "generic",
         "default": "feeds-reader-rss-new-feed-symbolic"
     },
-    "pref_feed_icon": {
+    "feed_icon": {
         "type": "generic",
         "default": "feeds-reader-rss-feed-symbolic"
     },
-    "pref_min_article_item_width": {
+    "min_article_item_width": {
         "type": "generic",
         "default": 400
     },
-    "pref_show_icons_in_menu": {
+    "show_icons_in_menu": {
         "type": "generic",
         "default": false
     },
-    "pref_max_items": {
+    "max_items": {
         "type": "generic",
         "default": 10
     },
-    "pref_refresh_interval_mins": {
+    "refresh_interval_mins": {
         "type": "generic",
         "default": 30
     },
-    "pref_description_max_length": {
+    "description_max_length": {
         "type": "generic",
         "default": 500
     },
-    "pref_tooltip_max_width": {
+    "tooltip_max_width": {
         "type": "generic",
         "default": 0
     },
-    "pref_notifications_enabled": {
+    "notifications_enabled": {
         "type": "generic",
         "default": true
     },
-    "pref_unified_notifications": {
+    "unified_notifications": {
         "type": "generic",
         "default": true
     },
-    "pref_unified_notifications_max_entries": {
+    "unified_notifications_max_entries": {
         "type": "generic",
         "default": 10
     },
-    "pref_third_party_integration_panel_drawer": {
+    "third_party_integration_panel_drawer": {
         "type": "generic",
         "default": true
     },
-    "pref_logging_level": {
-        "type": "generic",
-        "default": 0
-    },
-    "pref_debugger_enabled": {
-        "type": "generic",
-        "default": false
-    },
-    "pref_last_checked_storage": {
+    "last_checked_storage": {
         "type": "generic",
         "default": {}
     },
-    "pref_feeds_changed": {
+    "feeds_apply": {
         "type": "generic",
         "default": false
     },
-    "pref_imp_exp_last_selected_directory": {
+    "imp_exp_last_selected_directory": {
         "type": "generic",
         "default": ""
     },
-    "pref_feeds": {
+    "feeds": {
         "type": "generic",
         "default": [{
             "enabled": true,

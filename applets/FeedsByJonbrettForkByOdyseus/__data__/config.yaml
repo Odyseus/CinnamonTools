@@ -1,0 +1,23 @@
+%YAML 1.1
+---
+set_executable:
+    - python_modules/feeds_importer.py
+    - python_modules/get_feed.py
+make_pot_additional_files:
+    - "../../__app__/data/python_modules/file_chooser_dialog/__init__.py"
+python_modules:
+    - file_chooser_dialog
+    - xlets_settings
+javascript_modules:
+    - appletsUtils.js
+    - customDialogs.js
+    - customFileUtils.js
+    - customTooltips.js
+    - customTooltips.js
+    - debugManager.js
+    - notificationsUtils.js
+    - globalUtils.js
+    - stringUtils.js
+extra_files:
+    - source: __app__/data/gschemas/debugManagerSchema.xml
+      destination: schemas/org.cinnamon.{{XLET_TYPE}}s.{{UUID}}.gschema.xml

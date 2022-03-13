@@ -1,0 +1,897 @@
+# This is a template file for translating the FeedsByJonbrettForkByOdyseus package.
+# Copyright (C) 2017-2022
+# This file is distributed under the same license as the FeedsByJonbrettForkByOdyseus package.
+# Odyseus <EMAIL@ADDRESS>, 2017-2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: FeedsByJonbrettForkByOdyseus VERSION\n"
+"POT-Creation-Date: 2022-03-10 23:50-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Make Cinnamon Xlet POT 2020-04-11 06:23:52.163\n"
+
+#: ../../__app__/data/javascript_modules/appletsUtils.js:279
+msgid "Configure..."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:64
+msgid "Application Chooser"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:68 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:75 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:448 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1149 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1981 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2836 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1165 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1290 ../../__app__/data/python_modules/xlets_settings/__init__.py:1331 ../../__app__/data/python_modules/xlets_settings/__init__.py:1366 ../../__app__/data/python_modules/xlets_settings/common.py:452 ../../__app__/data/python_modules/xlets_settings/common.py:457 python_modules/feeds_importer.py:160
+msgid "_Cancel"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:69
+msgid "_OK"
+msgstr ""
+
+#. Can be programmatically changed if needed.
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:83 ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:708
+msgid "Choose an application"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:206
+msgid "Total applications"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:344
+msgid "Applications list"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:366
+msgid "Application"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:396
+msgid "Add Applications"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:404
+msgid "Remove selected applications"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:412 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2565 ../../__app__/data/python_modules/xlets_settings/__init__.py:413 ../../__app__/python_modules/localized_help_creator.py:324 applet.js:276
+msgid "Help"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:450 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2603
+msgid "Duplicated entries will be automatically removed."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:451 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2604
+msgid "Entries will be also sorted alphabetically."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:453 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2606
+msgid "Basic information"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:471
+msgid "Choose one or more applications (Hold Ctrl key)"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:663
+msgid "Clear application"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:771 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:548
+msgid "Invalid app"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:771 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:548
+msgid "No app chosen"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:773
+#, python-format
+msgid "The application with ID '%s' might not be installed anymore."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:73 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:444
+msgid "Choose an Icon"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:76 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:449 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1982
+msgid "_Select"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:132
+msgid "Search..."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:134
+msgid "Browse"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:322
+msgid "Icons shown"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:453
+msgid "Image files"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:576
+msgid "Icon"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:577
+msgid "The string representing the icon."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:292
+msgid "Click to set a new accelerator key."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:293
+msgid "Press Escape or click again to cancel the operation."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:294
+msgid "Press Backspace to clear the existing keybinding."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:369
+msgid "unassigned"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:410
+msgid "Pick an accelerator"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:554
+#, python-format
+msgid ""
+"\n"
+"This key combination, '<b>%s</b>' cannot be used because it would become impossible to type using this key.\n"
+"\n"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:555
+msgid "Please try again with a modifier key such as Control, Alt or Super (Windows key) at the same time.\n"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:337
+msgid "Information related to this specific section"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1150 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1291 ../../__app__/data/python_modules/xlets_settings/__init__.py:1332 ../../__app__/data/python_modules/xlets_settings/__init__.py:1367 ../../__app__/data/python_modules/xlets_settings/common.py:453
+msgid "_Save"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1728
+msgid "Clear color"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1863
+msgid "Clear path"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1906
+msgid "Non-existent file/location"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1915
+msgid "(None)"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1918 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1970
+msgid "Select a folder"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1920 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1973
+msgid "Select a file"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1956
+msgid "Any files"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2489
+msgid "Strings list"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2530
+msgid "Entries"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2557
+msgid "Remove selected entries"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2746
+msgid "Clear sound"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2837 ../../__app__/data/python_modules/xlets_settings/common.py:458 python_modules/feeds_importer.py:160
+msgid "_Open"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2853
+msgid "Sound files"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2877
+msgid "Non-existent file"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2883
+msgid "No sound"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:672
+msgid "Add new item"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:682
+msgid "Remove selected item"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:698
+msgid "Edit selected item"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:710
+msgid "Move selected item up"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:720
+msgid "Move selected item down"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:734
+msgid "Export data"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:747 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1162
+msgid "Import data"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:757
+msgid "Apply changes"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:959
+msgid "Item removal"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:962
+msgid "Are you sure that you want to remove the selected items?"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:963
+msgid "Note"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:964
+msgid "Press and hold Control key to remove items without confirmation."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1166
+msgid "_Overwrite"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1167
+msgid "_Append"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1188
+msgid "Overwrite"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1189
+msgid "replace the current data with the imported data."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1190
+msgid "Append"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1191
+msgid "add the imported data to the current data."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1226
+#, python-format
+msgid "Wrong data type found on file '{%s}'"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1229
+msgid "Error importing data"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1280
+msgid "Add new entry"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1282
+msgid "Edit entry"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:406
+msgid "Import settings from a file"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:407
+msgid "Export settings to a file"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:408
+msgid "Reset settings to defaults"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:409
+msgid "Xlet settings"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:419
+msgid "Use headerbars on dialogs"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:421
+msgid "Application preferences"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:468
+msgid "Previous instance"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:476
+msgid "Next instance"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:835 settings.py:149
+msgid "Other"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1026
+#, python-format
+msgid "Settings for %s"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1327 ../../__app__/data/python_modules/xlets_settings/common.py:451
+msgid "Select or enter file to export to"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1338 ../../__app__/data/python_modules/xlets_settings/__init__.py:1372 ../../__app__/data/python_modules/xlets_settings/common.py:476
+msgid "JSON files"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1362
+msgid "Select a JSON file to import"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1399
+msgid "Trying to reset all settings!!!"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1401
+msgid "Reset all settings to their default values?"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:52
+msgid "It enables the ability to log the output of several functions used by the extension."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:54 ../../__app__/data/python_modules/xlets_settings/builder.py:246
+msgid "Normal"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:54
+msgid "Only log messages caused by non critical errors."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:55
+msgid "Additionally log extra output messages and all HTTP responses."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:55 ../../__app__/data/python_modules/xlets_settings/builder.py:247
+msgid "Verbose"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:56 ../../__app__/data/python_modules/xlets_settings/builder.py:248
+msgid "Very verbose"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:57
+msgid "Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:241
+msgid "Debugging"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:243
+msgid "Logging level"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:252
+msgid "Enable debugger"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:253
+msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/common.py:456
+msgid "Select a file to import"
+msgstr ""
+
+#: ../../__app__/python_modules/app_data.py:316
+msgid "See this xlet help file."
+msgstr ""
+
+#: ../../__app__/python_modules/app_data.py:317 ../../__app__/python_modules/localized_help_creator.py:413
+msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:253 ../../__app__/python_modules/localized_help_creator.py:327
+#, python-format
+msgid "Help for %s"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:325
+msgid "Contributors"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:326
+msgid "Changelogs"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:362
+msgid "The following sections are available only in English."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:382
+#, python-format
+msgid "This xlet is compatible with Cinnamon %s up to latest Cinnamon version."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:385
+#, python-brace-format
+msgid "This xlet is compatible with Cinnamon {0} up to {1}."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:391
+msgid "Cinnamon compatibility"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:408
+msgid "Warning"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:411
+msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:429
+msgid "Xlets localization"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:433
+msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:434
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
+msgstr ""
+
+#: settings.py:26 js_modules/utils.js:343
+msgid "Enabled"
+msgstr ""
+
+#: settings.py:31 js_modules/utils.js:330
+msgid "Notify"
+msgstr ""
+
+#: settings.py:36 js_modules/utils.js:317
+msgid "Show read"
+msgstr ""
+
+#: settings.py:40
+msgid "Interval"
+msgstr ""
+
+#: settings.py:46 settings.py:107
+msgid "minutes"
+msgstr ""
+
+#: settings.py:49
+msgid "Category"
+msgstr ""
+
+#: settings.py:53
+msgid "Custom title"
+msgstr ""
+
+#: settings.py:57
+msgid "URL"
+msgstr ""
+
+#: settings.py:62 settings.py:138
+msgid "Mandatory fields"
+msgstr ""
+
+#: settings.py:66
+msgid "General"
+msgstr ""
+
+#: settings.py:67
+msgid "Applet settings"
+msgstr ""
+
+#: settings.py:69
+msgid "Keyboard shortcut to open and close the menu"
+msgstr ""
+
+#: settings.py:73
+msgid "Icon used when there are new feeds"
+msgstr ""
+
+#: settings.py:74 settings.py:78
+msgid "Select an icon to show in the panel."
+msgstr ""
+
+#: settings.py:77
+msgid "Icon used when there are not new feeds"
+msgstr ""
+
+#: settings.py:81
+msgid "Menu settings"
+msgstr ""
+
+#: settings.py:83
+msgid "Show icons on menu"
+msgstr ""
+
+#: settings.py:86
+msgid "Minimum article items width"
+msgstr ""
+
+#: settings.py:87
+msgid "Set a minimum width for article menu items. This is used to prevent the menu to drastically change size when opening/closing sub-menus."
+msgstr ""
+
+#: settings.py:91 settings.py:123
+msgid "pixels"
+msgstr ""
+
+#: settings.py:94
+msgid "Maximum number of articles"
+msgstr ""
+
+#: settings.py:95
+msgid "Maximum number of article items to display for each feed."
+msgstr ""
+
+#: settings.py:99
+msgid "articles"
+msgstr ""
+
+#: settings.py:102
+msgid "Update interval"
+msgstr ""
+
+#: settings.py:103
+msgid "Interval between checking for new articles."
+msgstr ""
+
+#: settings.py:110
+msgid "Description maximum length"
+msgstr ""
+
+#: settings.py:111
+msgid "The maximum numbers of characters that will be displayed in the article tooltip as the article description. With a value of zero the entire article will be displayed."
+msgstr ""
+
+#: settings.py:115
+msgid "characters"
+msgstr ""
+
+#: settings.py:118
+msgid "Tooltip maximum width"
+msgstr ""
+
+#: settings.py:119
+msgid "Set a custom maximum width for the articles tooltips. With a value of zero the maximum width will be set to half the monitor width."
+msgstr ""
+
+#: settings.py:126
+msgid "Notifications settings"
+msgstr ""
+
+#: settings.py:128
+msgid "Show notifications for new articles"
+msgstr ""
+
+#: settings.py:129
+msgid "If enabled, a popup notification will be displayed for new articles."
+msgstr ""
+
+#: settings.py:132
+msgid "Unified notifications"
+msgstr ""
+
+#: settings.py:133
+msgid "If enabled, all feeds notifications will use and update one notification."
+msgstr ""
+
+#: settings.py:137
+msgid "Feeds"
+msgstr ""
+
+#: settings.py:138
+msgid "Feeds Manager"
+msgstr ""
+
+#: settings.py:150
+msgid "Third party integrations"
+msgstr ""
+
+#: settings.py:152
+msgid "Panel Drawer applet integration"
+msgstr ""
+
+#: settings.py:153
+msgid "Display applet when receiving new articles."
+msgstr ""
+
+#: __data__/create_localized_help.py:27
+msgid "Description"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:30
+msgid "This applet is a fork of [Feeds Reader](https://cinnamon-spices.linuxmint.com/applets/view/149) applet by Jason Jackson (a.k.a. jake1164)."
+msgstr ""
+
+#: __data__/create_localized_help.py:32
+msgid "Differences with the original applet"
+msgstr ""
+
+#: __data__/create_localized_help.py:34
+msgid "Added keyboard shortcut to be able to open/close the menu."
+msgstr ""
+
+#: __data__/create_localized_help.py:35
+msgid "Added proper keyboard navigation for the menu."
+msgstr ""
+
+#: __data__/create_localized_help.py:36
+msgid "Eliminated the need of a stylesheet.css file. The menu will be styled respecting the currently used Cinnamon theme."
+msgstr ""
+
+#: __data__/create_localized_help.py:37
+msgid "Feeds will only be updated from their online sources if the last check was made after the refresh interval."
+msgstr ""
+
+#: __data__/create_localized_help.py:38
+msgid "Forced the use of Python 3 in all Python modules/scripts."
+msgstr ""
+
+#: __data__/create_localized_help.py:40
+msgid "Dependencies"
+msgstr ""
+
+#: __data__/create_localized_help.py:42
+msgid "The feedparser Python 3 module is a universal feed parser that handles RSS 0.9x, RSS 1.0, RSS 2.0, CDF, Atom 0.3, and Atom 1.0 feeds."
+msgstr ""
+
+#: __data__/create_localized_help.py:43
+msgid "Install with `pip` (Cinnamon needs to be restarted after installing feedparser if the applet was already placed in a panel):"
+msgstr ""
+
+#: applet.js:81
+msgid "Feeds reader"
+msgstr ""
+
+#: applet.js:112
+msgid "Missing dependency!!!"
+msgstr ""
+
+#: applet.js:113
+msgid "This applet needs the feedparser Python 3 module installed on your system for it to work."
+msgstr ""
+
+#: applet.js:114
+msgid "Read this applet help for more details (Applet context menu > Help item)."
+msgstr ""
+
+#: applet.js:115
+msgid "Restart Cinnamon after satisfying all dependencies."
+msgstr ""
+
+#: applet.js:184
+msgid "Mark all feeds as read"
+msgstr ""
+
+#: applet.js:192
+msgid "Are you sure that you want to mark as read all articles from all feeds?"
+msgstr ""
+
+#: applet.js:193
+msgid "Cancel"
+msgstr ""
+
+#: applet.js:194
+msgid "OK"
+msgstr ""
+
+#: applet.js:206
+msgid "Mark all articles from all feeds as read."
+msgstr ""
+
+#: applet.js:211
+msgid "Reload"
+msgstr ""
+
+#: applet.js:222
+msgid "Update feeds from their on-line sources."
+msgstr ""
+
+#: applet.js:227
+msgid "Manage feeds"
+msgstr ""
+
+#. Extras submenu
+#: applet.js:237
+msgid "Extras"
+msgstr ""
+
+#: applet.js:241
+msgid "Import feeds in old format"
+msgstr ""
+
+#: applet.js:255
+msgid "Import feeds from an old version of this applet."
+msgstr ""
+
+#: applet.js:260
+msgid "Import feeds from OPML file"
+msgstr ""
+
+#: applet.js:350
+msgid "No unread feeds"
+msgstr ""
+
+#: applet.js:503
+msgid "Feeds successfully imported."
+msgstr ""
+
+#: applet.js:504
+msgid "All imported feeds are disabled."
+msgstr ""
+
+#: applet.js:508
+msgid "Error importing feeds file!"
+msgstr ""
+
+#: applet.js:509
+msgid "Look at the logs for details."
+msgstr ""
+
+#: js_modules/utils.js:84 js_modules/utils.js:1010
+msgid "Loading..."
+msgstr ""
+
+#. Only one page of items to read, no need to display mark all posts option.
+#: js_modules/utils.js:286
+msgid "Mark All Articles as Read"
+msgstr ""
+
+#: js_modules/utils.js:297
+#, javascript-format
+msgid "Mark %d Article as Read"
+msgid_plural "Mark the Next %d Articles as Read"
+msgstr[0] ""
+msgstr[1] ""
+
+#: js_modules/utils.js:306
+msgid "Update Feed URL"
+msgstr ""
+
+#: js_modules/utils.js:311
+msgid "Visit Feed URL"
+msgstr ""
+
+#: js_modules/utils.js:458 js_modules/utils.js:464
+msgid "Published"
+msgstr ""
+
+#: js_modules/utils.js:531
+msgid "Mark Article as Read"
+msgstr ""
+
+#: js_modules/utils.js:535
+msgid "Copy Article URL"
+msgstr ""
+
+#: js_modules/utils.js:570
+msgid "d"
+msgstr ""
+
+#: js_modules/utils.js:572 js_modules/utils.js:574
+msgid "h"
+msgstr ""
+
+#: js_modules/utils.js:574
+#, javascript-format
+msgid "(<1%s) "
+msgstr ""
+
+#: js_modules/utils.js:880
+#, javascript-format
+msgid "%d unread article!"
+msgid_plural "%d unread articles!"
+msgstr[0] ""
+msgstr[1] ""
+
+#: js_modules/utils.js:990
+msgid "Fail to load feed"
+msgstr ""
+
+#: python_modules/feeds_importer.py:152
+msgid "Choose a OPML feed file"
+msgstr ""
+
+#: python_modules/feeds_importer.py:153
+msgid "OPML files"
+msgstr ""
+
+#: python_modules/feeds_importer.py:155
+msgid "Choose a feed file"
+msgstr ""
+
+#: python_modules/feeds_importer.py:156
+msgid "CSV files"
+msgstr ""
+
+#: python_modules/feeds_importer.py:167 python_modules/feeds_importer.py:181
+msgid "File imported"
+msgstr ""
+
+#: python_modules/feeds_importer.py:176
+#, python-format
+msgid "Invalid file, first line must match: %s"
+msgstr ""
+
+#: python_modules/feeds_importer.py:186
+#, python-format
+msgid "%d feed found"
+msgid_plural "%d feeds found"
+msgstr[0] ""
+msgstr[1] ""
+
+#: python_modules/feeds_importer.py:194
+msgid "Failed to import file"
+msgstr ""
+
+#: python_modules/get_feed.py:39
+msgid "Feed is password protected and not supported at this time."
+msgstr ""
+
+#: python_modules/get_feed.py:41
+msgid "Feed marked Gone, please remove and stop trying."
+msgstr ""
+
+#. metadata.json->description
+msgid "Displays RSS news feeds."
+msgstr ""
+
+#. metadata.json->name
+msgid "Feeds Reader (Fork By Odyseus)"
+msgstr ""
+
+#. settings-schema.json->info_label_1->description
+msgid "This window isn't this xlet's \"real\" configuration window."
+msgstr ""
+
+#. settings-schema.json->settings_button->description
+msgid "Open the \"real\" preference window"
+msgstr ""

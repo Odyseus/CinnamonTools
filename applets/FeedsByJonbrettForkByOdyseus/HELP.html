@@ -1,65 +1,75 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <meta http-equiv="content-type" content="text/html;charset=utf-8">
-    <title>Help for Feeds Reader (Fork By Odyseus)</title>
-    <link rel="shortcut icon" type="image/x-icon" href="./icon.png">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link type="text/css" rel="stylesheet" href="./assets/css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="./assets/css/bootstrap-tweaks.css">
-    <style type="text/css">
+    <head>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8">
+        <title>Help for Feeds Reader (Fork By Odyseus)</title>
+        <link rel="shortcut icon" type="image/x-icon" href="./icon.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link type="text/css" rel="stylesheet" href="./assets/css/bootstrap.min.css">
+        <link type="text/css" rel="stylesheet" href="./assets/css/bootstrap-tweaks.css">
+        <style type="text/css">
 
-    </style>
-</head>
+        </style>
+    </head>
 
-<body>
-<div id="mainarea">
-    <nav class="text-bold py-0 navbar navbar-expand-sm navbar-dark bg-gradient-primary fixed-top" role="navigation">
-        <div class="container-fluid">
-            <div class="nav navbar-nav mr-auto">
-                <!-- The preventDefault() calls are to avoid changing the address in the address bar. -->
-                <a id="nav-xlet-help" class="navbar-brand nav-link" onclick="event.preventDefault();" href="#xlet-help">Help</a>
-                <a id="nav-xlet-contributors" class="navbar-brand nav-link" onclick="event.preventDefault();" href="#xlet-contributors">Contributors</a>
-                <a id="nav-xlet-changelog" class="navbar-brand nav-link" onclick="event.preventDefault();" href="#xlet-changelog">Changelog</a>
-            </div>
-            <form class="form-inline">
-                <div class="input-group input-group-sm">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" for="localization-switch">🌐</span>
+    <body>
+        <div id="mainarea">
+            <nav id="main-navbar"
+                 class="navbar navbar-expand-sm navbar-dark bg-primary fixed-top py-0"
+                 role="navigation">
+                <div class="container-fluid">
+                    <div class="nav navbar-nav mr-auto">
+                        <a id="nav-xlet-help"
+                           class="nav-link"
+                           onclick="event.preventDefault();"
+                           href="#xlet-help">Help</a>
+                        <a id="nav-xlet-contributors"
+                           class="nav-link"
+                           onclick="event.preventDefault();"
+                           href="#xlet-contributors">Contributors</a>
+                        <a id="nav-xlet-changelogs"
+                           class="nav-link"
+                           onclick="event.preventDefault();"
+                           href="#xlet-changelogs">Changelogs</a>
                     </div>
-                    <select class="custom-select custom-select-sm text-bold" id="localization-switch">
-<!-- English --><option selected data-title="Help for Feeds Reader (Fork By Odyseus)" data-xlet-help="Help" data-xlet-contributors="Contributors" data-xlet-changelog="Changelog" value="en">English (English)</option>
-<!-- Español --><option data-title="Ayuda para Lector de Feeds (Modificado por Odyseus)" data-xlet-help="Ayuda" data-xlet-contributors="Colaboradores" data-xlet-changelog="Registro de cambios" value="es">Español (Spanish)</option>
-                    </select>
+                    <form>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text"
+                                  id="localization-switch-image">🌐</span>
+                            <select class="form-select form-select-sm"
+                                    id="localization-switch"
+                                    aria-describedby="localization-switch-image">
+<!-- English --><option selected data-title="Help for Feeds Reader (Fork By Odyseus)" data-xlet-help="Help" data-xlet-contributors="Contributors" data-xlet-changelog="Changelogs" value="en">English (English)</option>
+<!-- Español --><option data-title="Ayuda para Lector de Feeds (Modificado por Odyseus)" data-xlet-help="Ayuda" data-xlet-contributors="Colaboradores" data-xlet-changelog="Changelogs" value="es">Español (Spanish)</option>
+                            </select>
+                        </div>
+                    </form>
                 </div>
-            </form>
-        </div>
-    </nav>
-<span id="xlet-help">
-<div class="container boxed my-3 py-3">
-<noscript>
-    <div class="alert alert-danger" role="alert">
-        <p><strong>Oh snap! This page needs JavaScript enabled to display correctly.</strong></p>
-        <p><strong>This page uses JavaScript only to switch between the available languages, smooth scrolling, etc.</strong></p>
-        <p><strong>There are no tracking services of any kind and never will be (at least, not from my side).</strong></p>
-    </div>
-    <!-- .alert.alert-danger -->
-</noscript>
+            </nav>
+            <div id="no-js-main"
+                 class="alert alert-warning mx-5"
+                 role="alert">
+                <p><strong>Oh snap! This page needs JavaScript enabled to display correctly.</strong></p>
+                <p><strong>This page uses JavaScript only to switch between the available languages, smooth scrolling, etc.</strong></p>
+                <p><strong>There are no tracking services of any kind and never will be (at least, not from my side).</strong></p>
+            </div>
+            <span id="xlet-help"></span>
+            <div class="container boxed my-3 py-3">
 
 <div id="es" class="localization-content" hidden="true">
 <h1>Ayuda para Lector de Feeds (Modificado por Odyseus)</h1>
 
-<div class="card text-bold my-3 border-warning shadow-sm">
+<div class="card fw-bold my-3 border-warning shadow-sm">
     <div class="card-header bg-warning text-white">Advertencia</div>
     <div class="card-body text-warning text-font-size-large"><p>Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet.</p>
 <p>Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p></div>
 </div>
-<div class="card text-bold my-3 border-success shadow-sm">
+<div class="card fw-bold my-3 border-success shadow-sm">
     <div class="card-header bg-success text-white">Compatibilidad con Cinnamon</div>
-    <div class="card-body text-success text-font-size-large">Este xlet es compatible con Cinnamon 3.0 hasta la última versión de Cinnamon.</div>
+    <div class="card-body text-success text-font-size-large">Este xlet es compatible con Cinnamon 5.0 hasta la última versión de Cinnamon.</div>
 </div>
-<div class="card text-bold my-3 border-info shadow-sm">
+<div class="card fw-bold my-3 border-info shadow-sm">
     <div class="card-header bg-info text-white">Localización de xlets</div>
     <div class="card-body text-info text-font-size-large"><p>Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente.</p>
 
@@ -87,7 +97,7 @@ Instalar con <code>pip</code> (Cinnamon necesita ser reiniciado luego de instala
 
 </br>
 
-<div class="alert alert-info text-bold shadow-sm" role="alert">
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
 
 Las siguientes secciones están disponibles sólo en Inglés.
 </div>
@@ -98,16 +108,16 @@ Las siguientes secciones están disponibles sólo en Inglés.
 <div id="en" class="localization-content" >
 <h1>Help for Feeds Reader (Fork By Odyseus)</h1>
 
-<div class="card text-bold my-3 border-warning shadow-sm">
+<div class="card fw-bold my-3 border-warning shadow-sm">
     <div class="card-header bg-warning text-white">Warning</div>
     <div class="card-body text-warning text-font-size-large"><p>Never delete any of the files found inside this xlet folder. It might break this xlet functionality.</p>
 <p>Bug reports, feature requests and contributions should be done on this xlet's repository linked next. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p></div>
 </div>
-<div class="card text-bold my-3 border-success shadow-sm">
+<div class="card fw-bold my-3 border-success shadow-sm">
     <div class="card-header bg-success text-white">Cinnamon compatibility</div>
-    <div class="card-body text-success text-font-size-large">This xlet is compatible with Cinnamon 3.0 up to latest Cinnamon version.</div>
+    <div class="card-body text-success text-font-size-large">This xlet is compatible with Cinnamon 5.0 up to latest Cinnamon version.</div>
 </div>
-<div class="card text-bold my-3 border-info shadow-sm">
+<div class="card fw-bold my-3 border-info shadow-sm">
     <div class="card-header bg-info text-white">Xlets localization</div>
     <div class="card-body text-info text-font-size-large"><p>If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed.</p>
 
@@ -135,15 +145,15 @@ Install with <code>pip</code> (Cinnamon needs to be restarted after installing f
 
 </br>
 
-<div class="alert alert-info text-bold shadow-sm" role="alert">
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
 
 The following sections are available only in English.
 </div>
 
 </div> <!-- .localization-content -->
 
-</div> <!-- .container.boxed -->
-<span id="xlet-contributors">
+            </div>
+            <span id="xlet-contributors"></span>
 <div class="container boxed my-3 py-3">
 <h2>Contributors/Mentions</h2>
 <h3>Original authors</h3>
@@ -158,10 +168,19 @@ The following sections are available only in English.
 
 </div> <!-- .container.boxed -->
 
-<span id="xlet-changelog">
+            <span id="xlet-changelogs"></span>
 <div class="container boxed my-3 py-3">
-<h2>Feeds Reader (Fork By Odyseus) changelog</h2>
-<p><strong>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a>.</strong></p>
+<h2>Feeds Reader (Fork By Odyseus) changelogs</h2>
+<p><strong>These change logs are only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a>.</strong></p>
+<hr>
+
+</div> <!-- .container.boxed -->
+<div class="container boxed my-3 py-3">
+
+<button type="button" class="btn btn-primary collapsible">Display more history</button>
+<div class="collapsible-content">
+<p><br/>
+<br/></p>
 <hr>
 <p><strong>Date:</strong> Mon, 17 Feb 2020 10:40:52 -0300<br/>
 <strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/85ea0ca">85ea0ca</a><br/>
@@ -326,38 +345,35 @@ The following sections are available only in English.
 </ul>
 <hr>
 
+</div>
+
 </div> <!-- .container.boxed -->
 
-</div> <!-- #mainarea -->
-<!--Footer-->
-<footer class="text-bold text-white navbar-dark bg-gradient-primary px-3 pt-4 mt-4">
-    <!--Footer Links-->
-    <div class="container-fluid text-left">
-        <ul class="list-unstyled">
-            <li>
-                <p>Page created with <a href="https://getbootstrap.com">Bootstrap</a>.</p>
-            </li>
-            <li>
-                <p>Boostrap theme created with <a href="https://gitlab.com/PythonCLIApplications/BootstrapThemesGenerator">Bootstrap Theme Generator</a> and based on <a href="https://bootswatch.com">Bootswatch</a>'s <a href="https://bootswatch.com/flatly">Flatly theme</a>.</p>
-            </li>
-            <li>
-                <p><a href="https://github.com/julienetie/smooth-scroll">Smooth Scroll plugin</a> provided by <a href="https://github.com/julienetie">Julien Etienne</a>.</p>
-            </li>
-        </ul>
-    </div>
-    <!--/.Footer Links-->
-    <!--Copyright-->
-    <div class="text-center py-3">
-        <div class="container-fluid">
-            © 2016-2020 <a href="https://gitlab.com/Odyseus/CinnamonTools">Odyseus</a>
         </div>
-    </div>
-    <!--/.Copyright-->
-</footer>
-<!--/.Footer-->
-<script type="text/javascript" defer src="./assets/js/localizations-handler.min.js"></script>
-<script type="text/javascript">
+        <footer class="fw-bold text-white navbar-dark bg-primary px-3 pt-4 mt-4">
+            <div class="container-fluid text-left">
+                <ul class="list-unstyled">
+                    <li>
+                        <p>Page created with <a href="https://getbootstrap.com">Bootstrap</a>.</p>
+                    </li>
+                    <li>
+                        <p>Boostrap theme created with <a href="https://gitlab.com/PythonCLIApplications/BootstrapThemesGenerator">Bootstrap Theme Generator</a> and based on <a href="https://bootswatch.com">Bootswatch</a>'s <a href="https://bootswatch.com/flatly">Flatly theme</a>.</p>
+                    </li>
+                    <li>
+                        <p><a href="https://github.com/julienetie/smooth-scroll">Smooth Scroll plugin</a> provided by <a href="https://github.com/julienetie">Julien Etienne</a>.</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="text-center py-3">
+                <div class="container-fluid">
+                    © 2016-2022 <a href="https://gitlab.com/Odyseus/CinnamonTools">Odyseus</a>
+                </div>
+            </div>
+        </footer>
+        <script type="text/javascript" defer src="./assets/js/main.js"></script>
+        <script type="text/javascript">
 
-</script>
-</body>
+        </script>
+    </body>
+
 </html>

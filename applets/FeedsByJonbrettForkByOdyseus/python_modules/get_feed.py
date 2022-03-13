@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -18,17 +18,19 @@ except (SystemError, ImportError):
 
 # NOTE: Just a dummy function so the strings called by it are detected by gettext.
 # These strings are actually localized on the JavaScript side.
+
+
 def _(msg):
     return msg
 
 
 if __name__ == "__main__":
-    rss = sys.argv[1]
+    rss_url = sys.argv[1]
 
     info = {}
 
     try:
-        parser = feedparser.parse(rss)
+        parser = feedparser.parse(rss_url)
 
         if "status" in parser:
             if parser.status == 301:
@@ -43,14 +45,14 @@ if __name__ == "__main__":
         if "title" in feed:
             info["title"] = feed["title"]
         else:
-            info["title"] = rss
+            info["title"] = rss_url
 
         if "description" in feed:
             info["description"] = feed["description"]
         else:
             info["description"] = feed.get("subtitle", info["title"])
 
-        info["link"] = feed.get("link", rss)
+        info["link"] = feed.get("link", rss_url)
         info["lastcheck"] = int(time.time() * 1000)
         info["entries"] = []
 
