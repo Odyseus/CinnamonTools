@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8">
+        <title>Help for Weather (Fork By Odyseus)</title>
+        <link rel="shortcut icon" type="image/x-icon" href="./icon.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link type="text/css" rel="stylesheet" href="./assets/css/bootstrap.min.css">
+        <link type="text/css" rel="stylesheet" href="./assets/css/bootstrap-tweaks.css">
+        <style type="text/css">
+
+        </style>
+    </head>
+
+    <body>
+        <div id="mainarea">
+            <nav id="main-navbar"
+                 class="navbar navbar-expand-sm navbar-dark bg-primary fixed-top py-0"
+                 role="navigation">
+                <div class="container-fluid">
+                    <div class="nav navbar-nav mr-auto">
+                        <a id="nav-xlet-help"
+                           class="nav-link"
+                           onclick="event.preventDefault();"
+                           href="#xlet-help">Help</a>
+                        <a id="nav-xlet-contributors"
+                           class="nav-link"
+                           onclick="event.preventDefault();"
+                           href="#xlet-contributors">Contributors</a>
+                        <a id="nav-xlet-changelogs"
+                           class="nav-link"
+                           onclick="event.preventDefault();"
+                           href="#xlet-changelogs">Changelogs</a>
+                    </div>
+                    <form>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text"
+                                  id="localization-switch-image">🌐</span>
+                            <select class="form-select form-select-sm"
+                                    id="localization-switch"
+                                    aria-describedby="localization-switch-image">
+<!-- English --><option selected data-title="Help for Weather (Fork By Odyseus)" data-xlet-help="Help" data-xlet-contributors="Contributors" data-xlet-changelog="Changelogs" value="en">English (English)</option>
+<!-- Español --><option data-title="Ayuda para Clima (Modificado por Odyseus)" data-xlet-help="Ayuda" data-xlet-contributors="Colaboradores" data-xlet-changelog="Changelogs" value="es">Español (Spanish)</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </nav>
+            <div id="no-js-main"
+                 class="alert alert-warning mx-5"
+                 role="alert">
+                <p><strong>Oh snap! This page needs JavaScript enabled to display correctly.</strong></p>
+                <p><strong>This page uses JavaScript only to switch between the available languages, smooth scrolling, etc.</strong></p>
+                <p><strong>There are no tracking services of any kind and never will be (at least, not from my side).</strong></p>
+            </div>
+            <span id="xlet-help"></span>
+            <div class="container boxed my-3 py-3">
+
+<div id="es" class="localization-content" hidden="true">
+<h1>Ayuda para Clima (Modificado por Odyseus)</h1>
+
+<div class="card fw-bold my-3 border-warning shadow-sm">
+    <div class="card-header bg-warning text-white">Advertencia</div>
+    <div class="card-body text-warning text-font-size-large"><p>Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet.</p>
+<p>Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p></div>
+</div>
+<div class="card fw-bold my-3 border-success shadow-sm">
+    <div class="card-header bg-success text-white">Compatibilidad con Cinnamon</div>
+    <div class="card-body text-success text-font-size-large">Este xlet es compatible con Cinnamon 5.0 hasta la última versión de Cinnamon.</div>
+</div>
+<div class="card fw-bold my-3 border-info shadow-sm">
+    <div class="card-header bg-info text-white">Localización de xlets</div>
+    <div class="card-body text-info text-font-size-large"><p>Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente.</p>
+
+<p>Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet.</p>
+</div>
+</div>
+<h2>Descripción</h2>
+<p>Este applet es una bifurcación de <a href="https://cinnamon-spices.linuxmint.com/applets/view/17">Clima</a> applet por <a href="https://github.com/mockturtl">mockturtl</a>.</p>
+<h2>Diferencias con el applet original</h2>
+<ul>
+<li>Agregado soporte para múltiples ubicaciones.</li>
+<li>Agregado soporte para múltiples proveedores de clima.</li>
+<li>Este applet almacena en caché los datos meteorológicos utilizados. Lo que significa que solo se contactará a los proveedores meteorológicos cuando sea necesario, evitando el consumo innecesario de cuotas de API.</li>
+<li>La hoja de estilo de este applet se utiliza para acomodar el diseño de sus elementos y no modifica los colores.</li>
+<li>Agregada información sobre herramientas detallada al applet sobre la ubicación actual de los datos meteorológicos.</li>
+<li>Diseño del menú re-diseñado.<ul>
+<li>Las previsiones se pueden mostrar en una o dos filas (o columnas si el diseño del menú se establece en vertical).</li>
+<li>Las previsiones pueden mostrar el nombre del día o la fecha completa.</li>
+<li>La fecha en la que se publicaron los datos meteorológicos siempre se muestra en el menú.</li>
+<li>Más opciones de personalización (tamaño del icono del tiempo actual, tamaño del icono de pronósticos, etc.).</li>
+</ul>
+</li>
+</ul>
+
+<div class="alert alert-warning fw-bold shadow-sm" role="alert">
+
+<ul>
+<li>Este applet requiere credenciales válidas de cualquiera de los servicios proveedores de clima para que funcione.</li>
+<li>Las credenciales no se pueden usar hasta que hayan sido activadas por los proveedores del clima.</li>
+</ul>
+
+</div><h2>Obteniendo credenciales para las APIs.</h2>
+<p>Seguir las instrucciones facilitadas por los proveedores.</p>
+<h3>Proveedores de clima</h3>
+<table class="table table-bordered">
+<thead><tr>
+<th>Proveedor</th>
+<th>Instrucciones para obtener credenciales para API</th>
+<th>Buscador de ubicaciones</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OpenWeatherMap</td>
+<td><a href="https://openweathermap.org/appid">Obtener credenciales</a></td>
+<td><a href="https://openweathermap.org/find">Buscar ubicación</a></td>
+</tr>
+<tr>
+<td>WeatherBit</td>
+<td><a href="https://www.weatherbit.io/pricing">Obtener credenciales</a></td>
+<td><a href="https://openweathermap.org/find">Buscar ubicación</a> <strong>(*)</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>(*)</strong> WeatherBit usa las mismas ID de ciudad que devuelve el buscador de ubicación de OpenWeatherMap además de las coordenadas.</p>
+<h2>Diseño del menú</h2>
+<div class="img-centered-container"><img src="assets/images/menu-layout.png" class="img-fluid " alt="Diseño del menú">
+</div><ol>
+<li>Condición del tiempo actual para la ubicación seleccionada actualmente.</li>
+<li>Pronósticos para la ubicación seleccionada actualmente.</li>
+<li>La hora en que el proveedor del tiempo publicó los datos mostrados actualmente. Al hacer clic en él se intentará obtener datos meteorológicos actualizados.</li>
+<li>Botón para abrir el menú selector de ubicaciones.</li>
+<li>Atribución del proveedor de tiempo. Cuando se hace clic, se abre el sitio web del proveedor de tiempo.</li>
+</ol>
+<h2>Administrador de ubicaciones</h2>
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
+<h4 class="alert-heading">Destacados</h4>
+<ul>
+<li>Se puede acceder al administrador de ubicaciones desde la ventana de configuración de este applet.</li>
+<li>Las ubicaciones con exactamente la misma <em>ID de ubicación</em> y <em>Proveedor</em> se consideran duplicadas y se eliminarán automáticamente al aplicar los cambios.</li>
+<li>Se debe presionar el botón <em>Aplicar cambios</em> para que el applet refleje los cambios realizados en el administrador de ubicaciones.</li>
+</ul>
+
+</div><div class="img-centered-container"><img src="assets/images/locations-manager.png" class="img-fluid " alt="Administrador de ubicaciones">
+</div><ul>
+<li><strong>Nombre de la ubicación</strong>: Este es un campo informativo y no se utiliza para recuperar datos meteorológicos. Se utiliza para identificar los datos mostrados en el menú y para generar los elementos dentro del menú de selección de ubicaciones.</li>
+<li><strong>ID de la ubicación</strong>: Una identificación de ciudad/región utilizada por los proveedores de servicios meteorológicos para identificar una ubicación.<ul>
+<li>OpenWeatherMap usa IDs de ciudad (el número al final de una URL de ubicación) y coordenadas.</li>
+</ul>
+</li>
+<li><strong>Lenguaje</strong>: Weather conditions localization. Languages are only used by OpenWeatherMap provider and it only affect weather conditions text. Any other text of the applet UI is localized by the applet itself (if available).</li>
+<li><strong>Días de previsión</strong>: La cantidad de pronósticos a mostrar en el menú.</li>
+<li><strong>Filas/Columnas de pronóstico</strong>: La cantidad de files/columnas en las cuales mostrar los pronósticos.</li>
+<li><strong>Proveedor</strong>: Proveedor de datos meteorológicos. Todos los proveedores de clima requieren credenciales adecuadas para funcionar.</li>
+</ul>
+<h2>Tema del menú</h2>
+<ul>
+<li>Este applet soporta temas personalizados para el estilo de su menú.</li>
+<li>El tema predeterminado (que se encuentra en CARPETA_DEL_APPLET/themes/default.css) solo establece un estilo genérico para acomodar los elementos en el menú.</li>
+<li>Para usar un tema personalizado, simplemente configurar la opción <strong>Tema del menú</strong> como <strong>Personalizado</strong> y configurar la opción <strong>Ruta a hoja de estilo personalizada</strong> para que apunte a un archivo de hoja de estilo.</li>
+<li>Para crear un tema personalizado, simplemente hacer una copia del archivo de tema predeterminado en cualquier lugar del sistema de archivos, <strong>excepto</strong> dentro de la carpeta del applet. El archivo de tema predeterminado tiene la lista completa de clases CSS utilizadas por este applet.</li>
+<li>Para que los cambios del tema personalizados se reflejen en el menú mientras se modifica el archivo de tema, se puede reiniciar Cinnamon o se puede volver a cargar el tema Cinnamon.</li>
+<li>Canela proporciona un comando para volver a cargar su tema. Simplemente abrir el cuadro de diálogo <strong>Ejecutar comando</strong> (<kbd>Alt</kbd> + <kbd>F2</kbd>), escribir <strong>rt</strong> y presionar <kbd>Enter</kbd>.</li>
+</ul>
+<h2>Tema de ícono</h2>
+<ul>
+<li>Este applet soporta temas de iconos personalizados.</li>
+<li>Este applet viene con la posibilidad de elegir 3 temas de iconos y son nombrados de la siguiente manera.<ul>
+<li><strong>Systema</strong>: El applet utilizará los iconos proporcionados por el tema de íconos seleccionado actualmente para el sistema.</li>
+<li><strong>Incorporado</strong>: Los iconos utilizados son los que se encuentran en CARPETA_DEL_APPLET/themes/icons.</li>
+<li><strong>Personalizado</strong>: Los iconos utilizados son los que se encuentran en la ruta definida en la opción <strong>Ruta al tema de ícono personalizado</strong>.</li>
+</ul>
+</li>
+<li>Un tema de iconos es solo una carpeta que contiene archivos de iconos específicamente nombrados.</li>
+<li>El tema del icono incorporado es un tema monocromático y se encuentra en CARPETA_DEL_APPLET/themes/icons.</li>
+<li>El tema del icono incorporado se puede usar como iconos a todo color o simbólicos (configuración del applet <strong>Tipo de icono del menú</strong> y <strong>Tipo de icono del applet</strong>). La diferencia es que, si se utiliza como un tema a todo color, los iconos serán de color negro, sin importar si el tema de Cinnamon seleccionado tiene fondos claros u oscuros para los menús. Por otro lado, si se usa como iconos simbólicos, el color de los iconos se establecerá según el tema de Cinnamon seleccionado. Además, los iconos simbólicos se pueden colorear a través del tema CSS personalizado (configuración del applet <strong>Tema del menú</strong>) al aplicar un estilo a las clases <code>weather-forecast-icon</code> y<code>weather-current-icon</code>.</li>
+<li>Para crear un tema de icono personalizado, el tema de icono incorporado se puede utilizar como base.</li>
+<li>El tema de los iconos integrado está compuesto por 36 <em>imágenes reales</em>, el resto de iconos son enlaces simbólicos a estas <em>imágenes reales</em>.</li>
+<li>Dentro del tema de iconos integrado hay un script llamado <strong>z_symlinkify.bash</strong> que se puede usar para crear un tema de iconos desde cero. Este script también contiene la lista de <em>imágenes reales</em> que se utilizan para crear los enlaces simbólicos.</li>
+<li>Un tema de ícono personalizado puede contener solo íconos a todo color, solo íconos simbólicos o ambos. La configuración del applet del <strong>Tipo de ícono del menú</strong> y <strong>Tipo de ícono del applet</strong> se debe establecer de acuerdo con el tipo de ícono usado por el tema personalizado.</li>
+<li>Un tema de icono personalizado puede contener imágenes SVG o PNG; aunque las imágenes SVG son preferibles debido a su capacidad de escalar a cualquier tamaño de icono establecido en esta configuración de applet sin perder calidad. Se podrían usar otros tipos de imágenes, pero no los probé.</li>
+<li>Un tema de ícono personalizado debe contener 240 íconos para soportar íconos a todo color y simbólicos. O la mitad de eso (120) para soportar a uno u otro.</li>
+</ul>
+
+</br>
+
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
+
+Las siguientes secciones están disponibles sólo en Inglés.
+</div>
+
+</div> <!-- .localization-content -->
+
+
+<div id="en" class="localization-content" >
+<h1>Help for Weather (Fork By Odyseus)</h1>
+
+<div class="card fw-bold my-3 border-warning shadow-sm">
+    <div class="card-header bg-warning text-white">Warning</div>
+    <div class="card-body text-warning text-font-size-large"><p>Never delete any of the files found inside this xlet folder. It might break this xlet functionality.</p>
+<p>Bug reports, feature requests and contributions should be done on this xlet's repository linked next. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p></div>
+</div>
+<div class="card fw-bold my-3 border-success shadow-sm">
+    <div class="card-header bg-success text-white">Cinnamon compatibility</div>
+    <div class="card-body text-success text-font-size-large">This xlet is compatible with Cinnamon 5.0 up to latest Cinnamon version.</div>
+</div>
+<div class="card fw-bold my-3 border-info shadow-sm">
+    <div class="card-header bg-info text-white">Xlets localization</div>
+    <div class="card-body text-info text-font-size-large"><p>If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed.</p>
+
+<p>If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder.</p>
+</div>
+</div>
+<h2>Description</h2>
+<p>This applet is a fork of <a href="https://cinnamon-spices.linuxmint.com/applets/view/17">Weather</a> applet by <a href="https://github.com/mockturtl">mockturtl</a>.</p>
+<h2>Differences with the original applet</h2>
+<ul>
+<li>Added support for multiple locations.</li>
+<li>Added support for multiple weather providers.</li>
+<li>This applet caches the weather data used. Which means that weather providers will be contacted only when needed, preventing unnecessary API quota consumption.</li>
+<li>The style sheet of this fork is used to accommodate the layout of its elements and it doesn't modify colors.</li>
+<li>Added detailed tooltip to the applet about the current weather data location.</li>
+<li>Menu layout redesigned.<ul>
+<li>Forecasts can be displayed in one or two rows (or columns if the menu layout is set to vertical).</li>
+<li>Forecasts can display the name of the day or the full date.</li>
+<li>The date in which the weather data was published is always displayed in the menu.</li>
+<li>More customization options (current weather icon size, forecasts icon size, etc.).</li>
+</ul>
+</li>
+</ul>
+
+<div class="alert alert-warning fw-bold shadow-sm" role="alert">
+
+<ul>
+<li>This applet requires valid credentials from any of the weather provider services for it to work.</li>
+<li>The credentials cannot be used until they have been activated by the weather providers.</li>
+</ul>
+
+</div><h2>Getting API credentials</h2>
+<p>Follow the instructions made available by the providers.</p>
+<h3>Weather providers</h3>
+<table class="table table-bordered">
+<thead><tr>
+<th>Provider</th>
+<th>API credentials instructions</th>
+<th>Location finder</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OpenWeatherMap</td>
+<td><a href="https://openweathermap.org/appid">Get credentials</a></td>
+<td><a href="https://openweathermap.org/find">Find location</a></td>
+</tr>
+<tr>
+<td>WeatherBit</td>
+<td><a href="https://www.weatherbit.io/pricing">Get credentials</a></td>
+<td><a href="https://openweathermap.org/find">Find location</a> <strong>(*)</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>(*)</strong> WeatherBit uses the same city IDs returned by OpenWeatherMap's location finder in addition to coordinates.</p>
+<h2>Menu layout</h2>
+<div class="img-centered-container"><img src="assets/images/menu-layout.png" class="img-fluid " alt="Menu layout">
+</div><ol>
+<li>Current weather condition for the currently selected location.</li>
+<li>Forecasts for the currently selected location.</li>
+<li>The time in which the currently displayed data was published by the weather provider. Clicking it will attempt to retrieve updated weather data.</li>
+<li>Button to open the locations selector menu.</li>
+<li>Weather provider attribution. When clicked, it opens the weather provider website.</li>
+</ol>
+<h2>Locations manager</h2>
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
+<h4 class="alert-heading">Highlights</h4>
+<ul>
+<li>The locations manager can be accessed from this applet settings window.</li>
+<li>Locations with the exact same <em>Location ID</em> and <em>Provider</em> are considered duplicated and will be automatically removed when applying changes.</li>
+<li>The <em>Apply changes</em> button must be pressed for the applet to reflect the changes made in the locations manager.</li>
+</ul>
+
+</div><div class="img-centered-container"><img src="assets/images/locations-manager.png" class="img-fluid " alt="Locations manager">
+</div><ul>
+<li><strong>Location name</strong>: This is an informative field and it isn't used to retrieve weather data. It is used to identify the displayed data in the menu and to generate the items inside the locations selector menu.</li>
+<li><strong>Location ID</strong>: A city/region ID used by the weather service providers to identify a location.<ul>
+<li>Open Weather Map uses city IDs (the number at the end of a location URL) and coordinates.</li>
+</ul>
+</li>
+<li><strong>Language</strong>: Weather conditions localization. Languages are only used by OpenWeatherMap provider and it only affect weather conditions text. Any other text of the applet UI is localized by the applet itself (if available).</li>
+<li><strong>Forecast days</strong>: The amount of forecasts to display in the menu.</li>
+<li><strong>Forecast rows/columns</strong>: The amount of rows/cols to display the forecast days in.</li>
+<li><strong>Provider</strong>: Weather data provider. All weather providers require proper credentials to function.</li>
+</ul>
+<h2>Menu theme</h2>
+<ul>
+<li>This applet supports custom themes to style its menu.</li>
+<li>The default theme (found in APPLET_FOLDER/themes/default.css) only sets a generic styling to accommodate the elements in the menu.</li>
+<li>To use a custom theme, just set the <strong>Menu theme</strong> option to <strong>Custom</strong> and set the <strong>Path to custom style sheet</strong> option to point to a style sheet file.</li>
+<li>To create a custom theme, just make a copy of the default theme file anywhere on the file system, <strong>except</strong> inside the applet folder. The default theme file has the complete list of CSS classes used by this applet.</li>
+<li>For the custom theme changes to be reflected on the menu while the theme file is modified, either Cinnamon can be restarted or the Cinnamon theme can be reloaded.</li>
+<li>Cinnamon provides a command to reload its theme. Just open the <strong>Run command</strong> dialog (<kbd>Alt</kbd> + <kbd>F2</kbd>), type <strong>rt</strong> and press <kbd>Enter</kbd>.</li>
+</ul>
+<h2>Icon theme</h2>
+<ul>
+<li>This applet supports custom icon themes.</li>
+<li>This applet comes with the possibility to choose 3 icon themes and they are named as follows.<ul>
+<li><strong>System</strong>: The applet will use the icons provided by the currently selected icon theme for the system.</li>
+<li><strong>Built-in</strong>: The icons used are the ones found in APPLET_FOLDER/themes/icons.</li>
+<li><strong>Custom</strong>: The icons used are the ones found in the path defined in the <strong>Path to custom icon theme</strong> option.</li>
+</ul>
+</li>
+<li>An icon theme is just a folder that contains specifically named icon files.</li>
+<li>The built-in icon theme is a monochrome theme and is found in APPLET_FOLDER/themes/icons.</li>
+<li>The built-in icon theme can be used as full color or symbolic icons (applet settings <strong>Menu icon type</strong> and <strong>Applet icon type</strong>). The difference is that, if used as a full color theme, the icons will be black no matter if the Cinnamon theme selected has light or dark backgrounds for menus. On the other hand, if it is used as symbolic icons, the color of the icons will be set by the selected Cinnamon theme. Additionally, symbolic icons can be colorized through the custom CSS theme (applet setting <strong>Menu theme</strong>) by styling the <code>weather-forecast-icon</code> and <code>weather-current-icon</code> classes.</li>
+<li>To create a custom icon theme, the built-in icon theme can be used as a base.</li>
+<li>The built-in icon theme is composed of 36 <em>real images</em>, the rest of icons are symbolic links to these <em>real images</em>.</li>
+<li>Inside the built-in icon theme is a script called <strong>z_symlinkify.bash</strong> that can be used to create an icon theme from scratch. This script also contains the list of <em>real images</em> that are used to create the symbolic links.</li>
+<li>A custom icon theme can contain only full colored icons, only symbolic icons or both. The <strong>Menu icon type</strong> and <strong>Applet icon type</strong> applet settings should be set accordingly to the icon type used by the custom theme.</li>
+<li>A custom icon theme can contain SVG or PNG images; although SVG images are preferable due to their ability to scale into any icon size set in this applet settings without loosing quality. Other image types might be used, but I didn't test them.</li>
+<li>A custom icon theme should contain 240 icons to support both full color and symbolic icons. Or half of that (120) to support one or the other.</li>
+</ul>
+
+</br>
+
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
+
+The following sections are available only in English.
+</div>
+
+</div> <!-- .localization-content -->
+
+            </div>
+            <span id="xlet-contributors"></span>
+<div class="container boxed my-3 py-3">
+<h2>Contributors/Mentions</h2>
+<ul>
+<li><strong><a href="https://github.com/mockturtl">mockturtl</a>:</strong> Original author of the Wather applet for Cinnamon.</li>
+<li><strong><a href="https://github.com/Gr3q">Attila Greguss</a>:</strong> Current mantainer of the Wather applet for Cinnamon.</li>
+<li>The built-in icon theme uses <a href="https://github.com/erikflowers/weather-icons">Weather Icons</a>.</li>
+</ul>
+
+</div> <!-- .container.boxed -->
+
+            <span id="xlet-changelogs"></span>
+<div class="container boxed my-3 py-3">
+<h2>Weather (Fork By Odyseus) changelogs</h2>
+<p><strong>These change logs are only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a>.</strong></p>
+<hr>
+
+</div> <!-- .container.boxed -->
+<div class="container boxed my-3 py-3">
+
+<button type="button" class="btn btn-primary collapsible">Display more history</button>
+<div class="collapsible-content">
+<p><br/>
+<br/></p>
+<hr>
+<p><strong>Date:</strong> Fri, 14 Feb 2020 21:30:10 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/88cb363">88cb363</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<ul>
+<li>quantities.js library update:<ul>
+<li>Add Imperial Gallons, and Barrels (US Beer, Imperial Beer, Oil). (Upstream feature)</li>
+<li>Add support for imperial version of fluid ounces and pints. (Upstream feature)</li>
+<li>Marked strict warnings fixes to facilitate comparisson with upstream.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong>Date:</strong> Fri, 14 Feb 2020 19:08:58 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/5a7beb0">5a7beb0</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<ul>
+<li>Fixed <code>_</code> variable exported from wrong module.</li>
+<li>Fixed stric mode error in quantities.js libraries.</li>
+<li>Implemented a different SHA library that it's strict mode compliant to avoid spamming <strong>~/.xsession-errors</strong> with strict mode errors/warnings.</li>
+</ul>
+<hr>
+<p><strong>Date:</strong> Wed, 12 Feb 2020 22:47:25 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/56a3f44">56a3f44</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<ul>
+<li>Adaptations due to changes to the custom settings framework.</li>
+</ul>
+<hr>
+<p><strong>Date:</strong> Mon, 10 Feb 2020 23:14:40 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/c1170b5">c1170b5</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<ul>
+<li>Added a couple more known status codes to better identify network problems.</li>
+<li>Removed leftover code of xlets initialization using a Cinnamon feature that thankfully wasn't implemented.</li>
+<li>Implemented the use of the <code>xdgOpen</code>, <code>copyToClipboard</code>, and <code>safeGet</code> functions from the <code>globalUtils.js</code> javaScript module.</li>
+</ul>
+<hr>
+<p><strong>Date:</strong> Mon, 27 Jan 2020 02:41:38 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/c9d9edb">c9d9edb</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<h2>Countermeasures for using an external settings application</h2>
+<ul>
+<li>Removed condition used to selectively override the applet's Configure context menu item depending on Cinnamon version used. This condition caused to not open the settings window on newer Cinnamon versions.</li>
+<li>Added button to the settings-schema.json file so the <em>real</em> settings window can be opened from Cinnamon's native settings window. Trying to open the correct xlet settings from the xlets manager isn't possible, so I added this button.</li>
+<li>Removed <code>external-configuration-app</code> key from the metadata.json file so the built-in mechanism to open xlet settings doesn't fail silently without displaying error messages.</li>
+</ul>
+<hr>
+<p><strong>Date:</strong> Sat, 18 Jan 2020 14:46:45 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/06693ef">06693ef</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<ul>
+<li>Exposed for localization the units abbreviations.</li>
+</ul>
+<hr>
+<p><strong>Date:</strong> Fri, 21 Jun 2019 23:06:01 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/f913c7e">f913c7e</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<ul>
+<li>Corrected error caused by random missing data from Yahoo! provider.</li>
+<li>Redesigned applet tooltip to display information symmetrically.</li>
+<li>Corrected the use of undefined constant in some providers.</li>
+<li>Removed duplicated field from tooltip when the weather provider is WeatherBit.</li>
+<li>Minor changes to the settings application due to changes in the custom settings framework.</li>
+</ul>
+<hr>
+<p><strong>Date:</strong> Wed, 5 Jun 2019 19:56:38 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/0e2e18e">0e2e18e</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<ul>
+<li>Eliminated from the quantities.js library all strict warnings (FINALLY).</li>
+</ul>
+<hr>
+<p><strong>Date:</strong> Thu, 30 May 2019 03:48:37 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/cd63982">cd63982</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<ul>
+<li>Minor changes due to changes in global modules.</li>
+<li>Python scripts: Changed the use of cgi.escape to html.escape due to cgi.escape deprecation.</li>
+</ul>
+<hr>
+<p><strong>Date:</strong> Thu, 23 May 2019 02:16:58 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/e0d44f6">e0d44f6</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<ul>
+<li>JavaScript modules globalization. Moved functions/classes out of the xlet itself into global modules added at build time to minimize duplicated code across all xlets and facilitate maintenance.</li>
+<li>JavaScript code homogenization.</li>
+<li>Improved debugger.</li>
+<li>Override the <strong>Configure..</strong> context menu item only when it is needed.</li>
+<li>Fixed (at least tried to) warnings about "function does not always return value" nonsense.</li>
+<li>Added SVG icon.</li>
+</ul>
+<hr>
+<p><strong>Date:</strong> Sat, 18 May 2019 22:29:33 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/581cbbe">581cbbe</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<ul>
+<li>Removed unused file.</li>
+<li>Added "external-configuration-app" option to the metadata.json file to minimize probability of opening the "fake" settings window.</li>
+</ul>
+<hr>
+<p><strong>Date:</strong> Tue, 14 May 2019 14:29:06 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/9762324">9762324</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<p>WARNING: Before updating to this version of the applet, make sure to backup the list of locations using the locations manager. There is a very slim chance that the current settings will prevent the settings window to open. In that case, the current settings will have to be completely reseted (by deleting the folder ~/.cinnamon/configs/0WeatherAppletForkByOdyseus@your.domain.com). I tried to make sure that this could not happen, but better safe than sorry.</p>
+<ul>
+<li>Finally fixed asymmetry issues inside the applet menu elements. Everything is beautifully symmetric now.</li>
+<li>Removed option to abbreviate the name of the moon phases since it was just a workaround that is not needed anymore.</li>
+<li>Changed the <em>chained module imports</em> approach for a <em>direct module import</em> approach. This is to avoid errors caused by the garbage that is the implementation of <code>require()</code>.</li>
+<li>Added the ID (name) WeatherApplet to the applet menu and updated the default theme (default.css) to use the ID. This was added to minimize possible conflicts with xlets that might use the same class names and it doesn't break custom themes in use.</li>
+<li>Changed default current weather icon size to 128 and maximum icon size to 512.</li>
+<li>Implemented the use of a custom framework to handle the applet settings since I was already using the framework to create the locations manager window.</li>
+</ul>
+<hr>
+<p><strong>Date:</strong> Thu, 9 May 2019 05:22:15 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/0f06d1d">0f06d1d</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<ul>
+<li>Prefer the icons provided by the currently used theme instead of the custom icons shipped with the xlet.</li>
+<li>Corrected infinite loop caused by the use of an absolutely retarded language.</li>
+<li>Restructured theme loading mechanism.</li>
+<li>Removed unnecessary icons.</li>
+</ul>
+<hr>
+<p><strong>Date:</strong> Thu, 25 Apr 2019 02:06:28 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/5ddbc74">5ddbc74</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<ul>
+<li>Added a signal manager to manage signal connections that weren't managed.</li>
+<li>Added settings finalization on applet removal.</li>
+</ul>
+<hr>
+<p><strong>Date:</strong> Tue, 16 Apr 2019 02:57:35 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/ef59ee2">ef59ee2</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<ul>
+<li>Removed leftover call to log function.</li>
+</ul>
+<hr>
+<p><strong>Date:</strong> Mon, 15 Apr 2019 22:45:45 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/41e1d57">41e1d57</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<ul>
+<li>Added WeatherBit weather provider.</li>
+<li>Added option to display the moon phases abbreviated. This is just a workaround to avoid the moon phase's long text to move the entire current weather information off center. Until I figure out a better way this will have to do.</li>
+<li>Modified the locations manager GUI to use a centralized framework.</li>
+<li>Added weather provider info to the list of languages in the locations manager to easily identify which provider supports which languages.</li>
+<li>Added a script to assist in the creation of the languages menu.</li>
+</ul>
+<hr>
+<p><strong>Date:</strong> Thu, 28 Feb 2019 20:06:14 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/c510888">c510888</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<ul>
+<li>Removed unused icons from the icons folder.</li>
+<li>Added missing CONTRIBUTORS.md file to properly give credit.</li>
+<li>Added the possibility to select an icon theme. One can select from 3 different icon themes.<ul>
+<li>System: the system icon theme is used.</li>
+<li>Built-in: the icon theme provided by this applet is used.</li>
+<li>Custom: an icon theme created by the user is used.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong>Date:</strong> Sun, 24 Feb 2019 18:36:21 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/a9f994a">a9f994a</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<ul>
+<li>Added moon phase to current condition details. Since none of the weather services provide such information, a JavaScript function is used to calculate the moon phases.</li>
+<li>Changed the method of creating the current weather details. Instead of creating them "by hand", use a loop.</li>
+<li>Removed custom separator used in the menu in favor of using PopupSeparatorMenuItem.</li>
+<li>Removed hard-coded max. width for the current weather condition. It is now defined in the CSS theme, so it can be modified with a custom theme.</li>
+<li>Removed unused function and property.</li>
+<li>Removed call to function in favor of in-line declaration.</li>
+</ul>
+<hr>
+<p><strong>Date:</strong> Thu, 21 Feb 2019 10:30:38 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/8c41de9">8c41de9</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<ul>
+<li>Added theming support.</li>
+</ul>
+<hr>
+<p><strong>Date:</strong> Sun, 17 Feb 2019 02:31:28 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/c95eefe">c95eefe</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<ul>
+<li>Improved description of known status codes.</li>
+<li>Improved the display of error messages in the applet menu.</li>
+<li>Improved identification of method names when verbose debug mode is enabled.</li>
+<li>Avoid the hiding of the error box when it shouldn't be hidden.</li>
+</ul>
+<hr>
+<p><strong>Date:</strong> Wed, 13 Feb 2019 04:04:10 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/5e59cee">5e59cee</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<ul>
+<li>Corrected the logic of the sanitizeStoredLocations method.<ul>
+<li>First, this.locationsMap doesn't need deduplication since it's a Map.</li>
+<li>And second, I'm iterating over the stored data keys (a location UUID), not its values (the weather data for a location). So there is no need to re-create the UUIDs.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong>Date:</strong> Tue, 12 Feb 2019 23:33:32 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/4fc8ec3">4fc8ec3</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<ul>
+<li>Rewritten from scratch to suport changes to the Yahoo! Weather API and to add several features.</li>
+<li>Added support for multiple locations.</li>
+<li>Added support for multiple weather providers.</li>
+<li>Added detailed tooltip to the applet about the current weather data location.</li>
+<li>Menu layout redesigned.<ul>
+<li>Forecasts can be displayed in one or two rows (or columns if the menu layout is set to vertical).</li>
+<li>Forecasts can display the name of the day or the full date.</li>
+<li>The date in which the weather data was published is always displayed in the menu.</li>
+<li>More customization options (current weather icon size, forecasts icon size, etc.).</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong>Date:</strong> Mon, 21 Jan 2019 21:55:26 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/24e684b">24e684b</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<ul>
+<li>Changed applet icon.</li>
+</ul>
+<hr>
+<p><strong>Date:</strong> Tue, 15 Jan 2019 22:36:02 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/5797433">5797433</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<ul>
+<li>Modified applet initialization code in preparation for asynchronous settings initialization that will be available in the next Cinnamon version (4.2.x?).</li>
+</ul>
+<hr>
+<p><strong>Date:</strong> Tue, 8 Jan 2019 21:40:05 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/fbdef6f">fbdef6f</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<ul>
+<li>Fixed strict mode warning.</li>
+</ul>
+<hr>
+<p><strong>Date:</strong> Tue, 7 Aug 2018 03:12:54 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/ea72172">ea72172</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<ul>
+<li>Second step towards moving all JavaScript code to ES6. Convert all functions (that can be converted) to arrow functions.</li>
+</ul>
+<hr>
+<p><strong>Date:</strong> Sat, 4 Aug 2018 05:13:40 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/4bfbd34">4bfbd34</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<ul>
+<li>Eradication of <strong>Lang</strong> module usage in favor of arrow/standard functions. First step towards moving all JavaScript code to ES6.</li>
+</ul>
+<hr>
+<p><strong>Date:</strong> Wed, 13 Jun 2018 01:05:41 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/0225402">0225402</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<ul>
+<li>Corrected settings changed callback function due to different amount of arguments passed by different Cinnamon versions.</li>
+</ul>
+<hr>
+<p><strong>Date:</strong> Mon, 14 May 2018 07:15:52 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/2e7d01c">2e7d01c</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<ul>
+<li>Corrected the logic when polling for weather data.</li>
+</ul>
+<hr>
+<p><strong>Date:</strong> Mon, 7 May 2018 04:47:37 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/e8d1011">e8d1011</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<ul>
+<li>Revamped/simplified settings mechanism.<ul>
+<li>Renamed all settings keys to be prefixed with "pref_".</li>
+<li>Removed unnecessary properties definition.</li>
+</ul>
+</li>
+<li>Cleaned up unnecessary variable definitions.</li>
+<li>Proper handling of key bindings.</li>
+<li>Moved utility functions into the utils.js files.</li>
+<li>Added a mechanism to update weather data from the online source only when it is needed.</li>
+<li>Added Spanish localization.</li>
+</ul>
+<hr>
+
+</div>
+
+</div> <!-- .container.boxed -->
+
+        </div>
+        <footer class="fw-bold text-white navbar-dark bg-primary px-3 pt-4 mt-4">
+            <div class="container-fluid text-left">
+                <ul class="list-unstyled">
+                    <li>
+                        <p>Page created with <a href="https://getbootstrap.com">Bootstrap</a>.</p>
+                    </li>
+                    <li>
+                        <p>Boostrap theme created with <a href="https://gitlab.com/PythonCLIApplications/BootstrapThemesGenerator">Bootstrap Theme Generator</a> and based on <a href="https://bootswatch.com">Bootswatch</a>'s <a href="https://bootswatch.com/flatly">Flatly theme</a>.</p>
+                    </li>
+                    <li>
+                        <p><a href="https://github.com/julienetie/smooth-scroll">Smooth Scroll plugin</a> provided by <a href="https://github.com/julienetie">Julien Etienne</a>.</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="text-center py-3">
+                <div class="container-fluid">
+                    © 2016-2022 <a href="https://gitlab.com/Odyseus/CinnamonTools">Odyseus</a>
+                </div>
+            </div>
+        </footer>
+        <script type="text/javascript" defer src="./assets/js/main.js"></script>
+        <script type="text/javascript">
+
+        </script>
+    </body>
+
+</html>

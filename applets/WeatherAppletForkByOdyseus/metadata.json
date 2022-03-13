@@ -1,0 +1,6 @@
+{
+    "external-configuration-app": "settings.py",
+    "description": "View your local weather forecast.",
+    "max-instances": -1,
+    "name": "Weather (Fork By Odyseus)"
+}

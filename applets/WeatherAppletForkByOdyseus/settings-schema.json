@@ -1,0 +1,137 @@
+{
+    "info_label_1": {
+        "type": "label",
+        "description": "This window isn't this xlet's \"real\" configuration window."
+    },
+    "settings_button": {
+        "type": "button",
+        "callback": "__openXletSettings",
+        "description": "Open the \"real\" preference window"
+    },
+    "toggle_menu_keybinding": {
+        "type": "generic",
+        "default": ""
+    },
+    "refresh_interval": {
+        "type": "generic",
+        "default": 60
+    },
+    "temperature_unit": {
+        "type": "generic",
+        "default": "celsius"
+    },
+    "distance_unit": {
+        "type": "generic",
+        "default": "km"
+    },
+    "wind_speed_unit": {
+        "type": "generic",
+        "default": "kph"
+    },
+    "pressure_unit": {
+        "type": "generic",
+        "default": "kPa"
+    },
+    "menu_orientation": {
+        "type": "generic",
+        "default": "horizontal"
+    },
+    "icon_theme": {
+        "type": "generic",
+        "default": "built-in"
+    },
+    "icon_theme_path_custom": {
+        "type": "generic",
+        "default": ""
+    },
+    "temperature_high_first": {
+        "type": "generic",
+        "default": false
+    },
+    "forecats_display_dates": {
+        "type": "generic",
+        "default": true
+    },
+    "show_common_sense_hours": {
+        "type": "generic",
+        "default": true
+    },
+    "current_weather_icon_size": {
+        "type": "generic",
+        "default": 128
+    },
+    "forecasts_icon_size": {
+        "type": "generic",
+        "default": 48
+    },
+    "menu_icon_type": {
+        "type": "generic",
+        "default": 0
+    },
+    "menu_theme": {
+        "type": "generic",
+        "default": "default"
+    },
+    "menu_theme_path_custom": {
+        "type": "generic",
+        "default": ""
+    },
+    "show_current_temperature_in_panel": {
+        "type": "generic",
+        "default": true
+    },
+    "show_current_condition_in_panel": {
+        "type": "generic",
+        "default": false
+    },
+    "applet_icon_type": {
+        "type": "generic",
+        "default": "0"
+    },
+    "imp_exp_last_selected_directory": {
+        "type": "generic",
+        "default": ""
+    },
+    "open_weather_map_credential_app_id": {
+        "type": "generic",
+        "default": ""
+    },
+    "weatherbit_credential_app_id": {
+        "type": "generic",
+        "default": ""
+    },
+    "current_location": {
+        "type": "generic",
+        "default": "3435910:WeatherBit"
+    },
+    "locations_storage": {
+        "type": "generic",
+        "default": [{
+            "forecastRowsCols": 2,
+            "forecastDays": 10,
+            "languageID": "en",
+            "locationID": "3435910",
+            "locationName": "Buenos Aires, Argentina",
+            "providerID": "WeatherBit"
+        }, {
+            "forecastRowsCols": 1,
+            "forecastDays": 5,
+            "languageID": "en",
+            "locationID": "3435910",
+            "locationName": "Buenos Aires, Argentina",
+            "providerID": "OpenWeatherMap"
+        }]
+    },
+    "weather_data": {
+        "type": "generic",
+        "default": {}
+    },
+    "locations_storage_apply": {
+        "type": "generic",
+        "default": false
+    },
+    "initial_load_done": {
+        "type": "generic",
+        "default": false
+    }
+}

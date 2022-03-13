@@ -1,0 +1,106 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+open_weather_map = [
+    "af",
+    "al",
+    "ar",
+    "az",
+    "bg",
+    "ca",
+    "cz",
+    "da",
+    "de",
+    "el",
+    "en",
+    "es",
+    "eu",
+    "fa",
+    "fi",
+    "fr",
+    "gl",
+    "he",
+    "hi",
+    "hr",
+    "hu",
+    "id",
+    "it",
+    "ja",
+    "kr",
+    "la",
+    "lt",
+    "mk",
+    "nl",
+    "no",
+    "pl",
+    "pt",
+    "pt",
+    "ro",
+    "ru",
+    "se",
+    "sk",
+    "sl",
+    "sp",
+    "sr",
+    "sv",
+    "th",
+    "tr",
+    "ua",
+    "uk",
+    "vi",
+    "zh_cn",
+    "zh_tw",
+    "zu"
+]
+
+weather_bit = [
+    "ar",
+    "az",
+    "be",
+    "bg",
+    "bs",
+    "ca",
+    "cz",
+    "da",
+    "de",
+    "el",
+    "en",
+    "es",
+    "et",
+    "fi",
+    "fr",
+    "hr",
+    "hu",
+    "id",
+    "is",
+    "it",
+    "iw",
+    "ja",
+    "kw",
+    "lt",
+    "nb",
+    "nl",
+    "pl",
+    "pt",
+    "ro",
+    "ru",
+    "sk",
+    "sl",
+    "sr",
+    "sv",
+    "tr",
+    "uk",
+    "zh",
+    "zh-tw"
+]
+
+all = set(open_weather_map + weather_bit)
+
+
+if __name__ == "__main__":
+    for lang in all:
+        suffix = " %s%s" % (
+            ("(O)" if lang in open_weather_map else ""),
+            ("(W)" if lang in weather_bit else "")
+        )
+        print('"%s": "%s",' % (lang, lang + suffix))

@@ -1,0 +1,247 @@
+%YAML 1.1
+---
+python_modules:
+    - xlets_settings
+javascript_modules:
+    - appletsUtils.js
+    - customFileUtils.js
+    - customTooltips.js
+    - debugManager.js
+    - notificationsUtils.js
+    - globalConstants.js
+    - globalUtils.js
+    - oauth.js
+    - quantities.js
+    - sha1.js
+extra_files:
+    - source: __app__/data/gschemas/debugManagerSchema.xml
+      destination: schemas/org.cinnamon.{{XLET_TYPE}}s.{{UUID}}.gschema.xml
+symlinks:
+    themes/icons:
+        # OpenWeatherMap
+        - - wi-0.svg
+          - wi-781-symbolic.svg
+        - - wi-0.svg
+          - wi-781.svg
+        - - wi-10.svg
+          - wi-500-symbolic.svg
+        - - wi-10.svg
+          - wi-500.svg
+        - - wi-10.svg
+          - wi-501-symbolic.svg
+        - - wi-10.svg
+          - wi-501.svg
+        - - wi-10.svg
+          - wi-502-symbolic.svg
+        - - wi-10.svg
+          - wi-502.svg
+        - - wi-10.svg
+          - wi-503-symbolic.svg
+        - - wi-10.svg
+          - wi-503.svg
+        - - wi-10.svg
+          - wi-504-symbolic.svg
+        - - wi-10.svg
+          - wi-504.svg
+        - - wi-10.svg
+          - wi-511-symbolic.svg
+        - - wi-10.svg
+          - wi-511.svg
+        - - wi-10.svg
+          - wi-520-symbolic.svg
+        - - wi-10.svg
+          - wi-520.svg
+        - - wi-10.svg
+          - wi-521-symbolic.svg
+        - - wi-10.svg
+          - wi-521.svg
+        - - wi-10.svg
+          - wi-522-symbolic.svg
+        - - wi-10.svg
+          - wi-522.svg
+        - - wi-10.svg
+          - wi-531-symbolic.svg
+        - - wi-10.svg
+          - wi-531.svg
+        - - wi-11.svg
+          - wi-300-symbolic.svg
+        - - wi-11.svg
+          - wi-300.svg
+        - - wi-11.svg
+          - wi-301-symbolic.svg
+        - - wi-11.svg
+          - wi-301.svg
+        - - wi-11.svg
+          - wi-302-symbolic.svg
+        - - wi-11.svg
+          - wi-302.svg
+        - - wi-11.svg
+          - wi-310-symbolic.svg
+        - - wi-11.svg
+          - wi-310.svg
+        - - wi-11.svg
+          - wi-311-symbolic.svg
+        - - wi-11.svg
+          - wi-311.svg
+        - - wi-11.svg
+          - wi-312-symbolic.svg
+        - - wi-11.svg
+          - wi-312.svg
+        - - wi-11.svg
+          - wi-313-symbolic.svg
+        - - wi-11.svg
+          - wi-313.svg
+        - - wi-11.svg
+          - wi-314-symbolic.svg
+        - - wi-11.svg
+          - wi-314.svg
+        - - wi-11.svg
+          - wi-321-symbolic.svg
+        - - wi-11.svg
+          - wi-321.svg
+        - - wi-13.svg
+          - wi-600-symbolic.svg
+        - - wi-13.svg
+          - wi-600.svg
+        - - wi-13.svg
+          - wi-601-symbolic.svg
+        - - wi-13.svg
+          - wi-601.svg
+        - - wi-13.svg
+          - wi-602-symbolic.svg
+        - - wi-13.svg
+          - wi-602.svg
+        - - wi-18.svg
+          - wi-611-symbolic.svg
+        - - wi-18.svg
+          - wi-611.svg
+        - - wi-18.svg
+          - wi-612-symbolic.svg
+        - - wi-18.svg
+          - wi-612.svg
+        - - wi-19.svg
+          - wi-761-symbolic.svg
+        - - wi-19.svg
+          - wi-761.svg
+        - - wi-20.svg
+          - wi-741-symbolic.svg
+        - - wi-20.svg
+          - wi-741.svg
+        - - wi-21.svg
+          - wi-721-symbolic.svg
+        - - wi-21.svg
+          - wi-721.svg
+        - - wi-22.svg
+          - wi-711-symbolic.svg
+        - - wi-22.svg
+          - wi-711.svg
+        - - wi-26.svg
+          - wi-801-symbolic.svg
+        - - wi-26.svg
+          - wi-801.svg
+        - - wi-26.svg
+          - wi-802-symbolic.svg
+        - - wi-26.svg
+          - wi-802.svg
+        - - wi-26.svg
+          - wi-803-symbolic.svg
+        - - wi-26.svg
+          - wi-803.svg
+        - - wi-26.svg
+          - wi-804-symbolic.svg
+        - - wi-26.svg
+          - wi-804.svg
+        - - wi-3.svg
+          - wi-200-symbolic.svg
+        - - wi-3.svg
+          - wi-200.svg
+        - - wi-3.svg
+          - wi-201-symbolic.svg
+        - - wi-3.svg
+          - wi-201.svg
+        - - wi-3.svg
+          - wi-202-symbolic.svg
+        - - wi-3.svg
+          - wi-202.svg
+        - - wi-3.svg
+          - wi-210-symbolic.svg
+        - - wi-3.svg
+          - wi-210.svg
+        - - wi-3.svg
+          - wi-211-symbolic.svg
+        - - wi-3.svg
+          - wi-211.svg
+        - - wi-3.svg
+          - wi-212-symbolic.svg
+        - - wi-3.svg
+          - wi-212.svg
+        - - wi-3.svg
+          - wi-221-symbolic.svg
+        - - wi-3.svg
+          - wi-221.svg
+        - - wi-3.svg
+          - wi-230-symbolic.svg
+        - - wi-3.svg
+          - wi-230.svg
+        - - wi-3.svg
+          - wi-231-symbolic.svg
+        - - wi-3.svg
+          - wi-231.svg
+        - - wi-3.svg
+          - wi-232-symbolic.svg
+        - - wi-3.svg
+          - wi-232.svg
+        - - wi-32.svg
+          - wi-800-symbolic.svg
+        - - wi-32.svg
+          - wi-800.svg
+        - - wi-5.svg
+          - wi-615-symbolic.svg
+        - - wi-5.svg
+          - wi-615.svg
+        - - wi-5.svg
+          - wi-616-symbolic.svg
+        - - wi-5.svg
+          - wi-616.svg
+        - - wi-5.svg
+          - wi-620-symbolic.svg
+        - - wi-5.svg
+          - wi-620.svg
+        - - wi-5.svg
+          - wi-621-symbolic.svg
+        - - wi-5.svg
+          - wi-621.svg
+        - - wi-5.svg
+          - wi-622-symbolic.svg
+        - - wi-5.svg
+          - wi-622.svg
+        - - wi-701.svg
+          - wi-701-symbolic.svg
+        - - wi-731.svg
+          - wi-731-symbolic.svg
+        - - wi-731.svg
+          - wi-751-symbolic.svg
+        - - wi-731.svg
+          - wi-751.svg
+        - - wi-762.svg
+          - wi-762-symbolic.svg
+        - - wi-771.svg
+          - wi-771-symbolic.svg
+
+            # WeatherBit
+            # NOTE: Most of WeatherBit's codes are exactly the same as OpenWeatherMap's.
+            # Hurra!!
+        - - wi-5.svg
+          - wi-610-symbolic.svg
+        - - wi-5.svg
+          - wi-610.svg
+        - - wi-233.svg
+          - wi-233-symbolic.svg
+        - - wi-13.svg
+          - wi-623.svg
+        - - wi-13.svg
+          - wi-623-symbolic.svg
+        - - wi-701.svg
+          - wi-700.svg
+        - - wi-701.svg
+          - wi-700-symbolic.svg
