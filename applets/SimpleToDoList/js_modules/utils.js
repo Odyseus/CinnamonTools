@@ -1,10 +1,3 @@
-// {{IMPORTER}}
-
-const Constants = __import("constants.js");
-const DebugManager = __import("debugManager.js");
-const GlobalUtils = __import("globalUtils.js");
-const CustomTooltips = __import("customTooltips.js");
-
 const {
     gi: {
         Clutter,
@@ -20,37 +13,35 @@ const {
 } = imports;
 
 const {
-    _
-} = GlobalUtils;
+    _,
+    arrayEach,
+    isBlank,
+    tryFn
+} = require("js_modules/globalUtils.js");
 
 const {
     IntelligentTooltip
-} = CustomTooltips;
+} = require("js_modules/customTooltips.js");
 
 const {
     OrnamentType
-} = Constants;
+} = require("js_modules/constants.js");
 
 const {
+    DebugManager,
     LoggingLevel
-} = DebugManager;
+} = require("js_modules/debugManager.js");
 
-var Debugger = new DebugManager.DebugManager();
+var Debugger = new DebugManager(`org.cinnamon.applets.${__meta.uuid}`);
 
 function runtimeInfo(aMsg) {
     Debugger.logging_level !== LoggingLevel.NORMAL && aMsg &&
-        global.log("[DesktopCapture] " + aMsg);
+        global.log("[SimpleToDoList] " + aMsg);
 }
 
-function TaskItem() {
-    this._init.apply(this, arguments);
-}
-
-TaskItem.prototype = {
-    __proto__: PopupMenu.PopupIndicatorMenuItem.prototype,
-
-    _init: function(aApplet, aTask, aInitialOptions) {
-        PopupMenu.PopupBaseMenuItem.prototype._init.call(this, {
+var TaskItem = class TaskItem extends PopupMenu.PopupIndicatorMenuItem {
+    constructor(aApplet, aTask, aInitialOptions) {
+        super("", {
             reactive: true,
             activate: true,
             hover: false
@@ -61,7 +52,6 @@ TaskItem.prototype = {
         this.task = aTask;
         this.isMovable = !aInitialOptions.sort_tasks_alphabetically &&
             !aInitialOptions.sort_tasks_by_completed;
-        this.connections = [];
 
         this._ornament = new St.Bin();
         this.setOrnament(OrnamentType.CHECK, this.task.completed || false);
@@ -119,151 +109,124 @@ TaskItem.prototype = {
         }
 
         // Create connection for rename and clicks
-        let _ct = this._label.get_clutter_text();
+        const _ct = this._label.get_clutter_text();
         _ct.set_line_wrap(true);
 
-        let conn = _ct.connect("key_focus_in",
-            (aActor) => this._onKeyFocusIn(aActor));
-        this.connections.push([_ct, conn]);
+        this._signals.connect(_ct, "key_focus_in", function(aActor) {
+            this._onKeyFocusIn(aActor);
+        }.bind(this));
+        this._signals.connect(_ct, "key_focus_out", function(aActor) {
+            this._rename(aActor);
+        }.bind(this));
+        this._signals.connect(_ct, "key-press-event", function(aActor, aEvent) {
+            this._onKeyPressEvent(aActor, aEvent);
+        }.bind(this));
+        this._signals.connect(this._ornament.child, "clicked", function() {
+            this._setCheckedState();
+        }.bind(this));
+        this._signals.connect(this._del_btn.actor, "clicked", function() {
+            this._emit_delete();
+        }.bind(this));
+        this._signals.connect(this.actor, "button-release-event", function(aActor, aEvent) {
+            this._onButtonReleaseEvent(aActor, aEvent);
+        }.bind(this));
+    }
 
-        conn = _ct.connect("key_focus_out",
-            (aActor) => this._rename(aActor));
-        this.connections.push([_ct, conn]);
-
-        conn = _ct.connect("key-press-event",
-            (aActor, aEvent) => this._onKeyPressEvent(aActor, aEvent));
-        this.connections.push([_ct, conn]);
-
-        conn = this._ornament.child.connect("clicked",
-            () => this._setCheckedState());
-        this.connections.push([this._ornament.child, conn]);
-
-        conn = this._del_btn.actor.connect("clicked",
-            () => this._emit_delete());
-        this.connections.push([this._del_btn.actor, conn]);
-
-        conn = this.actor.connect("button-release-event",
-            (aActor, aEvent) => this._onButtonReleaseEvent(aActor, aEvent));
-        this.connections.push([this.actor, conn]);
-    },
-
-    _onButtonReleaseEvent: function(aActor, aEvent) {
+    _onButtonReleaseEvent(aActor, aEvent) {
         this.activate(aEvent, true);
-        return true;
-    },
+        return Clutter.EVENT_STOP;
+    }
 
-    getDragActor: function() {
+    getDragActor() {
         return new Clutter.Clone({
             source: this.actor
         });
-    },
+    }
 
     // Returns the original actor that should align with the actor
     // we show as the item is being dragged.
-    getDragActorSource: function() {
+    getDragActorSource() {
         return this.actor;
-    },
+    }
 
-    _setTaskStyle: function() {
-        let backgroundColor = null;
-        let color = null;
-        // TO TRANSLATORS: This is a priority tag.
-        let low = new RegExp("@%s".format(_("low"))),
-            // TO TRANSLATORS: This is a priority tag.
-            today = new RegExp("@%s".format(_("today"))),
-            // TO TRANSLATORS: This is a priority tag.
-            medium = new RegExp("@%s".format(_("medium"))),
-            // TO TRANSLATORS: This is a priority tag.
-            high = new RegExp("@%s".format(_("high"))),
-            // TO TRANSLATORS: This is a priority tag.
-            critical = new RegExp("@%s".format(_("critical")));
+    _setTaskStyle() {
+        let firstFoundTask = null;
 
-        if (this._applet.pref_tasks_priorities_colors_enabled) {
-            if (low.test(this.task.name)) {
-                backgroundColor = this._applet.pref_tasks_priorities_low_background;
-                color = this._applet.pref_tasks_priorities_low_foreground;
-            }
+        if (this._applet.$._.tasks_priorities_colors_enabled) {
+            const tagDefinitions = this._applet.$._.tag_definitions.filter((aDef) => {
+                return aDef.enabled;
+            });
 
-            if (today.test(this.task.name)) {
-                backgroundColor = this._applet.pref_tasks_priorities_today_background;
-                color = this._applet.pref_tasks_priorities_today_foreground;
-            }
+            arrayEach(tagDefinitions, (aDef) => {
+                const tagRegEx = new RegExp(aDef.tag);
 
-            if (medium.test(this.task.name)) {
-                backgroundColor = this._applet.pref_tasks_priorities_medium_background;
-                color = this._applet.pref_tasks_priorities_medium_foreground;
-            }
+                if (tagRegEx.test(this.task.name)) {
+                    firstFoundTask = aDef;
+                    return false;
+                }
+                return null;
+            });
 
-            if (high.test(this.task.name)) {
-                backgroundColor = this._applet.pref_tasks_priorities_high_background;
-                color = this._applet.pref_tasks_priorities_high_foreground;
-            }
-
-            if (critical.test(this.task.name)) {
-                backgroundColor = this._applet.pref_tasks_priorities_critical_background;
-                color = this._applet.pref_tasks_priorities_critical_foreground;
-            }
-
-            if (this._applet.pref_tasks_priorities_highlight_entire_row) {
+            if (firstFoundTask && this._applet.$._.tasks_priorities_highlight_entire_row) {
                 this.actor.set_style(
-                    (backgroundColor ? "background-color: " + backgroundColor + ";" : "")
+                    (firstFoundTask.bg_color ? `background-color: ${firstFoundTask.bg_color};` : "")
                 );
             }
         }
 
         this._label.set_style(
-            (this._applet.pref_tasks_priorities_colors_enabled && color ?
-                "color: " + color + ";" :
+            (firstFoundTask && this._applet.$._.tasks_priorities_colors_enabled && firstFoundTask.text_color ?
+                `color: ${firstFoundTask.text_color};` :
                 "") +
-            (this._applet.pref_task_set_bold ?
+            (this._applet.$._.task_set_bold ?
                 "font-weight: bold !important;" :
                 "") +
-            (this._applet.pref_task_set_min_width !== 0 ?
-                "min-width: " + this._applet.pref_task_set_min_width + "px !important;" :
+            (this._applet.$._.task_set_min_width !== 0 ?
+                `min-width: ${this._applet.$._.task_set_min_width}px !important;` :
                 "") +
-            (this._applet.pref_task_set_max_width !== 0 ?
-                "max-width: " + this._applet.pref_task_set_max_width + "px !important;" :
+            (this._applet.$._.task_set_max_width !== 0 ?
+                `max-width: ${this._applet.$._.task_set_max_width}px !important;` :
                 "") +
-            "font-size: " + this._applet.pref_task_font_size + "em !important;" +
-            (this._applet.pref_task_remove_native_entry_theming ?
+            `font-size: ${this._applet.$._.task_font_size}em !important;` +
+            (this._applet.$._.task_remove_native_entry_theming ?
                 "background: transparent !important;" +
                 "background-image: none !important;" +
                 "background-gradient-direction: none !important;" +
                 "background-gradient-start: transparent !important;" +
                 "background-gradient-end: transparent !important;" +
                 "background-color: transparent !important;" +
-                (this._applet.pref_tasks_priorities_colors_enabled &&
-                    !this._applet.pref_tasks_priorities_highlight_entire_row &&
-                    backgroundColor ?
-                    "background-color: " + backgroundColor + ";" :
+                (firstFoundTask && this._applet.$._.tasks_priorities_colors_enabled &&
+                    !this._applet.$._.tasks_priorities_highlight_entire_row &&
+                    firstFoundTask.bg_color ?
+                    `background-color: ${firstFoundTask.bg_color};` :
                     "background-color: transparent !important;") +
                 "border: none !important;" +
                 "border-style: none !important;" +
                 "border-image: none !important;" +
                 "border-width: 0 !important;" +
-                (this._applet.pref_task_remove_native_entry_theming_sizing ?
+                (this._applet.$._.task_remove_native_entry_theming_sizing ?
                     "border-color: transparent !important;" +
                     "border-radius: 0 !important;" +
                     "padding: 0 !important;" +
                     "margin: 0 !important;" : "") :
-                (this._applet.pref_tasks_priorities_colors_enabled &&
-                    !this._applet.pref_tasks_priorities_highlight_entire_row &&
-                    backgroundColor ?
-                    "background-color: " + backgroundColor + ";" :
+                (firstFoundTask && this._applet.$._.tasks_priorities_colors_enabled &&
+                    !this._applet.$._.tasks_priorities_highlight_entire_row &&
+                    firstFoundTask.bg_color ?
+                    `background-color: ${firstFoundTask.bg_color};` :
                     "")
             )
         );
-    },
+    }
 
-    _onStyleChanged: function(aActor) {
-        if (this._applet.pref_task_set_custom_spacing !== 0) {
-            this._spacing = this._applet.pref_task_set_custom_spacing;
+    _onStyleChanged(aActor) {
+        if (this._applet.$._.task_set_custom_spacing !== 0) {
+            this._spacing = this._applet.$._.task_set_custom_spacing;
         } else {
             this._spacing = Math.round(aActor.get_theme_node().get_length("spacing"));
         }
-    },
+    }
 
-    _navigateEntries: function(aDirection) {
+    _navigateEntries(aDirection) {
         if (aDirection === "up") {
             let prev = this.actor.get_previous_sibling();
 
@@ -278,17 +241,17 @@ TaskItem.prototype = {
                     }
                 }
             } finally {
-                let prev_obj = prev ? prev._delegate : null;
+                const prev_obj = prev ? prev._delegate : null;
 
                 if (prev_obj && prev_obj instanceof TaskItem && prev_obj._label) {
                     prev_obj._label.grab_key_focus();
-                    return true;
+                    return Clutter.EVENT_STOP;
                 }
             }
 
             if (this._delegated_section && this._delegated_section._label) {
                 this._delegated_section._label.grab_key_focus();
-                return true;
+                return Clutter.EVENT_STOP;
             }
         } else if (aDirection === "down") {
             let next = this.actor.get_next_sibling();
@@ -304,31 +267,31 @@ TaskItem.prototype = {
                     }
                 }
             } finally {
-                let next_obj = next ? next._delegate : null;
+                const next_obj = next ? next._delegate : null;
 
                 if (next_obj && next_obj instanceof TaskItem && next_obj._label) {
                     next_obj._label.grab_key_focus();
-                    return true;
+                    return Clutter.EVENT_STOP;
                 }
             }
 
             if (this._delegated_section && this._delegated_section.newTaskEntry &&
                 this._delegated_section.newTaskEntry.newTask) {
                 this._delegated_section.newTaskEntry.newTask.grab_key_focus();
-                return true;
+                return Clutter.EVENT_STOP;
             }
         }
 
-        return false;
-    },
+        return Clutter.EVENT_PROPAGATE;
+    }
 
-    _onKeyPressEvent: function(aActor, aEvent) {
-        let symbol = aEvent.get_key_symbol();
+    _onKeyPressEvent(aActor, aEvent) {
+        const symbol = aEvent.get_key_symbol();
 
         // Insert: Jump to the "New task..." entry.
         if (!this.ctrlKey && symbol === Clutter.KEY_Insert) {
             this._delegated_section.newTaskEntry.newTask.grab_key_focus();
-            return false;
+            return Clutter.EVENT_PROPAGATE;
         }
 
         // Shift + Delete: deletes the current task entry and focuses the previous task entry or
@@ -336,12 +299,12 @@ TaskItem.prototype = {
         // Alt + Delete: deletes the current task entry and focuses the next task entry or
         // the new task entry creator.
         // The cursor needs to be inside the task that one wishes to delete.
-        if ((this.altKey || this.shiftKey) && symbol === Clutter.Delete) {
+        if ((this.altKey || this.shiftKey) && symbol === Clutter.KEY_Delete) {
             runtimeInfo("'remove_task_signal' signal emitted");
             this.emit("remove_task_signal", this.task);
             this._navigateEntries(this.shiftKey ? "up" : "down");
             this.destroy();
-            return true;
+            return Clutter.EVENT_STOP;
         }
 
         // Ctrl + Spacebar: toggle the completed state of the current focused task entry.
@@ -356,28 +319,28 @@ TaskItem.prototype = {
             }
 
             this._setCheckedState();
-            return true;
+            return Clutter.EVENT_STOP;
         }
 
         // Ctrl + Arrow Down or Arrow Up keys: moves the currently focused task up/down.
         if (this.isMovable && this.ctrlKey &&
             (symbol === Clutter.KEY_Up || symbol === Clutter.KEY_Down)) {
             this._moveItem(symbol === Clutter.KEY_Up ? -1 : 1);
-            return true;
+            return Clutter.EVENT_STOP;
         }
 
         // Arrow Down and Arrow Up keys: triggers a custom navigation that ensures
         // the focus on just the editable entries.
         if (!this.ctrlKey && (symbol === Clutter.KEY_Up || symbol === Clutter.KEY_Down)) {
             this._navigateEntries(symbol === Clutter.KEY_Up ? "up" : "down");
-            return true;
+            return Clutter.EVENT_STOP;
         }
 
-        return false;
-    },
+        return Clutter.EVENT_PROPAGATE;
+    }
 
-    _moveItem: function(aDirection) {
-        let dir = aDirection === 1 ? "down" : "up";
+    _moveItem(aDirection) {
+        const dir = aDirection === 1 ? "down" : "up";
         let dummy;
 
         if (dir === "up") {
@@ -387,7 +350,7 @@ TaskItem.prototype = {
         }
 
         if (dummy === null) {
-            return true;
+            return Clutter.EVENT_STOP;
         }
 
         if (dummy && !(dummy._delegate instanceof TaskItem)) {
@@ -399,14 +362,14 @@ TaskItem.prototype = {
         }
 
         if (!dummy || !(dummy._delegate instanceof TaskItem)) {
-            return true;
+            return Clutter.EVENT_STOP;
         }
 
-        let children = this._delegated_section.tasksContainer.box.get_children();
-        let taskCurPos = children.indexOf(this.actor);
+        const children = this._delegated_section.tasksContainer.box.get_children();
+        const taskCurPos = children.indexOf(this.actor);
         runtimeInfo("taskCurPos = " + taskCurPos);
 
-        let taskNewPos = taskCurPos + aDirection;
+        const taskNewPos = taskCurPos + aDirection;
         runtimeInfo("taskNewPos = " + taskNewPos);
 
         if (taskNewPos !== taskCurPos) {
@@ -418,46 +381,35 @@ TaskItem.prototype = {
             this._label.grab_key_focus();
         }
 
-        return true;
-    },
+        return Clutter.EVENT_STOP;
+    }
 
-    _onKeyFocusIn: function(aActor) { // jshint ignore:line
-        let _ct = this._label.get_clutter_text();
+    _onKeyFocusIn(aActor) { // jshint ignore:line
+        const _ct = this._label.get_clutter_text();
         _ct.set_selection(0, _ct.text.length);
         this._delegated_section._scrollToItem(this);
-    },
+    }
 
-    destroy: function() {
-        for (let i = this.connections.length - 1; i >= 0; i--) {
-            // Just in case. See TasksListItem.destroy()
-            try {
-                this.connections[i][0].disconnect(this.connections[i][1]);
-            } catch (aErr) {
-                continue;
-            }
-        }
+    destroy() {
+        super.destroy();
+    }
 
-        this.connections.length = 0;
-
-        this.actor.destroy();
-    },
-
-    isEntry: function() {
+    isEntry() {
         return false;
-    },
+    }
 
-    _emit_delete: function() {
-        if (this._applet.pref_use_fail_safe && !this.ctrlKey) {
+    _emit_delete() {
+        if (this._applet.$._.use_fail_safe && !this.ctrlKey) {
             return;
         } else {
             runtimeInfo("'remove_task_signal' signal emitted");
             this.emit("remove_task_signal", this.task);
             this.destroy();
         }
-    },
+    }
 
-    _setCheckedState: function() {
-        let completed = this.checked;
+    _setCheckedState() {
+        const completed = this.checked;
 
         // Return if completed state wasn't changed.
         if (completed === this.task.completed) {
@@ -480,14 +432,14 @@ TaskItem.prototype = {
             this.actor.set_height(0);
             this.actor.hide();
         }
-    },
+    }
 
-    _rename: function() {
+    _rename() {
         // Rename the task and notify the ToDo list so it is updated.
-        let name = this._label.get_text();
+        const name = this._label.get_text();
 
         // Return if the name did not changed or is not set
-        if (name == this.task.name || name.length === 0) {
+        if (name === this.task.name || name.length === 0) {
             return;
         }
 
@@ -505,45 +457,46 @@ TaskItem.prototype = {
 
         runtimeInfo("'name_changed' signal emitted");
         this.emit("name_changed");
-    },
+    }
 
-    _setTooltip: function() {
+    _setTooltip() {
         this.tooltip.set_text(this.task.name);
-    },
+    }
 
     get checked() {
         return this._ornament.child.checked;
-    },
+    }
 
     get ctrlKey() {
         return (Clutter.ModifierType.CONTROL_MASK & global.get_pointer()[2]) !== 0;
-    },
+    }
 
     get shiftKey() {
         return (Clutter.ModifierType.SHIFT_MASK & global.get_pointer()[2]) !== 0;
-    },
+    }
 
     get altKey() {
         return (Clutter.ModifierType.MOD1_MASK & global.get_pointer()[2]) !== 0;
     }
 };
 
-function NewTaskEntry() {
-    this._init.apply(this, arguments);
-}
+var NewTaskEntry = class NewTaskEntry extends PopupMenu.PopupSubMenuMenuItem {
+    constructor(aApplet) {
+        super(null);
 
-NewTaskEntry.prototype = {
-    __proto__: PopupMenu.PopupSubMenuMenuItem.prototype,
+        // NOTE: Remove all the connections added by PopupBaseMenuItem since I cannot initialize
+        // PopupSubMenuMenuItem with parameters that should be passed to PopupBaseMenuItem.
+        this._signals.disconnect("notify::hover", this.actor);
+        this._signals.disconnect("button-release-event", this.actor);
+        this._signals.disconnect("key-press-event", this.actor);
+        this._signals.disconnect("key-focus-in", this.actor);
+        this._signals.disconnect("key-focus-out", this.actor);
 
-    _init: function(aApplet) {
-        PopupMenu.PopupBaseMenuItem.prototype._init.call(this, {
-            reactive: false,
-            activate: false,
-            hover: false
-        });
+        // Just in case, murder this too.
+        this._activatable = false;
 
         this._applet = aApplet;
-        this.connections = [];
+        this._contextMenu = null;
 
         // Add a text entry in the BaseMenuItem layout
         this.newTask = new St.Entry({
@@ -571,57 +524,61 @@ NewTaskEntry.prototype = {
             span: -1
         });
 
-        let _ct = this.newTask.get_clutter_text();
+        const _ct = this.newTask.get_clutter_text();
 
-        // Callback to add section when ENTER is press
-        let conn = _ct.connect("key-press-event",
-            (aEntry, aEvent) => this._onKeyPressEvent(aEntry, aEvent));
-        this.connections.push([_ct, conn]);
-
-        conn = _ct.connect("key_focus_in", (aActor) => this._onKeyFocusIn(aActor));
-        this.connections.push([_ct, conn]);
-
-        conn = this.opt_btn.actor.connect("clicked", () => this.toggleMenu());
-        this.connections.push([this.opt_btn.actor, conn]);
-    },
+        // Callback to add section when ENTER is pressed.
+        this._signals.connect(_ct, "key-press-event", function(aEntry, aEvent) {
+            this._onKeyPressEvent(aEntry, aEvent);
+        }.bind(this));
+        this._signals.connect(_ct, "key_focus_in", function(aActor) {
+            this._onKeyFocusIn(aActor);
+        }.bind(this));
+        this._signals.connect(this.opt_btn.actor, "clicked", this.toggleMenu.bind(this, false));
+    }
 
     // This function was the only thing that I could come up with to overcome the absolutely
     // retarded behavior of a sub-menu item inside another sub-menu item.
-    toggleMenu: function() { // jshint ignore:line
+    toggleMenu(aDestroy = false) {
         this.newTask.grab_key_focus();
 
-        let children = this.menu._getMenuItems();
-
-        let lastChild = children[children.length - 1];
-
-        if (lastChild) {
-            if (lastChild instanceof TaskItem) {
-                this._buildMenu();
-            } else {
-                this.menu.box.remove_actor(lastChild.actor);
-            }
+        if (aDestroy && !this._contextMenu) {
+            return Clutter.EVENT_STOP;
         }
-    },
 
-    _buildMenu: function() {
-        let contextMenu = new PopupMenu.PopupMenuSection();
-        contextMenu.actor.set_style_class_name("popup-sub-menu");
+        if (this._contextMenu) {
+            this._contextMenu.destroy();
+            this._contextMenu = null;
 
-        this.menu.addMenuItem(contextMenu);
+            return Clutter.EVENT_STOP;
+        }
 
-        let section = this._delegated_section.section;
+        this._contextMenu = new PopupMenu.PopupMenuSection();
+        this._contextMenu.actor.set_style_class_name("popup-sub-menu");
 
-        let exportSection = new PopupMenu.PopupMenuItem(
+        // WARNING: this.menu.addMenuItem(this._contextMenu) adds a lot of signals that I simply
+        // don't want to deal with. Furthermore, it crashes Cinnamon when I click any instance
+        // of PopupMenuItem added to this._contextMenu.
+        // The funny thing (in a completely sick way) is that in previous versions of Cinnamon,
+        // using addMenuItem worked without problems. ¬¬
+        this.menu.box.add_actor(this._contextMenu.actor);
+
+        const section = this._delegated_section.section;
+
+        const exportSection = new PopupMenu.PopupMenuItem(
             _("Export this tasks list")
         );
-        contextMenu.addMenuItem(exportSection);
+        exportSection.connect("activate",
+            (aActor, aEvent) => this._activateContext(aActor, aEvent, "_exportTasks"));
+        this._contextMenu.addMenuItem(exportSection);
 
-        this.saveSectionAsToDo = new PopupMenu.PopupMenuItem(
+        const saveSectionAsToDo = new PopupMenu.PopupMenuItem(
             _("Save this tasks list as TODO")
         );
-        contextMenu.addMenuItem(this.saveSectionAsToDo);
+        saveSectionAsToDo.connect("activate",
+            (aActor, aEvent) => this._activateContext(aActor, aEvent, "_saveAsTODOFile"));
+        this._contextMenu.addMenuItem(saveSectionAsToDo);
 
-        let sortAlphaSwitch = new PopupMenu.PopupSwitchMenuItem(
+        const sortAlphaSwitch = new PopupMenu.PopupSwitchMenuItem(
             _("Sort tasks alphabetically"),
             section["sort-tasks-alphabetically"]
         );
@@ -629,9 +586,11 @@ NewTaskEntry.prototype = {
             sortAlphaSwitch.actor,
             _("Takes effect after closing and re-opening the main menu.")
         );
-        contextMenu.addMenuItem(sortAlphaSwitch);
+        sortAlphaSwitch.connect("activate",
+            (aActor, aEvent) => this._toggleSwitch(aActor, aEvent, "sort-tasks-alphabetically"));
+        this._contextMenu.addMenuItem(sortAlphaSwitch);
 
-        let sortCompletedSwitch = new PopupMenu.PopupSwitchMenuItem(
+        const sortCompletedSwitch = new PopupMenu.PopupSwitchMenuItem(
             _("Sort tasks by completed state"),
             section["sort-tasks-by-completed"]
         );
@@ -639,9 +598,11 @@ NewTaskEntry.prototype = {
             sortCompletedSwitch.actor,
             _("Takes effect after closing and re-opening the main menu.")
         );
-        contextMenu.addMenuItem(sortCompletedSwitch);
+        sortCompletedSwitch.connect("activate",
+            (aActor, aEvent) => this._toggleSwitch(aActor, aEvent, "sort-tasks-by-completed"));
+        this._contextMenu.addMenuItem(sortCompletedSwitch);
 
-        let showRemoveTaskSwitch = new PopupMenu.PopupSwitchMenuItem(
+        const showRemoveTaskSwitch = new PopupMenu.PopupSwitchMenuItem(
             _("Display remove tasks buttons"),
             section["display-remove-task-buttons"]
         );
@@ -649,9 +610,11 @@ NewTaskEntry.prototype = {
             showRemoveTaskSwitch.actor,
             _("Takes effect immediately.")
         );
-        contextMenu.addMenuItem(showRemoveTaskSwitch);
+        showRemoveTaskSwitch.connect("activate",
+            (aActor, aEvent) => this._toggleSwitch(aActor, aEvent, "display-remove-task-buttons"));
+        this._contextMenu.addMenuItem(showRemoveTaskSwitch);
 
-        let keepCompletedHiddenSwitch = new PopupMenu.PopupSwitchMenuItem(
+        const keepCompletedHiddenSwitch = new PopupMenu.PopupSwitchMenuItem(
             _("Keep completed tasks hidden"),
             section["keep-completed-tasks-hidden"]
         );
@@ -659,50 +622,20 @@ NewTaskEntry.prototype = {
             keepCompletedHiddenSwitch.actor,
             _("Takes effect immediately.")
         );
-        contextMenu.addMenuItem(keepCompletedHiddenSwitch);
-
-        // Pay attention to the binding context!!!
-        exportSection.connect("activate",
-            (aActor, aEvent) => {
-                this._applet._exportTasks(aActor, aEvent, this._delegated_section.section);
-            }
-        );
-
-        // Pay attention to the binding context!!!
-        this.saveSectionAsToDo.connect("activate",
-            (aActor, aEvent) => {
-                this._applet._saveAsTODOFile(aActor, aEvent, this._delegated_section.section);
-            }
-        );
-
-        sortAlphaSwitch.connect("toggled",
-            (aActor, aEvent) => {
-                this._toggleSwitch(aActor, aEvent, "sort-tasks-alphabetically");
-            }
-        );
-
-        sortCompletedSwitch.connect("toggled",
-            (aActor, aEvent) => {
-                this._toggleSwitch(aActor, aEvent, "sort-tasks-by-completed");
-            }
-        );
-
-        showRemoveTaskSwitch.connect("toggled",
-            (aActor, aEvent) => {
-                this._toggleSwitch(aActor, aEvent, "display-remove-task-buttons");
-            }
-        );
-
-        keepCompletedHiddenSwitch.connect("toggled",
-            (aActor, aEvent) => {
-                this._toggleSwitch(aActor, aEvent, "keep-completed-tasks-hidden");
-            }
-        );
+        keepCompletedHiddenSwitch.connect("activate",
+            (aActor, aEvent) => this._toggleSwitch(aActor, aEvent, "keep-completed-tasks-hidden"));
+        this._contextMenu.addMenuItem(keepCompletedHiddenSwitch);
 
         this._delegated_section._scrollToItem(this);
-    },
+    }
 
-    _toggleSwitch: function(aActor, aEvent, aOption) {
+    _activateContext(aActor, aEvent, aOption) {
+        this.toggleMenu(true);
+        this._applet.on_applet_clicked.call(this._applet);
+        this._applet[aOption].call(this._applet, aActor, aEvent, this._delegated_section.section);
+    }
+
+    _toggleSwitch(aActor, aEvent, aOption) {
         this._delegated_section.section[aOption] = !this._delegated_section.section[aOption];
         aActor.setToggleState(this._delegated_section.section[aOption]);
 
@@ -711,50 +644,39 @@ NewTaskEntry.prototype = {
         if (aOption === "display-remove-task-buttons" || aOption === "keep-completed-tasks-hidden") {
             this._delegated_section._setTasksElementsVisibility();
         }
-    },
+    }
 
-    _onKeyFocusIn: function() {
+    _onKeyFocusIn() {
         this._delegated_section._scrollToItem(this);
-    },
+    }
 
-    destroy: function() {
-        for (let i = this.connections.length - 1; i >= 0; i--) {
-            // Just in case. See TasksListItem.destroy()
-            try {
-                this.connections[i][0].disconnect(this.connections[i][1]);
-            } catch (aErr) {
-                continue;
-            }
-        }
+    destroy() {
+        super.destroy();
+    }
 
-        this.connections.length = 0;
-
-        PopupMenu.PopupBaseMenuItem.prototype.destroy.call(this);
-    },
-
-    isEntry: function() {
+    isEntry() {
         return true;
-    },
+    }
 
-    _onKeyPressEvent: function(aEntry, aEvent) {
-        let symbol = aEvent.get_key_symbol();
+    _onKeyPressEvent(aEntry, aEvent) {
+        const symbol = aEvent.get_key_symbol();
 
         // Ctrl + Spacebar: Opens/Closes the tasks list options menu.
         if (this.ctrlKey && symbol === Clutter.KEY_space) {
             this.toggleMenu();
-            return true;
+            return Clutter.EVENT_STOP;
         }
 
         if ((!this.altKey && !this.shiftKey) &&
-            (symbol == Clutter.KEY_Return ||
-                symbol == Clutter.KEY_KP_Enter)) {
+            (symbol === Clutter.KEY_Return ||
+                symbol === Clutter.KEY_KP_Enter)) {
             runtimeInfo("'new_task' signal emitted");
             this.emit("new_task", aEntry.get_text());
             aEntry.set_text("");
             this._delegated_section._scrollToItem(this);
-            return false;
+            return Clutter.EVENT_PROPAGATE;
         } else if (symbol === Clutter.KEY_Up) {
-            let boxChildren = this._delegated_section.tasksContainer.box.get_children();
+            const boxChildren = this._delegated_section.tasksContainer.box.get_children();
             let prev = boxChildren[boxChildren.length - 1];
 
             if (prev) {
@@ -769,67 +691,61 @@ NewTaskEntry.prototype = {
                         }
                     }
                 } finally {
-                    let prev_obj = prev ? prev._delegate : null;
+                    const prev_obj = prev ? prev._delegate : null;
 
                     if (prev_obj) {
                         prev_obj._label.grab_key_focus();
                     } else {
-                        return false;
+                        return Clutter.EVENT_PROPAGATE;
                     }
                 }
 
-                return true;
+                return Clutter.EVENT_STOP;
             } else {
-                return false;
+                return Clutter.EVENT_PROPAGATE;
             }
         } else if (symbol === Clutter.KEY_Down) {
             this._delegated_section.menu.navigate_focus(this.actor, Gtk.DirectionType.DOWN, false);
-            return true;
+            return Clutter.EVENT_STOP;
         }
 
-        return false;
-    },
+        return Clutter.EVENT_PROPAGATE;
+    }
 
     get ctrlKey() {
         return (Clutter.ModifierType.CONTROL_MASK & global.get_pointer()[2]) !== 0;
-    },
+    }
 
     get shiftKey() {
         return (Clutter.ModifierType.SHIFT_MASK & global.get_pointer()[2]) !== 0;
-    },
+    }
 
     get altKey() {
         return (Clutter.ModifierType.MOD1_MASK & global.get_pointer()[2]) !== 0;
     }
 };
 
-function TasksContainer() {
-    this._init.apply(this, arguments);
-}
-
-TasksContainer.prototype = {
-    __proto__: PopupMenu.PopupMenuSection.prototype,
-
-    _init: function() {
-        PopupMenu.PopupMenuSection.prototype._init.call(this);
+var TasksContainer = class TasksContainer extends PopupMenu.PopupMenuSection {
+    constructor() {
+        super();
 
         this._dragPlaceholder = null;
         this._dragPlaceholderPos = -1;
         this._animatingPlaceholdersCount = 0;
-    },
+    }
 
-    handleDragOver: function(aSource, aActor, aX, aY, aTime) { // jshint ignore:line
+    handleDragOver(aSource, aActor, aX, aY, aTime) { // jshint ignore:line
         try {
-            let task = aSource.task;
-            let taskPos = this._delegated_section.tasks.indexOf(task);
+            const task = aSource.task;
+            const taskPos = this._delegated_section.tasks.indexOf(task);
 
             if (!task || !(aSource instanceof TaskItem)) {
                 this._clearDragPlaceholder();
                 return DND.DragMotionResult.NO_DROP;
             }
 
-            let n_tasks = this._delegated_section.tasks.length;
-            let children = this.box.get_children();
+            const n_tasks = this._delegated_section.tasks.length;
+            const children = this.box.get_children();
             let numChildren = children.length;
             let boxHeight = this.box.height;
 
@@ -840,14 +756,14 @@ TasksContainer.prototype = {
                 boxHeight -= this._dragPlaceholder.actor.height;
                 numChildren--;
             }
-            let pos = Math.round(aY * n_tasks / boxHeight);
+            const pos = Math.round(aY * n_tasks / boxHeight);
 
             if (pos <= n_tasks) {
                 this._dragPlaceholderPos = pos;
                 let fadeIn;
 
                 if (this._dragPlaceholder) {
-                    let parentPlaceHolder = this._dragPlaceholder.actor.get_parent();
+                    const parentPlaceHolder = this._dragPlaceholder.actor.get_parent();
                     if (parentPlaceHolder) {
                         parentPlaceHolder.remove_actor(this._dragPlaceholder.actor);
                     }
@@ -868,7 +784,7 @@ TasksContainer.prototype = {
                 }
             }
 
-            let srcIsCurrentItem = (taskPos !== -1);
+            const srcIsCurrentItem = (taskPos !== -1);
 
             if (srcIsCurrentItem) {
                 return DND.DragMotionResult.MOVE_DROP;
@@ -881,18 +797,18 @@ TasksContainer.prototype = {
 
         this._clearDragPlaceholder();
         return DND.DragMotionResult.NO_DROP;
-    },
+    }
 
-    acceptDrop: function(aSource, aActor, aX, aY, aTime) { // jshint ignore:line
+    acceptDrop(aSource, aActor, aX, aY, aTime) { // jshint ignore:line
         try {
-            let task = aSource.task;
+            const task = aSource.task;
 
             if (!task || !(aSource instanceof TaskItem)) {
                 return DND.DragMotionResult.NO_DROP;
             }
 
-            let taskCurPos = this._delegated_section.tasks.indexOf(task);
-            let taskNewPos = this._dragPlaceholderPos;
+            const taskCurPos = this._delegated_section.tasks.indexOf(task);
+            const taskNewPos = this._dragPlaceholderPos;
 
             Meta.later_add(Meta.LaterType.BEFORE_REDRAW,
                 () => {
@@ -910,16 +826,17 @@ TasksContainer.prototype = {
                     } catch (aErr) {
                         global.logError((aErr));
                     }
+                    // return GLib.SOURCE_REMOVE;
                     return false;
                 });
         } catch (aErr) {
             global.logError(aErr);
         }
 
-        return true;
-    },
+        return Clutter.EVENT_STOP;
+    }
 
-    _clearDragPlaceholder: function() {
+    _clearDragPlaceholder() {
         if (this._dragPlaceholder) {
             this._dragPlaceholder.animateOutAndDestroy();
             this._dragPlaceholder = null;
@@ -928,17 +845,13 @@ TasksContainer.prototype = {
     }
 };
 
-function TasksListItem() {
-    this._init.apply(this, arguments);
-}
+var TasksListItem = class TasksListItem extends PopupMenu.PopupSubMenuMenuItem {
+    constructor(aApplet, aSection) {
+        super(null);
 
-TasksListItem.prototype = {
-    __proto__: PopupMenu.PopupSubMenuMenuItem.prototype,
-
-    _init: function(aApplet, aSection) {
-        PopupMenu.PopupBaseMenuItem.prototype._init.call(this, {
-            hover: false
-        });
+        // NOTE: Remove the connection added by PopupBaseMenuItem since I cannot initialize
+        // PopupSubMenuMenuItem without hover.
+        this._signals.disconnect("notify::hover", this.actor);
 
         this._applet = aApplet;
         this.section = aSection;
@@ -948,7 +861,6 @@ TasksListItem.prototype = {
         runtimeInfo("Got section with name: " + this.name);
 
         this.n_tasks = 0;
-        this.connections = [];
 
         this._triangleBin = new St.Bin({
             x_expand: true,
@@ -960,9 +872,6 @@ TasksListItem.prototype = {
             y: 0.6
         });
         this._triangleBin.child = this._triangle;
-        this.menu = new PopupMenu.PopupSubMenu(this.actor, this._triangle);
-        this.menu.connect("open-state-changed",
-            (aMenu, aOpen) => this._subMenuOpenStateChanged(aMenu, aOpen));
         this.menu.box.set_y_expand = true;
         this.menu.box.set_x_expand = true;
 
@@ -1014,78 +923,81 @@ TasksListItem.prototype = {
         });
 
         // Create connection for rename and clicks
-        let _ct = this._label.get_clutter_text();
-        let conn = _ct.connect("key_focus_out",
-            (aActor) => this._rename(aActor));
-        this.connections.push([_ct, conn]);
-
-        conn = _ct.connect("key-press-event",
-            (aActor, aEvent) => this._onKeyPressEvent(aActor, aEvent));
-        this.connections.push([_ct, conn]);
-
+        const _ct = this._label.get_clutter_text();
+        this._signals.connect(_ct, "key_focus_out", function(aActor) {
+            this._rename(aActor);
+        }.bind(this));
+        this._signals.connect(_ct, "key-press-event", function(aActor, aEvent) {
+            this._onKeyPressEvent(aActor, aEvent);
+        }.bind(this));
         // Create connection for delete button
-        conn = this.delete_btn.actor.connect("clicked", () => this._supr_call());
-        this.connections.push([this.delete_btn.actor, conn]);
+        this._signals.connect(this.delete_btn.actor, "clicked", this._supr_call.bind(this));
 
         // Draw the section
         this._draw_section();
-    },
+    }
 
-    _setSectionStyle: function() {
-        let baseStyle = (this._applet.pref_section_set_bold ?
-                "font-weight: bold !important;" :
-                "") +
-            "font-size: " + this._applet.pref_section_font_size + "em !important;";
+    _setSectionStyle() {
+        let style = ["font-size: " + this._applet.$._.section_font_size + "em;"];
 
-        this._counter.set_style(baseStyle);
+        this._applet.$._.section_set_bold && style.push("font-weight: bold;");
 
-        this._label.set_style(baseStyle +
-            (this._applet.pref_section_set_min_width !== 0 ?
-                "min-width: " + this._applet.pref_section_set_min_width + "px !important;" :
-                "") +
-            (this._applet.pref_section_set_max_width !== 0 ?
-                "max-width: " + this._applet.pref_section_set_max_width + "px !important;" :
-                "") +
-            (this._applet.pref_section_remove_native_entry_theming ?
-                "background: transparent !important;" +
-                "background-image: none !important;" +
-                "background-gradient-direction: none !important;" +
-                "background-gradient-start: transparent !important;" +
-                "background-gradient-end: transparent !important;" +
-                "background-color: transparent !important;" +
-                "border: none !important;" +
-                "border-style: none !important;" +
-                "border-image: none !important;" +
-                "border-color: transparent !important;" +
-                (this._applet.pref_section_remove_native_entry_theming_sizing ?
-                    "border-width: 0 !important;" +
-                    "border-radius: 0 !important;" +
-                    "padding: 0 !important;" +
-                    "margin: 0 !important;" :
-                    "") :
-                "")
+        this._counter.set_style(style.join(""));
+
+        this._applet.$._.section_set_min_width !== 0 && style.push(
+            "min-width: " + this._applet.$._.section_set_min_width + "px;"
         );
-    },
 
-    _onButtonReleaseEvent: function(aActor, aEvent) { // jshint ignore:line
+        this._applet.$._.section_set_max_width !== 0 && style.push(
+            "max-width: " + this._applet.$._.section_set_max_width + "px;"
+        );
+
+        if (this._applet.$._.section_remove_native_entry_theming) {
+            style = [...style, ...[
+                "background: transparent;",
+                "background-image: none;",
+                "background-gradient-direction: none;",
+                "background-gradient-start: transparent;",
+                "background-gradient-end: transparent;",
+                "background-color: transparent;",
+                "border: none;",
+                "border-style: none;",
+                "border-image: none;",
+                "border-color: transparent;",
+            ]];
+        }
+
+        if (this._applet.$._.section_remove_native_entry_theming_sizing) {
+            style = [...style, ...[
+                "border-width: 0;",
+                "border-radius: 0;",
+                "padding: 0;",
+                "margin: 0;",
+            ]];
+        }
+
+        this._label.set_style(style.join(""));
+    }
+
+    _onButtonReleaseEvent(aActor, aEvent) { // jshint ignore:line
         // Always force the focus on the section entry. Otherwise, if the focus is inside
         // an entry inside an opened sub-menu, and then the sub-menu is closed, the
         // closing of the sub-menu will force the closing of the applet's main menu.
         this._label.grab_key_focus();
 
         if (this.menu.isOpen) {
-            this.menu.close(this._applet.pref_animate_menu);
+            this.menu.close(this._applet.$._.animate_menu);
             return;
         }
 
-        PopupMenu.PopupBaseMenuItem.prototype._onButtonReleaseEvent.call(this);
-    },
+        super._onButtonReleaseEvent();
+    }
 
     // Taken from the default Cinnamon menu applet.
     // Works beautifully!!!
-    _scrollToItem: function(aItem) {
-        let current_scroll_value = this.menu.actor.get_vscroll_bar().get_adjustment().get_value();
-        let box_height = this.menu.actor.get_allocation_box().y2 -
+    _scrollToItem(aItem) {
+        const current_scroll_value = this.menu.actor.get_vscroll_bar().get_adjustment().get_value();
+        const box_height = this.menu.actor.get_allocation_box().y2 -
             this.menu.actor.get_allocation_box().y1;
         let new_scroll_value = current_scroll_value;
 
@@ -1097,21 +1009,17 @@ TasksListItem.prototype = {
             new_scroll_value = aItem.actor.get_allocation_box().y2 - box_height + 20;
         }
 
-        if (new_scroll_value != current_scroll_value) {
+        if (new_scroll_value !== current_scroll_value) {
             this.menu.actor.get_vscroll_bar().get_adjustment().set_value(new_scroll_value);
         }
-    },
+    }
 
-    _setTasksElementsVisibility: function() {
-        let children = this.tasksContainer.box.get_children();
-        let i = 0,
-            iLen = children.length;
-
-        for (; i < iLen; i++) {
-            let taskItem = children[i]._delegate;
+    _setTasksElementsVisibility() {
+        arrayEach(this.tasksContainer.box.get_children(), (aChild) => {
+            const taskItem = aChild._delegate;
 
             if (taskItem instanceof TaskItem) { // Just to be sure.
-                let del_btn = taskItem._del_btn.actor;
+                const del_btn = taskItem._del_btn.actor;
 
                 if (del_btn) {
                     if (this.section["display-remove-task-buttons"]) {
@@ -1131,31 +1039,31 @@ TasksListItem.prototype = {
                     taskItem.actor.show();
                 }
             }
-        }
-    },
+        });
+    }
 
-    _onKeyFocusIn: function() {
-        let _ct = this._label.get_clutter_text();
+    _onKeyFocusIn() {
+        const _ct = this._label.get_clutter_text();
         this._label.grab_key_focus();
 
         _ct.set_selection(
-            this._applet.pref_auto_select_all ? 0 : -1,
+            this._applet.$._.auto_select_all ? 0 : -1,
             _ct.text.length
         );
-    },
+    }
 
-    _onKeyPressEvent: function(aActor, aEvent) {
-        let symbol = aEvent.get_key_symbol();
-        let cursor = this._label.get_clutter_text().get_cursor_position();
+    _onKeyPressEvent(aActor, aEvent) {
+        const symbol = aEvent.get_key_symbol();
+        const cursor = this._label.get_clutter_text().get_cursor_position();
 
         // Insert: Jump to the "New task..." entry. If sub menu isn't open, open it.
         if (!this.ctrlKey && symbol === Clutter.KEY_Insert) {
             if (!this.menu.isOpen) {
-                this.menu.open(this._applet.pref_animate_menu);
+                this.menu.open(this._applet.$._.animate_menu);
             }
 
             this.newTaskEntry.newTask.grab_key_focus();
-            return false;
+            return Clutter.EVENT_PROPAGATE;
         }
 
         // Do not let the Right Arrow key open the menu unless the menu is closed and
@@ -1164,64 +1072,67 @@ TasksListItem.prototype = {
                 // Do not let the Left Arrow key close the menu unless the menu is opened and
                 // the cursor position is at the beginning of the section label text.
                 (symbol === Clutter.KEY_Left && cursor !== 0 && this.menu.isOpen))) {
-            return false;
+            return Clutter.EVENT_PROPAGATE;
         }
 
-        if (!this.ctrlKey && symbol == Clutter.KEY_Down && this.menu.isOpen) {
+        if (!this.ctrlKey && symbol === Clutter.KEY_Down && this.menu.isOpen) {
             // Explicitly focus the first menu item if it exists.
             // I have no idea how navigate_focus works nor how to use it.
             if (this.tasksContainer.firstMenuItem) {
                 this.tasksContainer.firstMenuItem.actor._delegate._label.grab_key_focus();
-                return true;
+                return Clutter.EVENT_STOP;
             } else {
-                return false;
+                return Clutter.EVENT_PROPAGATE;
             }
         }
 
         if (!this.ctrlKey && symbol === Clutter.KEY_Right) {
-            this.menu.open(this._applet.pref_animate_menu);
+            this.menu.open(this._applet.$._.animate_menu);
             // Explicitly focus the first menu item if it exists.
             // I have no idea how navigate_focus works nor how to use it.
             if (this.tasksContainer.firstMenuItem) {
                 this.tasksContainer.firstMenuItem.actor._delegate._label.grab_key_focus();
-                return true;
+                return Clutter.EVENT_STOP;
             } else {
                 this._applet.menu.actor.navigate_focus(this.actor, Gtk.DirectionType.DOWN, false);
-                return false;
+                return Clutter.EVENT_PROPAGATE;
             }
         } else if (!this.ctrlKey && symbol === Clutter.KEY_Left && this.menu.isOpen) {
-            this.menu.close(this._applet.pref_animate_menu);
-            return true;
+            this.menu.close(this._applet.$._.animate_menu);
+            return Clutter.EVENT_STOP;
         }
 
         // Shift/Alt + Delete: Removes a section but only if it's empty.
         if (!this.ctrlKey && (this.altKey || this.shiftKey) &&
-            symbol === Clutter.Delete &&
+            symbol === Clutter.KEY_Delete &&
             this.delete_btn.actor.get_paint_visibility()) {
-            try {
+            tryFn(() => {
                 this._applet.menu.actor.navigate_focus(this.actor, Gtk.DirectionType.UP, false);
-                this.menu.close(this._applet.pref_animate_menu);
-            } finally {
+                this.menu.close(this._applet.$._.animate_menu);
+            }, (aErr) => { // jshint ignore:line
+                //
+            }, () => {
                 runtimeInfo("'remove_section_signal' signal emitted");
                 this.emit("remove_section_signal", this);
-            }
-            return false;
+            });
+
+            return Clutter.EVENT_PROPAGATE;
         }
 
         // Do not let Spacebar to activate the sub menu opening/closing.
         // Let it actually type the space.
         if (!this.ctrlKey && symbol === Clutter.KEY_space) {
-            return false;
+            return Clutter.EVENT_PROPAGATE;
         }
 
         if (this.ctrlKey) {
-            return false;
+            return Clutter.EVENT_PROPAGATE;
         } else {
-            return PopupMenu.PopupBaseMenuItem.prototype._onKeyPressEvent.call(this, aActor, aEvent);
+            return super._onKeyPressEvent(aActor, aEvent);
         }
-    },
+    }
 
-    _draw_section: function() {
+    _draw_section() {
         this._clear();
 
         this.tasksContainer = new TasksContainer();
@@ -1235,11 +1146,9 @@ TasksListItem.prototype = {
         this.n_completed = 0;
 
         // Add tasks item in the section
-        let i = 0,
-            iLen = this.tasks.length;
-        for (; i < iLen; i++) {
-            this._add_task(i);
-        }
+        arrayEach(this.tasks, (a, aIdx) => {
+            this._add_task(aIdx);
+        });
 
         // Update the title of the section with the right task count
         // and notify the ToDo list applet if this count changed.
@@ -1256,28 +1165,16 @@ TasksListItem.prototype = {
         this.newTaskEntry._delegated_section = this;
         this.newTaskEntry.menu = this.tasksContainer;
 
-        let conn = this.newTaskEntry.connect("new_task",
-            (aItem, aText) => this._create_task(aItem, aText));
-        this.connections.push([this.newTaskEntry, conn]);
+        this._signals.connect(this.newTaskEntry, "new_task", function(aItem, aText) {
+            this._create_task(aItem, aText);
+        }.bind(this));
 
         this.menu.addMenuItem(this.newTaskEntry);
-    },
+    }
 
-    destroy: function() {
-        this.menu.close(this._applet.pref_animate_menu);
+    destroy() {
+        this.menu.close(this._applet.$._.animate_menu);
 
-        // Clean up all the connection
-        for (let i = this.connections.length - 1; i >= 0; i--) {
-            // I have no idea why this throws when trying to disconnect one of
-            // the signals on applet removal. So, lets try/catch it and move on. ¬¬
-            try {
-                this.connections[i][0].disconnect(this.connections[i][1]);
-            } catch (aErr) {
-                continue;
-            }
-        }
-
-        this.connections.length = 0;
         this.disconnectAll();
 
         // Remove all sub items
@@ -1287,14 +1184,14 @@ TasksListItem.prototype = {
 
         this.menu.removeAll();
 
-        this.actor.destroy();
+        super.destroy();
 
         runtimeInfo("Section clean-up done");
-    },
+    }
 
-    _add_task: function(aI) {
+    _add_task(aI) {
         // Create a task item and set its callback
-        let taskItem = new TaskItem(this._applet, this.section.tasks[aI], {
+        const taskItem = new TaskItem(this._applet, this.section.tasks[aI], {
             sort_tasks_alphabetically: this.section["sort-tasks-alphabetically"],
             sort_tasks_by_completed: this.section["sort-tasks-by-completed"],
             display_remove_task_buttons: this.section["display-remove-task-buttons"],
@@ -1304,16 +1201,15 @@ TasksListItem.prototype = {
         taskItem._delegated_section = this;
 
         // Connect the signals to taskItem
-        let conn = taskItem.connect("name_changed", () => this._saveTasks());
-        this.connections.push([taskItem, conn]);
-
-        conn = taskItem.connect("completed_state_changed",
-            (aActor) => this._rename(aActor));
-        this.connections.push([taskItem, conn]);
-
-        conn = taskItem.connect("remove_task_signal",
-            (aActor, aTask) => this._remove_task(aActor, aTask));
-        this.connections.push([taskItem, conn]);
+        this._signals.connect(taskItem, "name_changed", function() {
+            this._saveTasks();
+        }.bind(this));
+        this._signals.connect(taskItem, "completed_state_changed", function(aActor) {
+            this._rename(aActor);
+        }.bind(this));
+        this._signals.connect(taskItem, "remove_task_signal", function(aActor, aTask) {
+            this._remove_task(aActor, aTask);
+        }.bind(this));
 
         // Add the task to the section
         this.tasksContainer.addMenuItem(taskItem, aI);
@@ -1329,35 +1225,35 @@ TasksListItem.prototype = {
             this.delete_btn.actor.set_width(0);
             this.delete_btn.actor.hide();
         }
-    },
+    }
 
-    _create_task: function(aItem, aText) {
+    _create_task(aItem, aText) {
         // Create a new task to add in the ToDo list and displays it while
         // updating the counters of our widget.
 
         // Don't add empty task
-        if (aText === "" || aText == "\n") {
+        if (isBlank(aText)) {
             return;
         }
 
         // New task object
-        let task = {
+        const task = {
             completed: false,
             name: aText
         };
 
-        let id = this.tasks.push(task) - 1;
+        const id = this.tasks.push(task) - 1;
         this._add_task(id);
         this._set_text();
 
         runtimeInfo("'task_count_changed' signal emitted");
         this.emit("task_count_changed", -1);
         this._saveTasks();
-    },
+    }
 
-    _remove_task: function(aActor, aTask) {
+    _remove_task(aActor, aTask) {
         // Remove task from the section
-        let id = this.section.tasks.indexOf(aTask);
+        const id = this.section.tasks.indexOf(aTask);
         this.section.tasks.splice(id, 1);
         this.n_tasks--;
 
@@ -1376,9 +1272,9 @@ TasksListItem.prototype = {
         runtimeInfo("'task_count_changed' signal emitted");
         this.emit("task_count_changed", 1);
         this._saveTasks();
-    },
+    }
 
-    _rename: function(aTaskItem) {
+    _rename(aTaskItem) {
         // Update number of completed tasks inside this tasks list.
         if (aTaskItem && aTaskItem.task) {
             if (aTaskItem.task.completed) {
@@ -1388,7 +1284,7 @@ TasksListItem.prototype = {
             }
         }
 
-        let name = this._label.get_text();
+        const name = this._label.get_text();
 
         // No change needed.
         if (!aTaskItem || (name === this.name || name.length === 0)) {
@@ -1405,44 +1301,51 @@ TasksListItem.prototype = {
         }
 
         this._saveTasks();
-    },
+    }
 
-    _setTooltip: function() {
+    _setTooltip() {
         this.tooltip.set_text(this.section.name);
-    },
+    }
 
-    _clear: function() {
-        let item = null;
-        let items = this.menu._getMenuItems();
-        let i = 0,
-            iLen = items.length;
+    _clear() {
+        // let item = null;
+        // const items = this.menu._getMenuItems();
+        // let i = 0,
+        //     iLen = items.length;
 
-        for (; i < iLen; i++) {
-            item = items[i];
-            item.disconnectAll();
-            item.destroy();
-        }
+        // for (; i < iLen; i++) {
+        //     item = items[i];
+        //     item.disconnectAll();
+        //     item.destroy();
+        // }
+
+        // FIXME: Why on earth were the items stored before being destroyed?
+        // Keep an eye on this.
+        arrayEach(this.menu._getMenuItems(), (aItem) => {
+            aItem.disconnectAll();
+            aItem.destroy();
+        });
 
         this.menu.removeAll();
-    },
+    }
 
-    _supr_call: function() {
-        if (this._applet.pref_use_fail_safe && !this.ctrlKey) {
+    _supr_call() {
+        if (this._applet.$._.use_fail_safe && !this.ctrlKey) {
             return;
         } else {
             runtimeInfo("'remove_section_signal' signal emitted");
             this.emit("remove_section_signal", this);
         }
-    },
+    }
 
-    _set_text: function() {
+    _set_text() {
         // Set the label text with the amount of tasks and how many are completed
         this._label.set_text(this.section.name);
         this._counter.set_text(this.n_completed + "/" + this.n_tasks);
-    },
+    }
 
-    _saveTasks: function() {
-        try {
+    _saveTasks() {
+        tryFn(() => {
             // This might not be needed anymore, since I now store all task items
             // inside their own menu section. But I will keep it just in case.
             //
@@ -1450,77 +1353,64 @@ TasksListItem.prototype = {
             // create a task with a value of null.
             // Instead of allowing to save those null "objects" and be forced to
             // check the tasks everywhere they are used, I just clean them before saving.
-            for (let i = this.tasks.length - 1; i >= 0; i--) {
-                if (typeof this.tasks[i] !== "object") {
-                    this.tasks.splice(i, 1);
+            // FIXME: Keep an eye on this. I kept this to remove nulls, but I was checking for
+            // non-objects, a thing that nulls are. ¬¬
+            arrayEach(this.tasks, (aTask, aIdx) => {
+                if (!aTask || typeof aTask !== "object") {
+                    this.tasks.splice(aIdx, 1);
                 }
-            }
-        } finally {
+            }, true);
+        }, (aErr) => { // jshint ignore:line
+            //
+        }, () => {
             runtimeInfo("'save_signal' signal emitted");
             this.emit("save_signal", false);
-        }
-    },
 
-    _subMenuOpenStateChanged: function(aMenu, aOpen) {
-        if (aOpen && this._applet.pref_keep_one_menu_open) {
-            let menu = this._applet.todosSec;
+        });
+    }
 
-            let children = menu._getMenuItems();
-            let i = 0,
-                iLen = children.length;
-
-            for (; i < iLen; i++) {
-                let item = children[i];
-
-                if (item instanceof TasksListItem) {
-                    if (this.menu !== item.menu) {
-                        item.menu.close(this._applet.pref_animate_menu);
+    _subMenuOpenStateChanged(aMenu, aOpen) {
+        if (aOpen && this._applet.$._.keep_one_menu_open) {
+            arrayEach(this._applet.todosSec._getMenuItems(), (aItem) => {
+                if (aItem instanceof TasksListItem) {
+                    if (this.menu !== aItem.menu) {
+                        aItem.menu.close(this._applet.$._.animate_menu);
                     }
                 }
-            }
+            });
         }
-    },
+    }
 
     get ctrlKey() {
         return (Clutter.ModifierType.CONTROL_MASK & global.get_pointer()[2]) !== 0;
-    },
+    }
 
     get shiftKey() {
         return (Clutter.ModifierType.SHIFT_MASK & global.get_pointer()[2]) !== 0;
-    },
+    }
 
     get altKey() {
         return (Clutter.ModifierType.MOD1_MASK & global.get_pointer()[2]) !== 0;
     }
 };
 
-function RemoveTaskButtonTooltip() {
-    this._init.apply(this, arguments);
-}
-
-RemoveTaskButtonTooltip.prototype = {
-    __proto__: IntelligentTooltip.prototype,
-
-    _init: function(aActor, aObj) {
+var RemoveTaskButtonTooltip = class RemoveTaskButtonTooltip extends IntelligentTooltip {
+    constructor(aActor, aObj) {
         // TO TRANSLATORS: Full sentence.
         // "Remove this section/task"
         let tt = _("Remove this %s".format(aObj.is_section ? "section" : "task"));
 
-        if (aObj.applet.pref_use_fail_safe) {
+        if (aObj.applet.$._.use_fail_safe) {
             tt += " " + _("(Hold Ctrl key)");
         }
 
-        IntelligentTooltip.prototype._init.call(this, aActor, tt);
+        super(aActor, tt);
     }
 };
 
-function ReactiveButton() {
-    this._init.apply(this, arguments);
-}
-
-ReactiveButton.prototype = {
-    _init: function(aIconName) {
-        let icon = new St.Icon({
+var ReactiveButton = class ReactiveButton {
+    constructor(aIconName) {
+        const icon = new St.Icon({
             icon_name: aIconName,
             icon_size: 16,
             icon_type: St.IconType.SYMBOLIC,
@@ -1531,9 +1421,9 @@ ReactiveButton.prototype = {
             child: icon
         });
         this.actor.connect("notify::hover", () => this._onHover());
-    },
+    }
 
-    _onHover: function() {
+    _onHover() {
         this.actor.opacity = this.actor.hover ? 128 : 255;
     }
 };
@@ -1555,7 +1445,7 @@ function arrowIcon(side) {
             break;
     }
 
-    let arrow = new St.Icon({
+    const arrow = new St.Icon({
         style_class: "popup-menu-arrow",
         icon_name: iconName,
         icon_type: St.IconType.SYMBOLIC,
@@ -1578,7 +1468,7 @@ function arrayMove(array, old_index, new_index) {
     // return this; // for testing purposes
 }
 
-Date.prototype.toCustomISOString = function() {
+Date.prototype.toCustomISOString = function() { // jshint ignore:line
     var tzo = -this.getTimezoneOffset(),
         dif = tzo >= 0 ? "+" : "-",
         pad = function(num) {
@@ -1596,7 +1486,7 @@ Date.prototype.toCustomISOString = function() {
         "." + pad(tzo % 60);
 };
 
-DebugManager.wrapObjectMethods(Debugger, {
+Debugger.wrapObjectMethods({
     IntelligentTooltip: IntelligentTooltip,
     NewTaskEntry: NewTaskEntry,
     ReactiveButton: ReactiveButton,

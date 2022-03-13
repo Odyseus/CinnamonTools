@@ -1,7 +1,5 @@
-## Simple ToDo List changelog
-
-**This change log is only valid for the version of the xlet hosted on [its original repository](https://gitlab.com/Odyseus/CinnamonTools).**
-
+<br/>
+<br/>
 ***
 
 **Date:** Mon, 10 Feb 2020 23:20:27 -0300<br/>

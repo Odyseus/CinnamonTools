@@ -1,0 +1,17 @@
+%YAML 1.1
+---
+python_modules:
+    - xlets_settings
+    - file_chooser_dialog
+javascript_modules:
+    - appletsUtils.js
+    - customDialogs.js
+    - customFileUtils.js
+    - customTooltips.js
+    - debugManager.js
+    - globalUtils.js
+extra_files:
+    - source: __app__/data/python_scripts/file_chooser_dialog.py
+      destination: file_chooser_dialog.py
+    - source: __app__/data/gschemas/debugManagerSchema.xml
+      destination: schemas/org.cinnamon.{{XLET_TYPE}}s.{{UUID}}.gschema.xml

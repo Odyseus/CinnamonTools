@@ -1,0 +1,147 @@
+{
+    "info_label_1": {
+        "type": "label",
+        "description": "This window isn't this xlet's \"real\" configuration window."
+    },
+    "settings_button": {
+        "type": "button",
+        "callback": "__openXletSettings",
+        "description": "Open the \"real\" preference window"
+    },
+    "applet_icon": {
+        "type": "generic",
+        "default": "accessories-dictionary-symbolic"
+    },
+    "applet_label": {
+        "type": "generic",
+        "default": "ToDo"
+    },
+    "toggle_menu_keybinding": {
+        "type": "generic",
+        "default": ""
+    },
+    "show_tasks_counter_on_applet": {
+        "type": "generic",
+        "default": true
+    },
+    "use_fail_safe": {
+        "type": "generic",
+        "default": true
+    },
+    "animate_menu": {
+        "type": "generic",
+        "default": true
+    },
+    "keep_one_menu_open": {
+        "type": "generic",
+        "default": true
+    },
+    "section_font_size": {
+        "type": "generic",
+        "default": 1.25
+    },
+    "section_set_min_width": {
+        "type": "generic",
+        "default": 350
+    },
+    "section_set_max_width": {
+        "type": "generic",
+        "default": 350
+    },
+    "section_keep_alphabetic_order": {
+        "type": "generic",
+        "default": true
+    },
+    "section_set_bold": {
+        "type": "generic",
+        "default": true
+    },
+    "section_remove_native_entry_theming": {
+        "type": "generic",
+        "default": true
+    },
+    "section_remove_native_entry_theming_sizing": {
+        "type": "generic",
+        "default": false
+    },
+    "task_font_size": {
+        "type": "generic",
+        "default": 1
+    },
+    "task_set_min_width": {
+        "type": "generic",
+        "default": 350
+    },
+    "task_set_max_width": {
+        "type": "generic",
+        "default": 350
+    },
+    "task_set_custom_spacing": {
+        "type": "generic",
+        "default": 2
+    },
+    "task_set_bold": {
+        "type": "generic",
+        "default": true
+    },
+    "task_remove_native_entry_theming": {
+        "type": "generic",
+        "default": false
+    },
+    "task_remove_native_entry_theming_sizing": {
+        "type": "generic",
+        "default": false
+    },
+    "task_completed_character": {
+        "type": "generic",
+        "default": "✔"
+    },
+    "task_notcompleted_character": {
+        "type": "generic",
+        "default": "☐"
+    },
+    "tasks_priorities_colors_enabled": {
+        "type": "generic",
+        "default": true
+    },
+    "tasks_priorities_highlight_entire_row": {
+        "type": "generic",
+        "default": true
+    },
+    "autobackups_enabled": {
+        "type": "generic",
+        "default": false
+    },
+    "autobackups_max_files_to_keep": {
+        "type": "generic",
+        "default": 10
+    },
+    "initial_load": {
+        "type": "generic",
+        "default": false
+    },
+    "imp_exp_last_selected_directory_tasks": {
+        "type": "generic",
+        "default": ""
+    },
+    "imp_exp_last_selected_directory_tags": {
+        "type": "generic",
+        "default": ""
+    },
+    "save_last_selected_directory": {
+        "type": "generic",
+        "default": ""
+    },
+    "last_backup_cleanup": {
+        "type": "generic",
+        "default": 0
+    },
+    "tag_definitions": {
+        "type": "generic",
+        "default": []
+    },
+    "tag_definitions_apply": {
+        "type": "generic",
+        "default": false
+    }
+}
