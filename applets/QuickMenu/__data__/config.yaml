@@ -1,0 +1,18 @@
+%YAML 1.1
+---
+python_modules:
+    - xlets_settings
+javascript_modules:
+    - appletsUtils.js
+    - customFileUtils.js
+    - customTooltips.js
+    - debugManager.js
+    - globalUtils.js
+    - notificationsUtils.js
+extra_files:
+    - source: __app__/data/gschemas/debugManagerSchema.xml
+      destination: schemas/org.cinnamon.{{XLET_TYPE}}s.{{UUID}}.gschema.xml
+symlinks:
+    icons:
+        - - "../icon.svg"
+          - custom-quick-menu-applet-icon.svg

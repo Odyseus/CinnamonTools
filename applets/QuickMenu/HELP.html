@@ -1,65 +1,75 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <meta http-equiv="content-type" content="text/html;charset=utf-8">
-    <title>Help for Quick Menu</title>
-    <link rel="shortcut icon" type="image/x-icon" href="./icon.png">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link type="text/css" rel="stylesheet" href="./assets/css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="./assets/css/bootstrap-tweaks.css">
-    <style type="text/css">
+    <head>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8">
+        <title>Help for Quick Menu</title>
+        <link rel="shortcut icon" type="image/x-icon" href="./icon.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link type="text/css" rel="stylesheet" href="./assets/css/bootstrap.min.css">
+        <link type="text/css" rel="stylesheet" href="./assets/css/bootstrap-tweaks.css">
+        <style type="text/css">
 
-    </style>
-</head>
+        </style>
+    </head>
 
-<body>
-<div id="mainarea">
-    <nav class="text-bold py-0 navbar navbar-expand-sm navbar-dark bg-gradient-primary fixed-top" role="navigation">
-        <div class="container-fluid">
-            <div class="nav navbar-nav mr-auto">
-                <!-- The preventDefault() calls are to avoid changing the address in the address bar. -->
-                <a id="nav-xlet-help" class="navbar-brand nav-link" onclick="event.preventDefault();" href="#xlet-help">Help</a>
-                <a id="nav-xlet-contributors" class="navbar-brand nav-link" onclick="event.preventDefault();" href="#xlet-contributors">Contributors</a>
-                <a id="nav-xlet-changelog" class="navbar-brand nav-link" onclick="event.preventDefault();" href="#xlet-changelog">Changelog</a>
-            </div>
-            <form class="form-inline">
-                <div class="input-group input-group-sm">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" for="localization-switch">🌐</span>
+    <body>
+        <div id="mainarea">
+            <nav id="main-navbar"
+                 class="navbar navbar-expand-sm navbar-dark bg-primary fixed-top py-0"
+                 role="navigation">
+                <div class="container-fluid">
+                    <div class="nav navbar-nav mr-auto">
+                        <a id="nav-xlet-help"
+                           class="nav-link"
+                           onclick="event.preventDefault();"
+                           href="#xlet-help">Help</a>
+                        <a id="nav-xlet-contributors"
+                           class="nav-link"
+                           onclick="event.preventDefault();"
+                           href="#xlet-contributors">Contributors</a>
+                        <a id="nav-xlet-changelogs"
+                           class="nav-link"
+                           onclick="event.preventDefault();"
+                           href="#xlet-changelogs">Changelogs</a>
                     </div>
-                    <select class="custom-select custom-select-sm text-bold" id="localization-switch">
-<!-- English --><option selected data-title="Help for Quick Menu" data-xlet-help="Help" data-xlet-contributors="Contributors" data-xlet-changelog="Changelog" value="en">English (English)</option>
-<!-- Español --><option data-title="Ayuda para Menú rápido" data-xlet-help="Ayuda" data-xlet-contributors="Colaboradores" data-xlet-changelog="Registro de cambios" value="es">Español (Spanish)</option>
-                    </select>
+                    <form>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text"
+                                  id="localization-switch-image">🌐</span>
+                            <select class="form-select form-select-sm"
+                                    id="localization-switch"
+                                    aria-describedby="localization-switch-image">
+<!-- English --><option selected data-title="Help for Quick Menu" data-xlet-help="Help" data-xlet-contributors="Contributors" data-xlet-changelog="Changelogs" value="en">English (English)</option>
+<!-- Español --><option data-title="Ayuda para Menú rápido" data-xlet-help="Ayuda" data-xlet-contributors="Colaboradores" data-xlet-changelog="Changelogs" value="es">Español (Spanish) (79%)</option>
+                            </select>
+                        </div>
+                    </form>
                 </div>
-            </form>
-        </div>
-    </nav>
-<span id="xlet-help">
-<div class="container boxed my-3 py-3">
-<noscript>
-    <div class="alert alert-danger" role="alert">
-        <p><strong>Oh snap! This page needs JavaScript enabled to display correctly.</strong></p>
-        <p><strong>This page uses JavaScript only to switch between the available languages, smooth scrolling, etc.</strong></p>
-        <p><strong>There are no tracking services of any kind and never will be (at least, not from my side).</strong></p>
-    </div>
-    <!-- .alert.alert-danger -->
-</noscript>
+            </nav>
+            <div id="no-js-main"
+                 class="alert alert-warning mx-5"
+                 role="alert">
+                <p><strong>Oh snap! This page needs JavaScript enabled to display correctly.</strong></p>
+                <p><strong>This page uses JavaScript only to switch between the available languages, smooth scrolling, etc.</strong></p>
+                <p><strong>There are no tracking services of any kind and never will be (at least, not from my side).</strong></p>
+            </div>
+            <span id="xlet-help"></span>
+            <div class="container boxed my-3 py-3">
 
 <div id="es" class="localization-content" hidden="true">
 <h1>Ayuda para Menú rápido</h1>
 
-<div class="card text-bold my-3 border-warning shadow-sm">
+<div class="card fw-bold my-3 border-warning shadow-sm">
     <div class="card-header bg-warning text-white">Advertencia</div>
     <div class="card-body text-warning text-font-size-large"><p>Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet.</p>
 <p>Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p></div>
 </div>
-<div class="card text-bold my-3 border-success shadow-sm">
+<div class="card fw-bold my-3 border-success shadow-sm">
     <div class="card-header bg-success text-white">Compatibilidad con Cinnamon</div>
-    <div class="card-body text-success text-font-size-large">Este xlet es compatible con Cinnamon 3.0 hasta la última versión de Cinnamon.</div>
+    <div class="card-body text-success text-font-size-large">Este xlet es compatible con Cinnamon 5.0 hasta la última versión de Cinnamon.</div>
 </div>
-<div class="card text-bold my-3 border-info shadow-sm">
+<div class="card fw-bold my-3 border-info shadow-sm">
     <div class="card-header bg-info text-white">Localización de xlets</div>
     <div class="card-body text-info text-font-size-large"><p>Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente.</p>
 
@@ -69,7 +79,7 @@
 <h2>Descripción</h2>
 <p>La función de este applet es muy simple, crear un menú basado en los archivos/carpetas que se encuentran dentro de una carpeta principal (especificada en la ventana de configuración de este applet).  Los archivos se utilizarán para crear elementos de menú y las subcarpetas se utilizarán para crear submenús.</p>
 <p>Creé principalmente este applet para replicar la funcionalidad del complemento para XFCE llamado <strong>Menú Directorio</strong> y el widget para KDE llamado <strong>Acceso rápido</strong>.</p>
-<div class="alert alert-danger text-bold shadow-sm" role="alert">
+<div class="alert alert-danger fw-bold shadow-sm" role="alert">
 <h4 class="alert-heading">Peligro</h4>
 Este applet tiene que leer cada archivo/carpeta dentro de una carpeta principal para crear su menú.  Por lo tanto, no intentar usar este applet para crear un menú basado en una carpeta que contiene miles de archivos!  Su sistema puede ralentizarse, congelarse o incluso caerse!
 </div><h2>Características</h2>
@@ -85,30 +95,28 @@ Este applet tiene que leer cada archivo/carpeta dentro de una carpeta principal 
 <div class="img-centered-container"><img src="./assets/images/image-featuring-different-icons-each-sub-menu-and-different-icon-sizes.png" class="img-fluid " alt="Imagen que ofrece diversos iconos para cada sub-menú y diversos tamaños del icono">
 </div><h2>Uso del applet</h2>
 <ul>
-<li>Ítems del menú a archivos .desktop serán mostrados con el ícono y el nombre declarado dentro de los mismos archivos .desktop.</li>
+<li>After placing a new instance of <strong>Quick Menu</strong> into a panel, an existing directory needs to be chosen for it to create a menu structure with.</li>
+<li>Applications can also be dragged (from Cinnamon menu or any other menu based on it) and dropped into this applet in the panel for quick item creation. This operation makes a copy of the application's .desktop file into the directory configured to be used by this applet.</li>
+<li>Menu items created from .desktop files will be displayed with the icon and name declared inside the .desktop files themselves.</li>
+<li>Menu items created from .desktop files have a context menu (opened with <strong>Right click</strong> or with the <kbd>Menu</kbd> key). From their context menu one has direct access to edit the .desktop file and also to actions provided by them if any.</li>
 <li>El menú puede ser mantenido abierto mientras se activan menú ítems con sólo presionar <kbd>Ctrl</kbd> + <strong>Clic Izquierdo</strong> o <strong>Clic Medio</strong>.</li>
 </ul>
 <h2>Cómo especificar un ícono diferente por cada sub menú ítem</h2>
 <ul>
-<li>Crear un archivo al mismo nivel que las carpetas que van a ser usadas para crear los sub menúes.</li>
-<li>El nombre del archivo puede ser personalizado, no necesita tener una extensión y puede ser un archivo oculto (un archivo "punto"). Por defecto is llamado <strong>0_icons_for_sub_menus.json</strong> (íconos para submenúes).</li>
-<li>Cualquiera sea el nombre elegido para el archivo, éste será automáticamente ignorado y jamás será mostrado en el menú.</li>
-<li>La ruta del ícono tiene que ser una ruta completa. Una ruta que comienza con <strong>~/</strong> puede ser usada y será.</li>
-<li>Si cualquier sub carpeta contiene carpetas que necesitan tener sus propios íconos, sólo se tiene que crear otro archivo <strong>0_icons_for_sub_menus.json</strong> al mismo nivel que esas carpetas.</li>
-<li>El contenido del archivo es un <em>objeto JSON</em> y tiene que lucir como sigue:</li>
+<li>Create a file named .directory inside the folders that will be used to create the sub-menus.</li>
+<li>The content of the .directory file should be exactly as follows.</li>
 </ul>
-<pre><code>{
-    "Nombre de carpeta #1": "Nombre de ícono o ruta a un ícono para Nombre de carpeta #1",
-    "Nombre de carpeta #2": "Nombre de ícono o ruta a un ícono para Nombre de carpeta #2",
-    "Nombre de carpeta #3": "Nombre de ícono o ruta a un ícono para Nombre de carpeta #3",
-    "Nombre de carpeta #n": "Nombre de ícono o ruta a un ícono para Nombre de carpeta #n"
-}
+<pre><code>[Desktop Entry]
+Type=Application
+Icon=icon name or absolute path to an icon file
 </code></pre>
-<p><strong>¡ADVERTENCIA!</strong> El <em>lenguaje</em> JSON es muy estricto. Asegurarse de utilizar SOLAMENTE comillas dobles. Y la combinación llave/valor no tiene que finalizar con una coma (<strong>Nombre de carpeta #n</strong> en el ejemplo anterior).</p>
+<ul>
+<li>The path to the icon has to be a valid icon name or a full path.</li>
+</ul>
 
 </br>
 
-<div class="alert alert-info text-bold shadow-sm" role="alert">
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
 
 Las siguientes secciones están disponibles sólo en Inglés.
 </div>
@@ -119,16 +127,16 @@ Las siguientes secciones están disponibles sólo en Inglés.
 <div id="en" class="localization-content" >
 <h1>Help for Quick Menu</h1>
 
-<div class="card text-bold my-3 border-warning shadow-sm">
+<div class="card fw-bold my-3 border-warning shadow-sm">
     <div class="card-header bg-warning text-white">Warning</div>
     <div class="card-body text-warning text-font-size-large"><p>Never delete any of the files found inside this xlet folder. It might break this xlet functionality.</p>
 <p>Bug reports, feature requests and contributions should be done on this xlet's repository linked next. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p></div>
 </div>
-<div class="card text-bold my-3 border-success shadow-sm">
+<div class="card fw-bold my-3 border-success shadow-sm">
     <div class="card-header bg-success text-white">Cinnamon compatibility</div>
-    <div class="card-body text-success text-font-size-large">This xlet is compatible with Cinnamon 3.0 up to latest Cinnamon version.</div>
+    <div class="card-body text-success text-font-size-large">This xlet is compatible with Cinnamon 5.0 up to latest Cinnamon version.</div>
 </div>
-<div class="card text-bold my-3 border-info shadow-sm">
+<div class="card fw-bold my-3 border-info shadow-sm">
     <div class="card-header bg-info text-white">Xlets localization</div>
     <div class="card-body text-info text-font-size-large"><p>If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed.</p>
 
@@ -138,7 +146,7 @@ Las siguientes secciones están disponibles sólo en Inglés.
 <h2>Description</h2>
 <p>The function of this applet is very simple, create a menu based on the files/folders found inside a main folder (specified on this applet settings window). The files will be used to create menu items and the sub folders will be used to create sub-menus.</p>
 <p>I mainly created this applet to replicate the functionality of the XFCE plugin called <strong>Directory Menu</strong> and the KDE widget called <strong>Quick access</strong>.</p>
-<div class="alert alert-danger text-bold shadow-sm" role="alert">
+<div class="alert alert-danger fw-bold shadow-sm" role="alert">
 <h4 class="alert-heading">Danger</h4>
 This applet has to read every single file/folder inside a main folder to create its menu. So, do not try to use this applet to create a menu based on a folder that contains thousands of files!!! Your system may slow down, freeze or even crash!!!
 </div><h2>Features</h2>
@@ -154,47 +162,54 @@ This applet has to read every single file/folder inside a main folder to create 
 <div class="img-centered-container"><img src="./assets/images/image-featuring-different-icons-each-sub-menu-and-different-icon-sizes.png" class="img-fluid " alt="Image featuring different icons for each sub-menu and different icon sizes">
 </div><h2>Applet usage</h2>
 <ul>
-<li>Menu items to .desktop files will be displayed with the icon and name declared inside the .desktop files themselves.</li>
+<li>After placing a new instance of <strong>Quick Menu</strong> into a panel, an existing directory needs to be chosen for it to create a menu structure with.</li>
+<li>Applications can also be dragged (from Cinnamon menu or any other menu based on it) and dropped into this applet in the panel for quick item creation. This operation makes a copy of the application's .desktop file into the directory configured to be used by this applet.</li>
+<li>Menu items created from .desktop files will be displayed with the icon and name declared inside the .desktop files themselves.</li>
+<li>Menu items created from .desktop files have a context menu (opened with <strong>Right click</strong> or with the <kbd>Menu</kbd> key). From their context menu one has direct access to edit the .desktop file and also to actions provided by them if any.</li>
 <li>The menu can be kept open while activating menu items by pressing <kbd>Ctrl</kbd> + <strong>Left click</strong> or with <strong>Middle click</strong>.</li>
 </ul>
 <h2>How to set a different icon for each sub-menu</h2>
 <ul>
-<li>Create a file at the same level as the folders that will be used to create the sub-menus.</li>
-<li>The file name can be customized, doesn't need to have an extension name and can be a hidden file (a dot file). By default is called <strong>0_icons_for_sub_menus.json</strong>.</li>
-<li>Whatever name is chosen for the file, it will be automatically ignored and will never be shown on the menu.</li>
-<li>The path to the icon has to be a full path. A path starting with <strong>~/</strong> can be used and will be expanded to the user's home folder.</li>
-<li>If any sub-folder has more folders that need to have custom icons, just create another <strong>0_icons_for_sub_menus.json</strong> file at the same level that those folders.</li>
-<li>The content of the file is a <em>JSON object</em> and has to look as follows:</li>
+<li>Create a file named .directory inside the folders that will be used to create the sub-menus.</li>
+<li>The content of the .directory file should be exactly as follows.</li>
 </ul>
-<pre><code>{
-    "Folder name #1": "Icon name or icon path for Folder name #1",
-    "Folder name #2": "Icon name or icon path for Folder name #2",
-    "Folder name #3": "Icon name or icon path for Folder name #3",
-    "Folder name #n": "Icon name or icon path for Folder name #n"
-}
+<pre><code>[Desktop Entry]
+Type=Application
+Icon=icon name or absolute path to an icon file
 </code></pre>
-<p><strong>Warning!!!</strong> JSON <em>language</em> is very strict. Just be sure to ONLY use double quotes. And the last key/value combination DOESN'T have to end with a comma (<strong>Folder name #n</strong> in the previous example).</p>
+<ul>
+<li>The path to the icon has to be a valid icon name or a full path.</li>
+</ul>
 
 </br>
 
-<div class="alert alert-info text-bold shadow-sm" role="alert">
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
 
 The following sections are available only in English.
 </div>
 
 </div> <!-- .localization-content -->
 
-</div> <!-- .container.boxed -->
-<span id="xlet-contributors">
+            </div>
+            <span id="xlet-contributors"></span>
 <div class="container boxed my-3 py-3">
 <h2>Contributors/Mentions</h2>
 
 </div> <!-- .container.boxed -->
 
-<span id="xlet-changelog">
+            <span id="xlet-changelogs"></span>
 <div class="container boxed my-3 py-3">
-<h2>Quick Menu changelog</h2>
-<p><strong>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a>.</strong></p>
+<h2>Quick Menu changelogs</h2>
+<p><strong>These change logs are only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a>.</strong></p>
+<hr>
+
+</div> <!-- .container.boxed -->
+<div class="container boxed my-3 py-3">
+
+<button type="button" class="btn btn-primary collapsible">Display more history</button>
+<div class="collapsible-content">
+<p><br/>
+<br/></p>
 <hr>
 <p><strong>Date:</strong> Mon, 10 Feb 2020 23:21:47 -0300<br/>
 <strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/e223984">e223984</a><br/>
@@ -289,9 +304,6 @@ The following sections are available only in English.
 <li>Implemented key bindings common naming.</li>
 </ul>
 <hr>
-
-</div> <!-- .container.boxed -->
-<div class="container boxed my-3 py-3">
 <h2>Old repository history</h2>
 <hr>
 <ul>
@@ -642,38 +654,35 @@ after activating a menu item. Some code cleaning/corrections.
 </code></pre>
 <hr>
 
+</div>
+
 </div> <!-- .container.boxed -->
 
-</div> <!-- #mainarea -->
-<!--Footer-->
-<footer class="text-bold text-white navbar-dark bg-gradient-primary px-3 pt-4 mt-4">
-    <!--Footer Links-->
-    <div class="container-fluid text-left">
-        <ul class="list-unstyled">
-            <li>
-                <p>Page created with <a href="https://getbootstrap.com">Bootstrap</a>.</p>
-            </li>
-            <li>
-                <p>Boostrap theme created with <a href="https://gitlab.com/PythonCLIApplications/BootstrapThemesGenerator">Bootstrap Theme Generator</a> and based on <a href="https://bootswatch.com">Bootswatch</a>'s <a href="https://bootswatch.com/flatly">Flatly theme</a>.</p>
-            </li>
-            <li>
-                <p><a href="https://github.com/julienetie/smooth-scroll">Smooth Scroll plugin</a> provided by <a href="https://github.com/julienetie">Julien Etienne</a>.</p>
-            </li>
-        </ul>
-    </div>
-    <!--/.Footer Links-->
-    <!--Copyright-->
-    <div class="text-center py-3">
-        <div class="container-fluid">
-            © 2016-2020 <a href="https://gitlab.com/Odyseus/CinnamonTools">Odyseus</a>
         </div>
-    </div>
-    <!--/.Copyright-->
-</footer>
-<!--/.Footer-->
-<script type="text/javascript" defer src="./assets/js/localizations-handler.min.js"></script>
-<script type="text/javascript">
+        <footer class="fw-bold text-white navbar-dark bg-primary px-3 pt-4 mt-4">
+            <div class="container-fluid text-left">
+                <ul class="list-unstyled">
+                    <li>
+                        <p>Page created with <a href="https://getbootstrap.com">Bootstrap</a>.</p>
+                    </li>
+                    <li>
+                        <p>Boostrap theme created with <a href="https://gitlab.com/PythonCLIApplications/BootstrapThemesGenerator">Bootstrap Theme Generator</a> and based on <a href="https://bootswatch.com">Bootswatch</a>'s <a href="https://bootswatch.com/flatly">Flatly theme</a>.</p>
+                    </li>
+                    <li>
+                        <p><a href="https://github.com/julienetie/smooth-scroll">Smooth Scroll plugin</a> provided by <a href="https://github.com/julienetie">Julien Etienne</a>.</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="text-center py-3">
+                <div class="container-fluid">
+                    © 2016-2022 <a href="https://gitlab.com/Odyseus/CinnamonTools">Odyseus</a>
+                </div>
+            </div>
+        </footer>
+        <script type="text/javascript" defer src="./assets/js/main.js"></script>
+        <script type="text/javascript">
 
-</script>
-</body>
+        </script>
+    </body>
+
 </html>

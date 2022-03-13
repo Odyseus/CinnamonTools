@@ -1,0 +1,111 @@
+{
+    "info_label_1": {
+        "type": "label",
+        "description": "This window isn't this xlet's \"real\" configuration window."
+    },
+    "settings_button": {
+        "type": "button",
+        "callback": "__openXletSettings",
+        "description": "Open the \"real\" preference window"
+    },
+    "main_directory": {
+        "type": "generic",
+        "default": ""
+    },
+    "max_files_to_handle_fail_safe": {
+        "type": "generic",
+        "default": 100
+    },
+    "max_files_to_list_fail_safe": {
+        "type": "generic",
+        "default": 100
+    },
+    "applet_tooltip": {
+        "type": "generic",
+        "default": "Quick Menu"
+    },
+    "applet_icon": {
+        "type": "generic",
+        "default": "custom-quick-menu-applet-icon"
+    },
+    "applet_label": {
+        "type": "generic",
+        "default": "Quick Menu"
+    },
+    "toggle_menu_keybinding": {
+        "type": "generic",
+        "default": ""
+    },
+    "icon_for_submenus": {
+        "type": "generic",
+        "default": "folder"
+    },
+    "style_for_sub_menus": {
+        "type": "generic",
+        "default": "font-weight:bold;"
+    },
+    "style_for_menu_items": {
+        "type": "generic",
+        "default": ""
+    },
+    "autoupdate": {
+        "type": "generic",
+        "default": false
+    },
+    "show_only_desktop_files": {
+        "type": "generic",
+        "default": true
+    },
+    "show_hidden_files": {
+        "type": "generic",
+        "default": false
+    },
+    "show_hidden_folders": {
+        "type": "generic",
+        "default": false
+    },
+    "show_submenu_icons": {
+        "type": "generic",
+        "default": true
+    },
+    "sub_menu_icon_size": {
+        "type": "generic",
+        "default": 24
+    },
+    "show_menuitem_icons": {
+        "type": "generic",
+        "default": true
+    },
+    "menuitem_icon_size": {
+        "type": "generic",
+        "default": 24
+    },
+    "create_sub_menus": {
+        "type": "generic",
+        "default": true
+    },
+    "auto_close_opened_sub_menus": {
+        "type": "generic",
+        "default": false
+    },
+    "usage_notified": {
+        "type": "generic",
+        "default": false
+    },
+    "apply_styles": {
+        "type": "generic",
+        "default": false
+    },
+    "files_blacklist": {
+        "type": "generic",
+        "default": ".directory"
+    },
+    "dirs_blacklist": {
+        "type": "generic",
+        "default": "lost+found"
+    },
+    "parse_directory_files_for_icons": {
+        "type": "generic",
+        "default": false
+    }
+}
