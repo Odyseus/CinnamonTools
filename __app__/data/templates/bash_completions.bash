@@ -12,8 +12,11 @@ _decide_nospace_{current_date}(){
 _get_xlets_slugs_{current_date}(){
     echo $(cd {full_path_to_app_folder}; ./app.py print_xlets_slugs)
 } &&
+_get_theme_variants_{current_date}(){
+    echo $(cd {full_path_to_app_folder}; ./app.py print_theme_variants)
+} &&
 __cinnamon_tools_cli_{current_date}(){
-    local cur prev cmd xlets_slugs
+    local cur prev cmd xlets_slugs theme_variants
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
@@ -27,6 +30,16 @@ __cinnamon_tools_cli_{current_date}(){
         -x)
             xlets_slugs=( $(_get_xlets_slugs_{current_date}) )
             COMPREPLY=( $( compgen -W "${xlets_slugs[*]}" -- ${cur}) )
+            return 0
+            ;;
+        --variant-name)
+            theme_variants=( $(_get_theme_variants_{current_date}) )
+            COMPREPLY=( $( compgen -W "${theme_variants[*]}") )
+            return 0
+            ;;
+        -v)
+            theme_variants=( $(_get_theme_variants_{current_date}) )
+            COMPREPLY=( $( compgen -W "${theme_variants[*]}" -- ${cur}) )
             return 0
             ;;
     esac
@@ -64,8 +77,8 @@ __cinnamon_tools_cli_{current_date}(){
     # Completion of commands.
     if [[ $COMP_CWORD == 1 ]]; then
         COMPREPLY=( $(compgen -W \
-            "menu build build_themes parse_sass generate dev repo -h --help --manual --version -r \
---restart-cinnamon" -- "${cur}") )
+            "-h --help --version --manual -r --restart-cinnamon menu build_xlets build_themes \
+dev_xlets dev_themes generate print_xlets_slugs print_theme_variants repo" -- "${cur}") )
         return 0
     fi
 
@@ -82,25 +95,27 @@ __cinnamon_tools_cli_{current_date}(){
             "system_executable docs docs_no_api base_xlet repo_changelog themes_changelog \
 all_changelogs" -- "${cur}") )
         ;;
-    "build")
+    "build_xlets")
         COMPREPLY=( $(compgen -W \
-            "-a --all-xlets -x --xlet= -d --domain= -o --output= -n --no-confirmation -r \
--e --extra-files= -i --install-localizations --restart-cinnamon -y --dry-run" -- "${cur}") )
+            "-x --xlet-name= -d --domain= -o --output= -e --extra-files= -i --install-localizations \
+-n --no-confirmation -r --restart-cinnamon" -- "${cur}") )
         _decide_nospace_{current_date} ${COMPREPLY[0]}
         ;;
     "build_themes")
         COMPREPLY=( $(compgen -W \
-            "-t --theme-name= -o --output= -n --no-confirmation -r --restart-cinnamon \
--y --dry-run" -- "${cur}") )
+            "-t --theme-name= -v --variant-name= -o --output= -n --no-confirmation -r \
+--restart-cinnamon" -- "${cur}") )
         _decide_nospace_{current_date} ${COMPREPLY[0]}
         ;;
-    "parse_sass")
-        COMPREPLY=( $(compgen -W "-y --dry-run" -- "${cur}") )
-        ;;
-    "dev")
+    "dev_xlets")
         COMPREPLY=( $(compgen -W \
-            "-x --xlet= generate_meta_file create_localized_help generate_trans_stats \
-update_pot_files update_spanish_localizations create_xlets_changelogs " -- "${cur}") )
+            "-x --xlet-name= generate_meta_file update_pot_files update_spanish_localizations \
+create_xlets_changelogs create_localized_help generate_trans_stats check_js_modules" -- "${cur}") )
+        ;;
+    "dev_themes")
+        COMPREPLY=( $(compgen -W \
+            "-v --variant-name= generate_gtk_sass_includes_index parse_sass \
+generate_thumbnails" -- "${cur}") )
         ;;
     esac
 
@@ -114,15 +129,12 @@ update_pot_files update_spanish_localizations create_xlets_changelogs " -- "${cu
     "submodules"|"subtrees")
         COMPREPLY=( $(compgen -W "init update" -- "${cur}") )
         ;;
-    esac
-
-    # Completion of options and sub-commands.
-    cmd="${COMP_WORDS[3]}"
-
-    case $cmd in
-    "init"|"update")
-        COMPREPLY=( $(compgen -W " -y --dry-run" -- "${cur}") )
+    "parse_sass"|"generate_thumbnails")
+        COMPREPLY=( $(compgen -W "-v --variant-name= -s --sass-parser=" -- "${cur}") )
+        _decide_nospace_{current_date} ${COMPREPLY[0]}
         ;;
     esac
+
+    return 0
 } &&
 complete -F __cinnamon_tools_cli_{current_date} {executable_name}

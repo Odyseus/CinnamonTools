@@ -1,0 +1,32 @@
+%YAML 1.1
+---
+extra_files:
+    - destination: schemas/org.cinnamon.{{XLET_TYPE}}s.{{UUID}}.gschema.xml
+      source: __app__/data/gschemas/debugManagerSchema.xml
+javascript_modules:
+    - appletsUtils.js
+    - debugManager.js
+    - globalUtils.js
+    - notificationsUtils.js
+make_pot_additional_files:
+    - ../../__app__/data/python_modules/xlets_settings/__init__.py
+    - ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py
+    - ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py
+max_cinnamon_version_override: 5.0
+min_cinnamon_version_override: 4.8
+python_modules:
+    - xlets_settings
+set_executable:
+    - file.ext
+symlinks:
+    "5.4":
+        - - ../icons
+          - icons
+        - - ../applet.js
+          - applet.js
+        - - ../HELP.html
+          - HELP.html
+        - - ../icon.png
+          - icon.png
+        - - ../utils.js
+          - utils.js

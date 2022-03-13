@@ -1,7 +1,5 @@
-![Platform: GNU/Linux]({repo_docs_url}/_static/images/Platform-name.svg "Platform: GNU/Linux")
-![Cinnamon: 3.0+]({repo_docs_url}/_static/images/Cinnamon-version.svg "Cinnamon: 3.0+")
-![Gtk+: 3.18+]({repo_docs_url}/_static/images/Gtk-version.svg "Gtk+: 3.18+")
-![Python: 3.5+]({repo_docs_url}/_static/images/Python-version.svg "Python: 3.5+")
+<!-- NOTE: Using img tags to be able to set bigger badge sizes. -->
+<img alt="Platform: GNU/Linux" src="https://odyseus.gitlab.io/cinnamon_tools_docs/_static/images/badge-platform.svg" width="189" height="27" /> <img alt="Cinnamon: 5.0+" src="https://odyseus.gitlab.io/cinnamon_tools_docs/_static/images/badge-cinnamon-version.svg" width="153" height="27" /> <img alt="Gtk: 3.24+" src="https://odyseus.gitlab.io/cinnamon_tools_docs/_static/images/badge-gtk-version.svg" width="108" height="27" /> <img alt="Python: 3.7+" src="https://odyseus.gitlab.io/cinnamon_tools_docs/_static/images/badge-python-version.svg" width="129" height="27" />
 
 ## Cinnamon Tools
 
@@ -14,7 +12,7 @@ Applets/Extensions/Themes for the [Cinnamon desktop environment](https://github.
 
 ## Dependencies
 
-The application used in this repository to build xlets and several other tasks requires Python 3.5+ to be available in `/usr/bin/python3`. All xlets that are shipped with Python scripts to perform different tasks have the exact same requirement.
+The application used in this repository to build xlets and several other tasks requires Python 3.7+ to be available in `/usr/bin/python3`. All xlets that are shipped with Python scripts to perform different tasks have the exact same requirement.
 
 Additionally, each xlet can depend on certain commands to be available on PATH or packages to be installed on a system. These dependencies are listed in each xlet help pages. See [Xlets help pages](#xlets-help-pages).
 
@@ -41,7 +39,7 @@ $ ./app.py menu
 The command bellow will perform the following actions:
 
 ```shell
-$ ./app.py build --all-xlets --domain="domain.com" --output="$HOME/.local/share/cinnamon" --no-confirmation --restart-cinnamon
+$ ./app.py build_xlets --all-xlets --domain="domain.com" --output="$HOME/.local/share/cinnamon" --no-confirmation --restart-cinnamon
 ```
 
 - `--all-xlets`: Build **all xlets** found on the repository.
@@ -54,7 +52,7 @@ $ ./app.py build --all-xlets --domain="domain.com" --output="$HOME/.local/share/
 
 #### [Building themes]({repo_docs_url}/includes/01-usage.html#app-py-build-themes)
 
-The theme building process is interactive (the build process will ask for Cinnamon version, Cinnamon's theme default font size/family, GTK+ 3 version, and Gtk+ 3 client-side-decorated windows shadows). There is only one theme variant in this repository, but an infinite number of variants can be created. See [How to create a custom theme variant?]({repo_docs_url}/includes/01-usage.html#how-to-create-custom-variant-reference).
+The theme building process is interactive (the build process will ask for Cinnamon version, GTK+ 3/4 versions, etc.). There are 11 theme variants in this repository, but an infinite number of variants can be created. See [How to create a custom theme variant?]({repo_docs_url}/includes/01-usage.html#how-to-create-custom-variant-reference).
 
 The command bellow will perform the following actions:
 
