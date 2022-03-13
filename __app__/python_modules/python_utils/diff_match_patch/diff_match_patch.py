@@ -1,16 +1,8 @@
 #!/usr/bin/python3
-# -*- coding: utf-8 -*-
+
 """Diff Match and Patch
-
-Functions for diff, match and patch.
-
-Computes the difference between two texts to create a patch.
-Applies the patch onto another text, allowing for errors.
-
-Based on `Diff, Match and Patch Library <https://github.com/GerHobbelt/google-diff-match-patch>`__.
-
-Copyright 2006 Google Inc.
-http://code.google.com/p/google-diff-match-patch/
+Copyright 2018 The diff-match-patch Authors.
+https://github.com/google/diff-match-patch
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -25,7 +17,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-__author__ = "fraser@google.com (Neil Fraser)"
+"""Functions for diff, match and patch.
+
+Computes the difference between two texts to create a patch.
+Applies the patch onto another text, allowing for errors.
+"""
+
+__author__ = 'fraser@google.com (Neil Fraser)'
 
 import re
 import sys
@@ -120,7 +118,7 @@ class diff_match_patch:
         # Trim off common suffix (speedup).
         commonlength = self.diff_commonSuffix(text1, text2)
         if commonlength == 0:
-            commonsuffix = ""
+            commonsuffix = ''
         else:
             commonsuffix = text1[-commonlength:]
             text1 = text1[:-commonlength]
@@ -222,12 +220,12 @@ class diff_match_patch:
 
         # Rediff any replacement blocks, this time character-by-character.
         # Add a dummy entry at the end.
-        diffs.append((self.DIFF_EQUAL, ""))
+        diffs.append((self.DIFF_EQUAL, ''))
         pointer = 0
         count_delete = 0
         count_insert = 0
-        text_delete = ""
-        text_insert = ""
+        text_delete = ''
+        text_insert = ''
         while pointer < len(diffs):
             if diffs[pointer][0] == self.DIFF_INSERT:
                 count_insert += 1
@@ -239,13 +237,13 @@ class diff_match_patch:
                 # Upon reaching an equality, check for prior redundancies.
                 if count_delete >= 1 and count_insert >= 1:
                     # Delete the offending records and add the merged ones.
-                    a = self.diff_main(text_delete, text_insert, False, deadline)
-                    diffs[pointer - count_delete - count_insert: pointer] = a
-                    pointer = pointer - count_delete - count_insert + len(a)
+                    subDiff = self.diff_main(text_delete, text_insert, False, deadline)
+                    diffs[pointer - count_delete - count_insert: pointer] = subDiff
+                    pointer = pointer - count_delete - count_insert + len(subDiff)
                 count_insert = 0
                 count_delete = 0
-                text_delete = ""
-                text_insert = ""
+                text_delete = ''
+                text_insert = ''
 
             pointer += 1
 
@@ -398,7 +396,7 @@ class diff_match_patch:
 
         # "\x00" is a valid character, but various debuggers don't like it.
         # So we'll insert a junk entry to avoid generating a null character.
-        lineArray.append("")
+        lineArray.append('')
 
         def diff_linesToCharsMunge(text):
             """Split a text into an array of strings.  Reduce the texts to a string
@@ -413,26 +411,33 @@ class diff_match_patch:
             """
             chars = []
             # Walk the text, pulling out a substring for each line.
-            # text.split("\n") would would temporarily double our memory footprint.
+            # text.split('\n') would would temporarily double our memory footprint.
             # Modifying text would create many large strings to garbage collect.
             lineStart = 0
             lineEnd = -1
             while lineEnd < len(text) - 1:
-                lineEnd = text.find("\n", lineStart)
+                lineEnd = text.find('\n', lineStart)
                 if lineEnd == -1:
                     lineEnd = len(text) - 1
                 line = text[lineStart:lineEnd + 1]
-                lineStart = lineEnd + 1
 
                 if line in lineHash:
                     chars.append(chr(lineHash[line]))
                 else:
+                    if len(lineArray) == maxLines:
+                        # Bail out at 1114111 because chr(1114112) throws.
+                        line = text[lineStart:]
+                        lineEnd = len(text)
                     lineArray.append(line)
                     lineHash[line] = len(lineArray) - 1
                     chars.append(chr(len(lineArray) - 1))
+                lineStart = lineEnd + 1
             return "".join(chars)
 
+        # Allocate 2/3rds of the space for text1, the rest for text2.
+        maxLines = 666666
         chars1 = diff_linesToCharsMunge(text1)
+        maxLines = 1114111
         chars2 = diff_linesToCharsMunge(text2)
         return (chars1, chars2, lineArray)
 
@@ -444,11 +449,11 @@ class diff_match_patch:
           diffs: Array of diff tuples.
           lineArray: Array of unique strings.
         """
-        for x in range(len(diffs)):
+        for i in range(len(diffs)):
             text = []
-            for char in diffs[x][1]:
+            for char in diffs[i][1]:
                 text.append(lineArray[ord(char)])
-            diffs[x] = (diffs[x][0], "".join(text))
+            diffs[i] = (diffs[i][0], "".join(text))
 
     def diff_commonPrefix(self, text1, text2):
         """Determine the common prefix of two strings.
@@ -464,7 +469,7 @@ class diff_match_patch:
         if not text1 or not text2 or text1[0] != text2[0]:
             return 0
         # Binary search.
-        # Performance analysis: http://neil.fraser.name/news/2007/10/09/
+        # Performance analysis: https://neil.fraser.name/news/2007/10/09/
         pointermin = 0
         pointermax = min(len(text1), len(text2))
         pointermid = pointermax
@@ -492,7 +497,7 @@ class diff_match_patch:
         if not text1 or not text2 or text1[-1] != text2[-1]:
             return 0
         # Binary search.
-        # Performance analysis: http://neil.fraser.name/news/2007/10/09/
+        # Performance analysis: https://neil.fraser.name/news/2007/10/09/
         pointermin = 0
         pointermax = min(len(text1), len(text2))
         pointermid = pointermax
@@ -536,7 +541,7 @@ class diff_match_patch:
 
         # Start by looking for a single character match
         # and increase length until no match is found.
-        # Performance analysis: http://neil.fraser.name/news/2010/11/04/
+        # Performance analysis: https://neil.fraser.name/news/2010/11/04/
         best = 0
         length = 1
         while True:
@@ -589,13 +594,14 @@ class diff_match_patch:
               common middle.  Or None if there was no match.
             """
             seed = longtext[i:i + len(longtext) // 4]
-            best_common = ""
+            best_common = ''
             j = shorttext.find(seed)
             while j != -1:
                 prefixLength = self.diff_commonPrefix(longtext[i:], shorttext[j:])
                 suffixLength = self.diff_commonSuffix(longtext[:i], shorttext[:j])
                 if len(best_common) < suffixLength + prefixLength:
-                    best_common = (shorttext[j - suffixLength:j] + shorttext[j:j + prefixLength])
+                    best_common = (shorttext[j - suffixLength:j] +
+                                   shorttext[j:j + prefixLength])
                     best_longtext_a = longtext[:i - suffixLength]
                     best_longtext_b = longtext[i + prefixLength:]
                     best_shorttext_a = shorttext[:j - suffixLength]
@@ -641,7 +647,7 @@ class diff_match_patch:
         """
         changes = False
         equalities = []  # Stack of indices where equalities are found.
-        lastequality = None  # Always equal to diffs[equalities[-1]][1]
+        lastEquality = None  # Always equal to diffs[equalities[-1]][1]
         pointer = 0  # Index of current position.
         # Number of chars that changed prior to the equality.
         length_insertions1, length_deletions1 = 0, 0
@@ -652,7 +658,7 @@ class diff_match_patch:
                 equalities.append(pointer)
                 length_insertions1, length_insertions2 = length_insertions2, 0
                 length_deletions1, length_deletions2 = length_deletions2, 0
-                lastequality = diffs[pointer][1]
+                lastEquality = diffs[pointer][1]
             else:  # An insertion or deletion.
                 if diffs[pointer][0] == self.DIFF_INSERT:
                     length_insertions2 += len(diffs[pointer][1])
@@ -660,10 +666,11 @@ class diff_match_patch:
                     length_deletions2 += len(diffs[pointer][1])
                 # Eliminate an equality that is smaller or equal to the edits on both
                 # sides of it.
-                if (lastequality and (len(lastequality) <= max(length_insertions1, length_deletions1)) and
-                        (len(lastequality) <= max(length_insertions2, length_deletions2))):
+                if (lastEquality and (len(lastEquality) <=
+                    max(length_insertions1, length_deletions1)) and
+                        (len(lastEquality) <= max(length_insertions2, length_deletions2))):
                     # Duplicate record.
-                    diffs.insert(equalities[-1], (self.DIFF_DELETE, lastequality))
+                    diffs.insert(equalities[-1], (self.DIFF_DELETE, lastEquality))
                     # Change second copy to insert.
                     diffs[equalities[-1] + 1] = (self.DIFF_INSERT,
                                                  diffs[equalities[-1] + 1][1])
@@ -679,7 +686,7 @@ class diff_match_patch:
                     # Reset the counters.
                     length_insertions1, length_deletions1 = 0, 0
                     length_insertions2, length_deletions2 = 0, 0
-                    lastequality = None
+                    lastEquality = None
                     changes = True
             pointer += 1
 
@@ -696,14 +703,15 @@ class diff_match_patch:
         # Only extract an overlap if it is as big as the edit ahead or behind it.
         pointer = 1
         while pointer < len(diffs):
-            if (diffs[pointer - 1][0] == self.DIFF_DELETE and diffs[pointer][0] == self.DIFF_INSERT):
+            if (diffs[pointer - 1][0] == self.DIFF_DELETE and
+                    diffs[pointer][0] == self.DIFF_INSERT):
                 deletion = diffs[pointer - 1][1]
                 insertion = diffs[pointer][1]
                 overlap_length1 = self.diff_commonOverlap(deletion, insertion)
                 overlap_length2 = self.diff_commonOverlap(insertion, deletion)
                 if overlap_length1 >= overlap_length2:
-                    if (overlap_length1 >= len(deletion) /
-                            2.0 or overlap_length1 >= len(insertion) / 2.0):
+                    if (overlap_length1 >= len(deletion) / 2.0 or
+                            overlap_length1 >= len(insertion) / 2.0):
                         # Overlap found.  Insert an equality and trim the surrounding edits.
                         diffs.insert(pointer, (self.DIFF_EQUAL,
                                                insertion[:overlap_length1]))
@@ -713,8 +721,8 @@ class diff_match_patch:
                                               insertion[overlap_length1:])
                         pointer += 1
                 else:
-                    if (overlap_length2 >= len(deletion) /
-                            2.0 or overlap_length2 >= len(insertion) / 2.0):
+                    if (overlap_length2 >= len(deletion) / 2.0 or
+                            overlap_length2 >= len(insertion) / 2.0):
                         # Reverse overlap found.
                         # Insert an equality and swap and trim the surrounding edits.
                         diffs.insert(pointer, (self.DIFF_EQUAL, deletion[:overlap_length2]))
@@ -787,7 +795,8 @@ class diff_match_patch:
         pointer = 1
         # Intentionally ignore the first and last element (don't need checking).
         while pointer < len(diffs) - 1:
-            if (diffs[pointer - 1][0] == self.DIFF_EQUAL and diffs[pointer + 1][0] == self.DIFF_EQUAL):
+            if (diffs[pointer - 1][0] == self.DIFF_EQUAL and
+                    diffs[pointer + 1][0] == self.DIFF_EQUAL):
                 # This is a single edit surrounded by equalities.
                 equality1 = diffs[pointer - 1][1]
                 edit = diffs[pointer][1]
@@ -848,7 +857,7 @@ class diff_match_patch:
         """
         changes = False
         equalities = []  # Stack of indices where equalities are found.
-        lastequality = None  # Always equal to diffs[equalities[-1]][1]
+        lastEquality = None  # Always equal to diffs[equalities[-1]][1]
         pointer = 0  # Index of current position.
         pre_ins = False  # Is there an insertion operation before the last equality.
         pre_del = False  # Is there a deletion operation before the last equality.
@@ -856,16 +865,17 @@ class diff_match_patch:
         post_del = False  # Is there a deletion operation after the last equality.
         while pointer < len(diffs):
             if diffs[pointer][0] == self.DIFF_EQUAL:  # Equality found.
-                if (len(diffs[pointer][1]) < self.Diff_EditCost and (post_ins or post_del)):
+                if (len(diffs[pointer][1]) < self.Diff_EditCost and
+                        (post_ins or post_del)):
                     # Candidate found.
                     equalities.append(pointer)
                     pre_ins = post_ins
                     pre_del = post_del
-                    lastequality = diffs[pointer][1]
+                    lastEquality = diffs[pointer][1]
                 else:
                     # Not a candidate, and can never become one.
                     equalities = []
-                    lastequality = None
+                    lastEquality = None
 
                 post_ins = post_del = False
             else:  # An insertion or deletion.
@@ -881,16 +891,16 @@ class diff_match_patch:
                 # <ins>A</del>X<ins>C</ins><del>D</del>
                 # <ins>A</ins><del>B</del>X<del>C</del>
 
-                if lastequality and ((pre_ins and pre_del and post_ins and post_del) or
-                                     ((len(lastequality) < self.Diff_EditCost / 2) and
-                                         (pre_ins + pre_del + post_ins + post_del) == 3)):
+                if lastEquality and ((pre_ins and pre_del and post_ins and post_del) or
+                                     ((len(lastEquality) < self.Diff_EditCost / 2) and
+                                      (pre_ins + pre_del + post_ins + post_del) == 3)):
                     # Duplicate record.
-                    diffs.insert(equalities[-1], (self.DIFF_DELETE, lastequality))
+                    diffs.insert(equalities[-1], (self.DIFF_DELETE, lastEquality))
                     # Change second copy to insert.
                     diffs[equalities[-1] + 1] = (self.DIFF_INSERT,
                                                  diffs[equalities[-1] + 1][1])
                     equalities.pop()  # Throw away the equality we just deleted.
-                    lastequality = None
+                    lastEquality = None
                     if pre_ins and pre_del:
                         # No changes made which could affect previous entry, keep going.
                         post_ins = post_del = True
@@ -916,12 +926,12 @@ class diff_match_patch:
         Args:
           diffs: Array of diff tuples.
         """
-        diffs.append((self.DIFF_EQUAL, ""))  # Add a dummy entry at the end.
+        diffs.append((self.DIFF_EQUAL, ''))  # Add a dummy entry at the end.
         pointer = 0
         count_delete = 0
         count_insert = 0
-        text_delete = ""
-        text_insert = ""
+        text_delete = ''
+        text_insert = ''
         while pointer < len(diffs):
             if diffs[pointer][0] == self.DIFF_INSERT:
                 count_insert += 1
@@ -955,21 +965,14 @@ class diff_match_patch:
                             text_insert = text_insert[:-commonlength]
                             text_delete = text_delete[:-commonlength]
                     # Delete the offending records and add the merged ones.
-                    if count_delete == 0:
-                        diffs[pointer - count_insert: pointer] = [
-                            (self.DIFF_INSERT, text_insert)]
-                    elif count_insert == 0:
-                        diffs[pointer - count_delete: pointer] = [
-                            (self.DIFF_DELETE, text_delete)]
-                    else:
-                        diffs[pointer - count_delete - count_insert: pointer] = [
-                            (self.DIFF_DELETE, text_delete),
-                            (self.DIFF_INSERT, text_insert)]
-                    pointer = pointer - count_delete - count_insert + 1
-                    if count_delete != 0:
-                        pointer += 1
-                    if count_insert != 0:
-                        pointer += 1
+                    new_ops = []
+                    if len(text_delete) != 0:
+                        new_ops.append((self.DIFF_DELETE, text_delete))
+                    if len(text_insert) != 0:
+                        new_ops.append((self.DIFF_INSERT, text_insert))
+                    pointer -= count_delete + count_insert
+                    diffs[pointer: pointer + count_delete + count_insert] = new_ops
+                    pointer += len(new_ops) + 1
                 elif pointer != 0 and diffs[pointer - 1][0] == self.DIFF_EQUAL:
                     # Merge this equality with the previous one.
                     diffs[pointer - 1] = (diffs[pointer - 1][0],
@@ -980,10 +983,10 @@ class diff_match_patch:
 
                 count_insert = 0
                 count_delete = 0
-                text_delete = ""
-                text_insert = ""
+                text_delete = ''
+                text_insert = ''
 
-        if diffs[-1][1] == "":
+        if diffs[-1][1] == '':
             diffs.pop()  # Remove the dummy entry at the end.
 
         # Second pass: look for single edits surrounded on both sides by equalities
@@ -998,11 +1001,12 @@ class diff_match_patch:
                 # This is a single edit surrounded by equalities.
                 if diffs[pointer][1].endswith(diffs[pointer - 1][1]):
                     # Shift the edit over the previous equality.
-                    diffs[pointer] = (diffs[pointer][0],
-                                      diffs[pointer - 1][1] +
-                                      diffs[pointer][1][:-len(diffs[pointer - 1][1])])
-                    diffs[pointer + 1] = (diffs[pointer + 1][0],
-                                          diffs[pointer - 1][1] + diffs[pointer + 1][1])
+                    if diffs[pointer - 1][1] != "":
+                        diffs[pointer] = (diffs[pointer][0],
+                                          diffs[pointer - 1][1] +
+                                          diffs[pointer][1][:-len(diffs[pointer - 1][1])])
+                        diffs[pointer + 1] = (diffs[pointer + 1][0],
+                                              diffs[pointer - 1][1] + diffs[pointer + 1][1])
                     del diffs[pointer - 1]
                     changes = True
                 elif diffs[pointer][1].startswith(diffs[pointer + 1][1]):
@@ -1374,8 +1378,9 @@ class diff_match_patch:
 
         # Look for the first and last matches of pattern in text.  If two different
         # matches are found, increase the pattern length.
-        while (text.find(pattern) != text.rfind(pattern) and
-               (self.Match_MaxBits == 0 or len(pattern) < self.Match_MaxBits - self.Patch_Margin - self.Patch_Margin)):
+        while (text.find(pattern) != text.rfind(pattern) and (self.Match_MaxBits ==
+                                                              0 or len(pattern) < self.Match_MaxBits - self.Patch_Margin -
+                                                              self.Patch_Margin)):
             padding += self.Patch_Margin
             pattern = text[max(0, patch.start2 - padding):
                            patch.start2 + patch.length1 + padding]
@@ -1494,7 +1499,7 @@ class diff_match_patch:
                     patches.append(patch)
                     patch = patch_obj()
                     # Unlike Unidiff, our patch lists have a rolling context.
-                    # http://code.google.com/p/google-diff-match-patch/wiki/Unidiff
+                    # https://github.com/google/diff-match-patch/wiki/Unidiff
                     # Update prepatch text & pos to reflect the application of the
                     # just completed patch.
                     prepatch_text = postpatch_text
@@ -1701,7 +1706,7 @@ class diff_match_patch:
             x -= 1
             start1 = bigpatch.start1
             start2 = bigpatch.start2
-            precontext = ""
+            precontext = ''
             while len(bigpatch.diffs) != 0:
                 # Create one of several smaller patches.
                 patch = patch_obj()
@@ -1721,9 +1726,9 @@ class diff_match_patch:
                         start2 += len(diff_text)
                         patch.diffs.append(bigpatch.diffs.pop(0))
                         empty = False
-                    elif (diff_type == self.DIFF_DELETE and len(patch.diffs) == 1
-                          and patch.diffs[0][0] == self.DIFF_EQUAL
-                          and len(diff_text) > 2 * patch_size):
+                    elif (diff_type == self.DIFF_DELETE and len(patch.diffs) == 1 and
+                          patch.diffs[0][0] == self.DIFF_EQUAL and
+                          len(diff_text) > 2 * patch_size):
                         # This is a large deletion.  Let it pass in one chunk.
                         patch.length1 += len(diff_text)
                         start1 += len(diff_text)
@@ -1797,7 +1802,7 @@ class diff_match_patch:
         patches = []
         if not textline:
             return patches
-        text = textline.split("\n")
+        text = textline.split('\n')
         while len(text) != 0:
             m = re.match(r"^@@ -(\d+),?(\d*) \+(\d+),?(\d*) @@$", text[0])
             if not m:
@@ -1805,20 +1810,20 @@ class diff_match_patch:
             patch = patch_obj()
             patches.append(patch)
             patch.start1 = int(m.group(1))
-            if m.group(2) == "":
+            if m.group(2) == '':
                 patch.start1 -= 1
                 patch.length1 = 1
-            elif m.group(2) == "0":
+            elif m.group(2) == '0':
                 patch.length1 = 0
             else:
                 patch.start1 -= 1
                 patch.length1 = int(m.group(2))
 
             patch.start2 = int(m.group(3))
-            if m.group(4) == "":
+            if m.group(4) == '':
                 patch.start2 -= 1
                 patch.length2 = 1
-            elif m.group(4) == "0":
+            elif m.group(4) == '0':
                 patch.length2 = 0
             else:
                 patch.start2 -= 1
@@ -1830,21 +1835,21 @@ class diff_match_patch:
                 if text[0]:
                     sign = text[0][0]
                 else:
-                    sign = ""
+                    sign = ''
                 line = urllib.parse.unquote(text[0][1:])
-                if sign == "+":
+                if sign == '+':
                     # Insertion.
                     patch.diffs.append((self.DIFF_INSERT, line))
-                elif sign == "-":
+                elif sign == '-':
                     # Deletion.
                     patch.diffs.append((self.DIFF_DELETE, line))
-                elif sign == " ":
+                elif sign == ' ':
                     # Minor equality.
                     patch.diffs.append((self.DIFF_EQUAL, line))
-                elif sign == "@":
+                elif sign == '@':
                     # Start of next patch.
                     break
-                elif sign == "":
+                elif sign == '':
                     # Blank line?  Whatever.
                     pass
                 else:
@@ -1868,9 +1873,9 @@ class patch_obj:
         self.length2 = 0
 
     def __str__(self):
-        """Emmulate GNU diff's format.
+        """Emulate GNU diff's format.
         Header: @@ -382,8 +481,9 @@
-        Indicies are printed as 1-based, not 0-based.
+        Indices are printed as 1-based, not 0-based.
 
         Returns:
           The GNU diff string.

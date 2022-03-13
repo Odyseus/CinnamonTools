@@ -6,8 +6,8 @@ import os
 
 from runpy import run_path
 from shutil import rmtree
+from sphinx.cmd.build import main as sphinx_main
 
-from . import cmd_utils
 from . import exceptions
 from . import file_utils
 from . import shell_utils
@@ -131,6 +131,16 @@ def generate_docs(root_folder="",
         logger.info(shell_utils.get_cli_separator("-"), date=False)
         logger.info("**Generating automodule directives...**")
 
+        # NOTE: Countermeasure for retarded new Sphinx behavior.
+        # https://github.com/sphinx-doc/sphinx/issues/8664
+        # In short, I have to force down os.environ's throat the SPHINX_APIDOC_OPTIONS environment
+        # variable because the options it contains aren't exposed to be passed as arguments.
+        # By default, SPHINX_APIDOC_OPTIONS will contain the undoc-members option, overriding its
+        # value without the undoc-members option will prevent apidoc from belching a trillion
+        # warnings unnecessarily.
+        os.environ["SPHINX_APIDOC_OPTIONS"] = "members,show-inheritance"
+        from sphinx.ext.apidoc import main as apidoc_main
+
         commmon_args = ["--module-first", "--separate", "--private",
                         "--force", "--suffix", "rst", "--output-dir"]
 
@@ -140,32 +150,24 @@ def generate_docs(root_folder="",
             if force_clean_build:
                 rmtree(apidoc_destination_path, ignore_errors=True)
 
-            cmd_utils.run_cmd(["sphinx-apidoc"] + commmon_args + [
+            apidoc_main(argv=commmon_args + [
                 apidoc_destination_path,
                 os.path.join(root_folder, rel_source_path)
-            ] + ignored_modules,
-                stdout=None,
-                stderr=None,
-                cwd=root_folder)
+            ] + ignored_modules)
 
     try:
         if build_coverage:
             logger.info(shell_utils.get_cli_separator("-"), date=False)
             logger.info("**Building coverage data...**")
 
-            cmd_utils.run_cmd(["sphinx-build", ".", "-b", "coverage", "-d", doctree_temp_location, "./coverage"],
-                              stdout=None,
-                              stderr=None,
-                              cwd=docs_sources_path)
+            sphinx_main(argv=[docs_sources_path, "-b", "coverage",
+                              "-d", doctree_temp_location, docs_sources_path + "/coverage"])
     finally:
         logger.info(shell_utils.get_cli_separator("-"), date=False)
         logger.info("**Generating HTML documentation...**")
 
-        cmd_utils.run_cmd(["sphinx-build", ".", "-b", "html", "-d", doctree_temp_location,
-                           docs_destination_path],
-                          stdout=None,
-                          stderr=None,
-                          cwd=docs_sources_path)
+        sphinx_main(argv=[docs_sources_path, "-b", "html", "-d", doctree_temp_location,
+                          docs_destination_path])
 
 
 def generate_man_pages(root_folder="",
@@ -196,11 +198,8 @@ def generate_man_pages(root_folder="",
     docs_sources_path = os.path.join(root_folder, docs_src_path_rel_to_root)
     man_pages_destination_path = os.path.join(root_folder, docs_dest_path_rel_to_root)
 
-    cmd_utils.run_cmd(["sphinx-build", ".", "-b", "man", "-d", doctree_temp_location,
-                       man_pages_destination_path],
-                      stdout=None,
-                      stderr=None,
-                      cwd=docs_sources_path)
+    sphinx_main(argv=[docs_sources_path, "-b", "man", "-d", doctree_temp_location,
+                      man_pages_destination_path])
 
 
 if __name__ == "__main__":

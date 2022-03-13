@@ -7,7 +7,22 @@ import os
 import re
 import unicodedata
 
+from collections import UserDict
+from collections.abc import Mapping
+from collections.abc import Sequence
+
 from . import file_utils
+
+
+class __DictClone(UserDict):
+    """__DictClone
+
+    Handle missing keys in a dictionary used by str.format_map(). It will just clear
+    non-defined variables out of the formatted string.
+    """
+
+    def __missing__(self, key):
+        return ""
 
 
 def split_on_uppercase(string, keep_contiguous=True):
@@ -64,13 +79,14 @@ def do_replacements(data, replacement_data):
     """
     for template, replacement in replacement_data:
         if template in data:
-            data = data.replace(template, replacement)
+            data = data.replace(str(template), str(replacement))
 
     return data
 
 
 def do_string_substitutions(dir_path, replacement_data,
                             allowed_extensions=(".py", ".bash", ".js", ".json", ".xml"),
+                            handle_file_names=True,
                             logger=None):
     """Do substitutions.
 
@@ -101,9 +117,11 @@ def do_string_substitutions(dir_path, replacement_data,
             with open(file_path, "r+", encoding="UTF-8") as file:
                 file_data = file.read()
                 file.seek(0)
-                file_data = do_replacements(file_data, replacement_data)
-                file.write(file_data)
-                file.truncate()
+                new_file_data = do_replacements(file_data, replacement_data)
+
+                if new_file_data != file_data:
+                    file.write(new_file_data)
+                    file.truncate()
 
             # Check and set execution permissions for Bash and Python scripts.
             # FIXME: Should I hard-code the file names that should be set as executable?
@@ -114,10 +132,11 @@ def do_string_substitutions(dir_path, replacement_data,
                 if not file_utils.is_exec(file_path):
                     os.chmod(file_path, 0o755)
 
-            fname_renamed = do_replacements(fname, replacement_data)
+            if handle_file_names:
+                fname_renamed = do_replacements(fname, replacement_data)
 
-            if fname != fname_renamed:
-                os.rename(file_path, os.path.join(os.path.dirname(file_path), fname_renamed))
+                if fname != fname_renamed:
+                    os.rename(file_path, os.path.join(os.path.dirname(file_path), fname_renamed))
 
         for dname in dirs:
             dir_path = os.path.join(root, dname)
@@ -125,10 +144,11 @@ def do_string_substitutions(dir_path, replacement_data,
             if os.path.islink(dir_path):
                 continue
 
-            dname_renamed = do_replacements(dname, replacement_data)
+            if handle_file_names:
+                dname_renamed = do_replacements(dname, replacement_data)
 
-            if dname != dname_renamed:
-                os.rename(dir_path, os.path.join(os.path.dirname(dir_path), dname_renamed))
+                if dname != dname_renamed:
+                    os.rename(dir_path, os.path.join(os.path.dirname(dir_path), dname_renamed))
 
 
 def super_filter(names, inclusion_patterns=[], exclusion_patterns=[]):
@@ -267,6 +287,50 @@ def slugify(string, allow_unicode=False):
     string = re.sub(r"[^\w\s-]", "", string).strip().lower()
 
     return re.sub(r"[-\s]+", "-", string)
+
+
+def substitute_variables(variables, value):
+    """Substitute variables.
+
+    This is a crude attempt to replicate the functionality of the function with the same name
+    that uses a function called ``expand_variables`` provided by Sublime Text's API. It uses
+    ``str.format_map()`` to replace variables found in a string.
+
+    Parameters
+    ----------
+    variables : dict
+        A dictionary containing variables as keys mapped to values to replace those variables.
+    value : str, list, dict
+        The str/list/dict containing the data where to perform substitutions.
+
+    Returns
+    -------
+    list
+    dict
+    str
+        The modified data.
+
+    Note
+    ----
+    Borrowed from SublimeLinter.
+    """
+    if isinstance(value, str):
+        # Workaround https://github.com/SublimeTextIssues/Core/issues/1878
+        # (E.g. UNC paths on Windows start with double backslashes.)
+        value = value.replace(r"\\", r"\\\\")
+
+        if os.pardir + os.sep in value:
+            value = os.path.normpath(value)
+
+        value = os.path.expandvars(os.path.expanduser(value))
+
+        return value.format_map(__DictClone(variables))
+    elif isinstance(value, Mapping):
+        return {key: substitute_variables(variables, val) for key, val in value.items()}
+    elif isinstance(value, Sequence):
+        return [substitute_variables(variables, item) for item in value]
+    else:
+        return value
 
 
 if __name__ == "__main__":
