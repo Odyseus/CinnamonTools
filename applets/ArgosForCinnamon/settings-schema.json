@@ -1,0 +1,104 @@
+{
+    "info_label_1": {
+        "type": "label",
+        "description": "This window isn't this xlet's \"real\" configuration window."
+    },
+    "settings_button": {
+        "type": "button",
+        "callback": "__openXletSettings",
+        "description": "Open the \"real\" preference window"
+    },
+    "applet_icon": {
+        "type": "generic",
+        "default": ""
+    },
+    "applet_label": {
+        "type": "generic",
+        "default": ""
+    },
+    "show_script_name": {
+        "type": "generic",
+        "default": false
+    },
+    "prevent_applet_lines_ellipsation": {
+        "type": "generic",
+        "default": false
+    },
+    "toggle_menu_keybinding": {
+        "type": "generic",
+        "default": ""
+    },
+    "animate_menu": {
+        "type": "generic",
+        "default": true
+    },
+    "keep_one_menu_open": {
+        "type": "generic",
+        "default": true
+    },
+    "file_path": {
+        "type": "generic",
+        "default": "",
+        "select-dir": false
+    },
+    "update_on_menu_open": {
+        "type": "generic",
+        "default": false
+    },
+    "update_interval": {
+        "type": "generic",
+        "default": 0
+    },
+    "update_interval_units": {
+        "type": "generic",
+        "default": "s"
+    },
+    "rotation_interval": {
+        "type": "generic",
+        "default": 3
+    },
+    "rotation_interval_units": {
+        "type": "generic",
+        "default": "s"
+    },
+    "cycle_on_menu_open": {
+        "type": "generic",
+        "default": false
+    },
+    "default_icon_size": {
+        "type": "generic",
+        "default": 16
+    },
+    "menu_spacing": {
+        "type": "generic",
+        "default": 1.00
+    },
+    "applet_spacing": {
+        "type": "generic",
+        "default": 6
+    },
+    "terminal_emulator": {
+        "type": "generic",
+        "default": "gnome-terminal"
+    },
+    "terminal_emulator_argument": {
+        "type": "generic",
+        "default": "-e"
+    },
+    "shell": {
+        "type": "generic",
+        "default": "/bin/bash"
+    },
+    "shell_argument": {
+        "type": "generic",
+        "default": "-c"
+    },
+    "last_selected_directory": {
+        "type": "generic",
+        "default": ""
+    },
+    "initial_load_done": {
+        "type": "generic",
+        "default": false
+    }
+}

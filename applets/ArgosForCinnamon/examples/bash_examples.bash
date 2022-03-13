@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# The following two line will display on the applet, but not on the menu
+# The following two lines will display on the applet, but not on the menu
 # thanks to the attribute "dropdown" set to false.
-# When there is more than one line, they will "rotate".
+# When there are more than one line, they will "rotate".
 echo "Argos line 1 | iconName=folder dropdown=false"
 echo "Argos line 2 | iconName=folder iconIsSymbolic=true dropdown=false"
 

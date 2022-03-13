@@ -1,11 +1,11 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import os
 import sys
 
 
-xlet_dir = os.path.normpath(os.path.dirname(os.path.abspath(__file__)))
+xlet_dir = os.getcwd()
 xlet_slug = os.path.basename(xlet_dir)
 repo_folder = os.path.normpath(os.path.join(xlet_dir, *([".."] * 2)))
 app_folder = os.path.join(repo_folder, "__app__")

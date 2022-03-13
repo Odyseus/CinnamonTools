@@ -1,10 +1,32 @@
-// {{IMPORTER}}
-
-const GlobalUtils = __import("globalUtils.js");
-
 const {
     _
-} = GlobalUtils;
+} = require("js_modules/globalUtils.js");
+
+var APPLET_PREFS = [
+    "applet_icon",
+    "applet_label",
+    "show_script_name",
+    "prevent_applet_lines_ellipsation",
+    "toggle_menu_keybinding",
+    "animate_menu",
+    "keep_one_menu_open",
+    "file_path",
+    "default_icon_size",
+    "menu_spacing",
+    "applet_spacing",
+    "update_on_menu_open",
+    "cycle_on_menu_open",
+    "update_interval",
+    "update_interval_units",
+    "rotation_interval",
+    "rotation_interval_units",
+    "terminal_emulator",
+    "terminal_emulator_argument",
+    "shell",
+    "shell_argument",
+    "last_selected_directory",
+    "initial_load_done"
+];
 
 var AnsiColors = ["black", "red", "green", "yellow", "blue", "magenta", "cyan", "white"];
 
@@ -92,15 +114,6 @@ var UnitSelectorSubMenuItemParams = Object.freeze({
     set_unit_cb: null
 });
 
-var CustomPopupSliderMenuItemParams = Object.freeze({
-    value: "",
-    associated_submenu: "",
-    tooltip: "",
-    value_changed_cb: null,
-    drag_begin_cb: null,
-    drag_end_cb: null
-});
-
 var ArgosMenuItemParams = Object.freeze({
     applet_menu: null,
     update_cb: null,
@@ -136,6 +149,7 @@ var UNITS_MAP = {
 var EXEC_ATTRIBUTES = ["bash", "command"];
 
 /* exported AnsiColors,
+            APPLET_PREFS,
             SLIDER_SCALE,
             UNITS_MAP,
             OrnamentType,
@@ -145,7 +159,6 @@ var EXEC_ATTRIBUTES = ["bash", "command"];
             DefaultAttributes,
             UnitSelectorMenuItemParams,
             UnitSelectorSubMenuItemParams,
-            CustomPopupSliderMenuItemParams,
             ArgosMenuItemParams,
             UnitsMultiplicationFactor,
             EXEC_ATTRIBUTES

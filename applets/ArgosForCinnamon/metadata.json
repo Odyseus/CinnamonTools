@@ -1,0 +1,6 @@
+{
+    "external-configuration-app": "settings.py",
+    "max-instances": -1,
+    "description": "Create Cinnamon applets in seconds.",
+    "name": "Argos for Cinnamon"
+}

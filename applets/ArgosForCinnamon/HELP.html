@@ -1,65 +1,75 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <meta http-equiv="content-type" content="text/html;charset=utf-8">
-    <title>Help for Argos for Cinnamon</title>
-    <link rel="shortcut icon" type="image/x-icon" href="./icon.png">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link type="text/css" rel="stylesheet" href="./assets/css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="./assets/css/bootstrap-tweaks.css">
-    <style type="text/css">
+    <head>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8">
+        <title>Help for Argos for Cinnamon</title>
+        <link rel="shortcut icon" type="image/x-icon" href="./icon.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link type="text/css" rel="stylesheet" href="./assets/css/bootstrap.min.css">
+        <link type="text/css" rel="stylesheet" href="./assets/css/bootstrap-tweaks.css">
+        <style type="text/css">
 
-    </style>
-</head>
+        </style>
+    </head>
 
-<body>
-<div id="mainarea">
-    <nav class="text-bold py-0 navbar navbar-expand-sm navbar-dark bg-gradient-primary fixed-top" role="navigation">
-        <div class="container-fluid">
-            <div class="nav navbar-nav mr-auto">
-                <!-- The preventDefault() calls are to avoid changing the address in the address bar. -->
-                <a id="nav-xlet-help" class="navbar-brand nav-link" onclick="event.preventDefault();" href="#xlet-help">Help</a>
-                <a id="nav-xlet-contributors" class="navbar-brand nav-link" onclick="event.preventDefault();" href="#xlet-contributors">Contributors</a>
-                <a id="nav-xlet-changelog" class="navbar-brand nav-link" onclick="event.preventDefault();" href="#xlet-changelog">Changelog</a>
-            </div>
-            <form class="form-inline">
-                <div class="input-group input-group-sm">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" for="localization-switch">🌐</span>
+    <body>
+        <div id="mainarea">
+            <nav id="main-navbar"
+                 class="navbar navbar-expand-sm navbar-dark bg-primary fixed-top py-0"
+                 role="navigation">
+                <div class="container-fluid">
+                    <div class="nav navbar-nav mr-auto">
+                        <a id="nav-xlet-help"
+                           class="nav-link"
+                           onclick="event.preventDefault();"
+                           href="#xlet-help">Help</a>
+                        <a id="nav-xlet-contributors"
+                           class="nav-link"
+                           onclick="event.preventDefault();"
+                           href="#xlet-contributors">Contributors</a>
+                        <a id="nav-xlet-changelogs"
+                           class="nav-link"
+                           onclick="event.preventDefault();"
+                           href="#xlet-changelogs">Changelogs</a>
                     </div>
-                    <select class="custom-select custom-select-sm text-bold" id="localization-switch">
-<!-- English --><option selected data-title="Help for Argos for Cinnamon" data-xlet-help="Help" data-xlet-contributors="Contributors" data-xlet-changelog="Changelog" value="en">English (English)</option>
-<!-- Español --><option data-title="Ayuda para Argos para Cinnamon" data-xlet-help="Ayuda" data-xlet-contributors="Colaboradores" data-xlet-changelog="Registro de cambios" value="es">Español (Spanish)</option>
-                    </select>
+                    <form>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text"
+                                  id="localization-switch-image">🌐</span>
+                            <select class="form-select form-select-sm"
+                                    id="localization-switch"
+                                    aria-describedby="localization-switch-image">
+<!-- English --><option selected data-title="Help for Argos for Cinnamon" data-xlet-help="Help" data-xlet-contributors="Contributors" data-xlet-changelog="Changelogs" value="en">English (English)</option>
+<!-- Español --><option data-title="Ayuda para Argos para Cinnamon" data-xlet-help="Ayuda" data-xlet-contributors="Colaboradores" data-xlet-changelog="Changelogs" value="es">Español (Spanish)</option>
+                            </select>
+                        </div>
+                    </form>
                 </div>
-            </form>
-        </div>
-    </nav>
-<span id="xlet-help">
-<div class="container boxed my-3 py-3">
-<noscript>
-    <div class="alert alert-danger" role="alert">
-        <p><strong>Oh snap! This page needs JavaScript enabled to display correctly.</strong></p>
-        <p><strong>This page uses JavaScript only to switch between the available languages, smooth scrolling, etc.</strong></p>
-        <p><strong>There are no tracking services of any kind and never will be (at least, not from my side).</strong></p>
-    </div>
-    <!-- .alert.alert-danger -->
-</noscript>
+            </nav>
+            <div id="no-js-main"
+                 class="alert alert-warning mx-5"
+                 role="alert">
+                <p><strong>Oh snap! This page needs JavaScript enabled to display correctly.</strong></p>
+                <p><strong>This page uses JavaScript only to switch between the available languages, smooth scrolling, etc.</strong></p>
+                <p><strong>There are no tracking services of any kind and never will be (at least, not from my side).</strong></p>
+            </div>
+            <span id="xlet-help"></span>
+            <div class="container boxed my-3 py-3">
 
 <div id="es" class="localization-content" hidden="true">
 <h1>Ayuda para Argos para Cinnamon</h1>
 
-<div class="card text-bold my-3 border-warning shadow-sm">
+<div class="card fw-bold my-3 border-warning shadow-sm">
     <div class="card-header bg-warning text-white">Advertencia</div>
     <div class="card-body text-warning text-font-size-large"><p>Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet.</p>
 <p>Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p></div>
 </div>
-<div class="card text-bold my-3 border-success shadow-sm">
+<div class="card fw-bold my-3 border-success shadow-sm">
     <div class="card-header bg-success text-white">Compatibilidad con Cinnamon</div>
-    <div class="card-body text-success text-font-size-large">Este xlet es compatible con Cinnamon 3.0 hasta la última versión de Cinnamon.</div>
+    <div class="card-body text-success text-font-size-large">Este xlet es compatible con Cinnamon 5.0 hasta la última versión de Cinnamon.</div>
 </div>
-<div class="card text-bold my-3 border-info shadow-sm">
+<div class="card fw-bold my-3 border-info shadow-sm">
     <div class="card-header bg-info text-white">Localización de xlets</div>
     <div class="card-body text-info text-font-size-large"><p>Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente.</p>
 
@@ -80,28 +90,27 @@
 
 <p><span id="usage-es"></span></p>
 <h2>Uso del applet</h2>
-<div class="alert alert-info text-bold shadow-sm" role="alert">
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
 
 <p>Voy a usar las palabras <em>complemento</em> o <em>archivo de comandos</em> cuando me refiera a un archivo de comandos asociado a una instancia del applet <strong>Argos para Cinnamon</strong>.</p>
 
 </div><p>Después de colocar una nueva instancia de <strong>Argos para Cinnamon</strong> en un panel, uno de los archivos de comandos de ejemplo proporcionados por este applet se adjuntará automáticamente a él y se creará un menú basado en la salida del complemento ejecutado. Estos archivos de comandos de ejemplo contienen varios ejemplos de lo que <strong>Argos para Cinnamon</strong> es capaz de hacer.</p>
 <p>Un applet recién colocado tendrá un intervalo de ejecución inicial de 0 segundos (cero segundos) y un intervalo inicial de rotación de texto de applet de 3 segundos (tres segundos). El intervalo de ejecución se establece en 0 segundos porque la secuencia de comandos de ejemplo inicial no tiene ningún dato dinámico que requiera actualización. Y el intervalo de rotación de texto de applet se establece en 3 segundos para que la rotación de texto del archivo de comandos de ejemplo se pueda ver en acción.</p>
 <p>Para los archivos de comandos que muestran datos no dinámicos, no se necesita un intervalo de ejecución. Pero si su archivo de comandos muestra datos dinámicos (un reloj por ejemplo), entonces se debe especificar un intervalo de ejecución y/o de rotación de texto del applet. Ambos valores se pueden establecer desde el menú contextual del applet.</p>
-<div class="alert alert-info text-bold shadow-sm" role="alert">
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
 
 <p>Los tres archivos de comandos de ejemplo proporcionados por este applet producirán exactamente la misma salida, pero se crean utilizando tres idiomas diferentes (<strong>bash_examples.bash</strong>, <strong>python_examples.py</strong> y <strong>ruby_examples.rb</strong>).</p>
 
-</div><div class="alert alert-warning text-bold shadow-sm" role="alert">
+</div><div class="alert alert-warning fw-bold shadow-sm" role="alert">
 
 <strong>Nunca guarde sus complementos/archivos de comandos personalizados dentro de la carpeta de este applet. De lo contrario, los perderá todos cuando haya una actualización para el applet.</strong>
 </div><h3>Formato del nombre de archivo</h3>
 <p><strong>Argos para Gnome Shell</strong> analiza el nombre de archivo de los archivos de comandos para extraer cierto conjunto de preferencias. <strong>Argos para Cinnamon</strong> no analiza el nombre de los archivos de comandos de tal manera (ni de ninguna otra manera). Todas las configuraciones del applet se pueden realizar desde la ventana de configuración del applet y/o desde el menú contextual del applet.</p>
 <h3>Formato de salida</h3>
-<p>Los complementos de Argos son ejecutables (como archivos de comandos de shell <strong>(*)</strong>) que imprimen líneas de salida estándar de la siguiente forma:</p>
-<pre><code>    TEXT | ATTRIBUTE_1=VALUE ATTRIBUTE_2=VALUE ...
-</code></pre>
+<p>Los complementos de Argos son ejecutables (como archivos de comandos de shell <strong>(*)</strong>) que imprimen líneas de salida estándar de la siguiente forma:
+<code>TEXT | ATTRIBUTE_1=VALUE ATTRIBUTE_2=VALUE ...</code></p>
 <p>Todos los atributos son opcionales, por lo que los complementos más básicos simplemente imprimen líneas que consisten en texto que se mostrará. Para incluir espacios en blanco, los valores de atributo se pueden citar utilizando la misma convención empleada por la mayoría de los shells de línea de comandos.</p>
-<div class="alert alert-info text-bold shadow-sm" role="alert">
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
 
 <strong>(*) No sólo archivos de comandos shell, sino también archivos de comandos python, archivos de comandos ruby ​​o cualquier otro archivos de comandos en cualquier otro idioma que pueda imprimir a salida estándar.</strong>
 </div><h3>Representación</h3>
@@ -275,12 +284,12 @@
 </tbody>
 </table>
 <p><span id="about-command-bash-attributes-es"></span></p>
-<div class="alert alert-info text-bold shadow-sm" role="alert">
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
 <h4 class="alert-heading"><strong>(1)</strong> Sobre los atributos <code>command</code> y <code>bash</code>.</h4>
 <p>Estos atributos son mutuamente excluyentes. Agregué el atributo <code>command</code> porque no tenía mucho sentido que se llamara <code>bash</code> cuando Argos for Cinnamon puede usar cualquier shell, no solo Bash. Dejé el atributo <code>bash</code> para que cualquier archivo de comandos escrito para BitBar o para la extensión original Argos para Gnome-Shell puedan usarse sin modificaciones. Nunca eliminaré el atributo <code>bash</code> mientras las dos herramientas mencionadas anteriormente sigan usándolo.</p>
 
 </div><p><span id="about-boolean-attributes-es"></span></p>
-<div class="alert alert-info text-bold shadow-sm" role="alert">
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
 <h4 class="alert-heading"><strong>(2)</strong> Sobre los valores booleanos</h4>
 <p>Cualquier atributo booleano puede tener un valor de <code>true</code> o <code>1</code> (uno) para habilitar una opción/característica. O un valor de <code>false</code> o <code>0</code> (cero) para deshabilitar una opción/característica. Los valores son insensibles a mayúsculas y minúsculas. Cualquier otro valor será considerado como <code>false</code>.</p>
 
@@ -305,7 +314,7 @@
 </table>
 <p><span id="bitbar-plugins-with-argos-for-cinnamon-es"></span></p>
 <h2>Complementos de BitBar con Argos para Cinnamon</h2>
-<div class="alert alert-warning text-bold shadow-sm" role="alert">
+<div class="alert alert-warning fw-bold shadow-sm" role="alert">
 <h4 class="alert-heading">¡¡¡ADVERTENCIA!!! ¡NO REALIZAR PRUEBAS ALEATORIAS CON ARCHIVOS DE COMANDOS!</h4>
 <ol>
 <li>Aplicar sentido común. Leer y entender lo que hace un archivo de comandos y lo exigente que podría ser.</li>
@@ -347,7 +356,7 @@
 
 </br>
 
-<div class="alert alert-info text-bold shadow-sm" role="alert">
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
 
 Las siguientes secciones están disponibles sólo en Inglés.
 </div>
@@ -358,16 +367,16 @@ Las siguientes secciones están disponibles sólo en Inglés.
 <div id="en" class="localization-content" >
 <h1>Help for Argos for Cinnamon</h1>
 
-<div class="card text-bold my-3 border-warning shadow-sm">
+<div class="card fw-bold my-3 border-warning shadow-sm">
     <div class="card-header bg-warning text-white">Warning</div>
     <div class="card-body text-warning text-font-size-large"><p>Never delete any of the files found inside this xlet folder. It might break this xlet functionality.</p>
 <p>Bug reports, feature requests and contributions should be done on this xlet's repository linked next. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p></div>
 </div>
-<div class="card text-bold my-3 border-success shadow-sm">
+<div class="card fw-bold my-3 border-success shadow-sm">
     <div class="card-header bg-success text-white">Cinnamon compatibility</div>
-    <div class="card-body text-success text-font-size-large">This xlet is compatible with Cinnamon 3.0 up to latest Cinnamon version.</div>
+    <div class="card-body text-success text-font-size-large">This xlet is compatible with Cinnamon 5.0 up to latest Cinnamon version.</div>
 </div>
-<div class="card text-bold my-3 border-info shadow-sm">
+<div class="card fw-bold my-3 border-info shadow-sm">
     <div class="card-header bg-info text-white">Xlets localization</div>
     <div class="card-body text-info text-font-size-large"><p>If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed.</p>
 
@@ -388,28 +397,27 @@ Las siguientes secciones están disponibles sólo en Inglés.
 
 <p><span id="usage-en"></span></p>
 <h2>Usage</h2>
-<div class="alert alert-info text-bold shadow-sm" role="alert">
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
 
 <p>I will use the words <em>plugin</em> or <em>script</em> when referring to a script file associated with an instance of <strong>Argos for Cinnamon</strong> applet.</p>
 
 </div><p>After placing a new instance of <strong>Argos for Cinnamon</strong> into a panel, one of the example scripts provided by this applet will be automatically attached to it and a menu will be created based on the output of the executed plugin. These example scripts contain various examples of what <strong>Argos for Cinnamon</strong> can do.</p>
 <p>A just placed applet will have an initial execution interval of 0 seconds (zero seconds) and an initial applet text rotation interval of 3 seconds (three seconds). The execution interval is set to 0 seconds because the initial example script doesn't have any dynamic data that requires update. And the applet text rotation interval is set to 3 seconds so the text rotation of the example script can be seen in action.</p>
 <p>For scripts that display non dynamic data, it isn't needed an execution interval. But if your script displays dynamic data (a clock for example), then an execution and/or applet text rotation interval needs to be specified. Both of these values can be set from the applet context menu.</p>
-<div class="alert alert-info text-bold shadow-sm" role="alert">
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
 
 <p>The three example scripts provided by this applet will produce the exact same output, but they are created using three different languages (<strong>bash_examples.bash</strong>, <strong>python_examples.py</strong> and <strong>ruby_examples.rb</strong>).</p>
 
-</div><div class="alert alert-warning text-bold shadow-sm" role="alert">
+</div><div class="alert alert-warning fw-bold shadow-sm" role="alert">
 
 <strong>Never save your custom plugins/scripts inside this applet folder. Otherwise, you will loose them all when there is an update for the applet.</strong>
 </div><h3>File name format</h3>
 <p><strong>Argos for Gnome Shell</strong> parses the script's file name to extract certain set of preferences. <strong>Argos for Cinnamon</strong> doesn't parse the script's file name in such way (nor in any other way). All the applet settings can be set from the applet settings window and/or from the applet context menu.</p>
 <h3>Output format</h3>
-<p>Argos plugins are executables (such as shell scripts <strong>(*)</strong>) that print to standard output lines of the following form:</p>
-<pre><code>    TEXT | ATTRIBUTE_1=VALUE ATTRIBUTE_2=VALUE ...
-</code></pre>
+<p>Argos plugins are executables (such as shell scripts <strong>(*)</strong>) that print to standard output lines of the following form:
+<code>TEXT | ATTRIBUTE_1=VALUE ATTRIBUTE_2=VALUE ...</code></p>
 <p>All attributes are optional, so the most basic plugins simply print lines consisting of text to be displayed. To include whitespace, attribute values may be quoted using the same convention employed by most command line shells.</p>
-<div class="alert alert-info text-bold shadow-sm" role="alert">
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
 
 <strong>(*) Not just shell scripts, but also python scripts, ruby scripts or any other script in any other language that can print to standard output.</strong>
 </div><h3>Rendering</h3>
@@ -583,12 +591,12 @@ Las siguientes secciones están disponibles sólo en Inglés.
 </tbody>
 </table>
 <p><span id="about-command-bash-attributes-en"></span></p>
-<div class="alert alert-info text-bold shadow-sm" role="alert">
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
 <h4 class="alert-heading"><strong>(1)</strong> About the <code>command</code> and <code>bash</code> attributes</h4>
 <p>These attributes are mutually exclusive. I added the <code>command</code> attribute because it didn't make much sense to have it named <code>bash</code> when Argos for Cinnamon can use any shell, not just Bash. I left the <code>bash</code> attribute so any scripts written for BitBar or for the original Argos for Gnome Shell extension can be used without modifications. I will never remove the <code>bash</code> attribute while the two previously mentioned tools keep using it.</p>
 
 </div><p><span id="about-boolean-attributes-en"></span></p>
-<div class="alert alert-info text-bold shadow-sm" role="alert">
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
 <h4 class="alert-heading"><strong>(2)</strong> About boolean attributes</h4>
 <p>Any boolean attribute can have a value of <code>true</code> or <code>1</code> (one) to enable a feature/option. Or a value of <code>false</code> or <code>0</code> (zero) to disable a feature/option. Values are case-insensitive. Any other value will be considered <code>false</code>.</p>
 
@@ -613,7 +621,7 @@ Las siguientes secciones están disponibles sólo en Inglés.
 </table>
 <p><span id="bitbar-plugins-with-argos-for-cinnamon-en"></span></p>
 <h2>BitBar plugins with Argos for Cinnamon</h2>
-<div class="alert alert-warning text-bold shadow-sm" role="alert">
+<div class="alert alert-warning fw-bold shadow-sm" role="alert">
 <h4 class="alert-heading">WARNING!!! DO NOT RANDOMLY TEST SCRIPTS!!!</h4>
 <ol>
 <li>Apply common sense. Read and understand what a script does and how demanding it could be.</li>
@@ -655,15 +663,15 @@ Las siguientes secciones están disponibles sólo en Inglés.
 
 </br>
 
-<div class="alert alert-info text-bold shadow-sm" role="alert">
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
 
 The following sections are available only in English.
 </div>
 
 </div> <!-- .localization-content -->
 
-</div> <!-- .container.boxed -->
-<span id="xlet-contributors">
+            </div>
+            <span id="xlet-contributors"></span>
 <div class="container boxed my-3 py-3">
 <h2>Contributors/Mentions</h2>
 <ul>
@@ -673,10 +681,19 @@ The following sections are available only in English.
 
 </div> <!-- .container.boxed -->
 
-<span id="xlet-changelog">
+            <span id="xlet-changelogs"></span>
 <div class="container boxed my-3 py-3">
-<h2>Argos for Cinnamon changelog</h2>
-<p><strong>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a>.</strong></p>
+<h2>Argos for Cinnamon changelogs</h2>
+<p><strong>These change logs are only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a>.</strong></p>
+<hr>
+
+</div> <!-- .container.boxed -->
+<div class="container boxed my-3 py-3">
+
+<button type="button" class="btn btn-primary collapsible">Display more history</button>
+<div class="collapsible-content">
+<p><br/>
+<br/></p>
 <hr>
 <p><strong>Date:</strong> Tue, 11 Feb 2020 00:00:48 -0300<br/>
 <strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/3fa9bdc">3fa9bdc</a><br/>
@@ -833,9 +850,6 @@ The following sections are available only in English.
 <li>Implemented key bindings common naming.</li>
 </ul>
 <hr>
-
-</div> <!-- .container.boxed -->
-<div class="container boxed my-3 py-3">
 <h2>Old repository history</h2>
 <hr>
 <ul>
@@ -1114,38 +1128,35 @@ if there is a localization language available.
 </code></pre>
 <hr>
 
+</div>
+
 </div> <!-- .container.boxed -->
 
-</div> <!-- #mainarea -->
-<!--Footer-->
-<footer class="text-bold text-white navbar-dark bg-gradient-primary px-3 pt-4 mt-4">
-    <!--Footer Links-->
-    <div class="container-fluid text-left">
-        <ul class="list-unstyled">
-            <li>
-                <p>Page created with <a href="https://getbootstrap.com">Bootstrap</a>.</p>
-            </li>
-            <li>
-                <p>Boostrap theme created with <a href="https://gitlab.com/PythonCLIApplications/BootstrapThemesGenerator">Bootstrap Theme Generator</a> and based on <a href="https://bootswatch.com">Bootswatch</a>'s <a href="https://bootswatch.com/flatly">Flatly theme</a>.</p>
-            </li>
-            <li>
-                <p><a href="https://github.com/julienetie/smooth-scroll">Smooth Scroll plugin</a> provided by <a href="https://github.com/julienetie">Julien Etienne</a>.</p>
-            </li>
-        </ul>
-    </div>
-    <!--/.Footer Links-->
-    <!--Copyright-->
-    <div class="text-center py-3">
-        <div class="container-fluid">
-            © 2016-2020 <a href="https://gitlab.com/Odyseus/CinnamonTools">Odyseus</a>
         </div>
-    </div>
-    <!--/.Copyright-->
-</footer>
-<!--/.Footer-->
-<script type="text/javascript" defer src="./assets/js/localizations-handler.min.js"></script>
-<script type="text/javascript">
+        <footer class="fw-bold text-white navbar-dark bg-primary px-3 pt-4 mt-4">
+            <div class="container-fluid text-left">
+                <ul class="list-unstyled">
+                    <li>
+                        <p>Page created with <a href="https://getbootstrap.com">Bootstrap</a>.</p>
+                    </li>
+                    <li>
+                        <p>Boostrap theme created with <a href="https://gitlab.com/PythonCLIApplications/BootstrapThemesGenerator">Bootstrap Theme Generator</a> and based on <a href="https://bootswatch.com">Bootswatch</a>'s <a href="https://bootswatch.com/flatly">Flatly theme</a>.</p>
+                    </li>
+                    <li>
+                        <p><a href="https://github.com/julienetie/smooth-scroll">Smooth Scroll plugin</a> provided by <a href="https://github.com/julienetie">Julien Etienne</a>.</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="text-center py-3">
+                <div class="container-fluid">
+                    © 2016-2022 <a href="https://gitlab.com/Odyseus/CinnamonTools">Odyseus</a>
+                </div>
+            </div>
+        </footer>
+        <script type="text/javascript" defer src="./assets/js/main.js"></script>
+        <script type="text/javascript">
 
-</script>
-</body>
+        </script>
+    </body>
+
 </html>

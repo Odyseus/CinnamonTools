@@ -1,0 +1,22 @@
+%YAML 1.1
+---
+set_executable:
+    - examples/bash_examples.bash
+    - examples/js_examples.js
+    - examples/python_examples.py
+    - examples/ruby_examples.rb
+python_modules:
+    - xlets_settings
+javascript_modules:
+    - appletsUtils.js
+    - customDialogs.js
+    - customFileUtils.js
+    - customPopupMenu.js
+    - customTooltips.js
+    - debugManager.js
+    - globalUtils.js
+    - notificationsUtils.js
+    - spawnUtils.js
+extra_files:
+    - source: __app__/data/gschemas/debugManagerSchema.xml
+      destination: schemas/org.cinnamon.{{XLET_TYPE}}s.{{UUID}}.gschema.xml

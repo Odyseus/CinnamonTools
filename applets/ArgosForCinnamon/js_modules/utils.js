@@ -1,21 +1,3 @@
-// {{IMPORTER}}
-
-let XletMeta;
-
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof __meta === "object") {
-    XletMeta = __meta;
-} else {
-    XletMeta = imports.ui.appletManager.appletMeta["{{UUID}}"];
-}
-
-const Emojis = __import("emojis.js").Emojis;
-const Constants = __import("constants.js");
-const DebugManager = __import("debugManager.js");
-const GlobalUtils = __import("globalUtils.js");
-const CustomTooltips = __import("customTooltips.js");
-const DesktopNotificationsUtils = __import("desktopNotificationsUtils.js");
-
 const {
     gi: {
         Clutter,
@@ -30,67 +12,63 @@ const {
         signalManager: SignalManager
     },
     ui: {
-        main: Main,
         popupMenu: PopupMenu,
-        tooltips: Tooltips
     }
 } = imports;
 
 const {
-    SLIDER_SCALE,
-    UNITS_MAP,
     AnsiColors,
+    ArgosMenuItemParams,
     BooleanAttrs,
     DefaultAttributes,
+    EXEC_ATTRIBUTES,
     OrnamentType,
-    Placeholders,
     TruthyVals,
+    UNITS_MAP,
     UnitSelectorMenuItemParams,
-    UnitSelectorSubMenuItemParams,
-    CustomPopupSliderMenuItemParams,
-    ArgosMenuItemParams
-} = Constants;
+    UnitSelectorSubMenuItemParams
+} = require("js_modules/constants.js");
 
 const {
     _,
-    ngettext,
     escapeHTML,
-    xdgOpen
-} = GlobalUtils;
+    ngettext,
+    tryFn,
+    launchUri
+} = require("js_modules/globalUtils.js");
 
 const {
     IntelligentTooltip
-} = CustomTooltips;
+} = require("js_modules/customTooltips.js");
 
 const {
     CustomNotification
-} = DesktopNotificationsUtils;
+} = require("js_modules/notificationsUtils.js");
 
-var Debugger = new DebugManager.DebugManager();
+const {
+    DebugManager
+} = require("js_modules/debugManager.js");
 
-DebugManager.wrapObjectMethods(Debugger, {
-    AltSwitcher: AltSwitcher,
-    ArgosLineView: ArgosLineView,
-    ArgosMenuItem: ArgosMenuItem,
-    CustomNotification: CustomNotification,
-    CustomPanelItemTooltip: CustomPanelItemTooltip,
-    CustomPopupSliderMenuItem: CustomPopupSliderMenuItem,
-    CustomSubMenuItem: CustomSubMenuItem,
-    IntelligentTooltip: IntelligentTooltip,
-    UnitSelectorMenuItem: UnitSelectorMenuItem,
-    UnitSelectorSubMenuItem: UnitSelectorSubMenuItem
+const {
+    Emojis
+} = require("js_modules/emojis.js");
+
+var Debugger = new DebugManager(`org.cinnamon.applets.${__meta.uuid}`);
+
+Debugger.wrapObjectMethods({
+    CustomNotification: CustomNotification
 });
 
 var Notification = new CustomNotification({
-    title: escapeHTML(_(XletMeta.name)),
-    defaultButtons: [{
+    title: escapeHTML(_(__meta.name)),
+    default_buttons: [{
         action: "dialog-information",
         label: escapeHTML(_("Help"))
     }],
-    actionInvokedCallback: (aSource, aAction) => {
+    action_invoked_callback: (aSource, aAction) => {
         switch (aAction) {
             case "dialog-information":
-                xdgOpen(XletMeta.path + "/HELP.html");
+                launchUri(`${__meta.path}/HELP.html`);
                 break;
         }
     }
@@ -113,17 +91,13 @@ function getUnitPluralForm(aUnit, aN) {
     return "";
 }
 
-function UnitSelectorMenuItem() {
-    this._init.apply(this, arguments);
-}
+class UnitSelectorMenuItem extends PopupMenu.PopupIndicatorMenuItem {
+    constructor(aParams) {
+        const params = Params.parse(aParams, UnitSelectorMenuItemParams);
 
-UnitSelectorMenuItem.prototype = {
-    __proto__: PopupMenu.PopupIndicatorMenuItem.prototype,
+        super(params.label);
 
-    _init: function(aParams) {
-        this.params = Params.parse(aParams, UnitSelectorMenuItemParams);
-
-        PopupMenu.PopupIndicatorMenuItem.prototype._init.call(this, this.params.label);
+        this.params = params;
 
         this.setOrnament(OrnamentType.DOT);
 
@@ -137,25 +111,19 @@ UnitSelectorMenuItem.prototype = {
         this._ornament.child._delegate.setToggleState(
             this.params.submenu.params.settings.getValue(this.params.units_key) === this.params.value
         );
-    },
-
-    destroy: function() {
-        this.disconnect(this._handler_id);
-        PopupMenu.PopupIndicatorMenuItem.prototype.destroy.call(this);
     }
-};
 
-function UnitSelectorSubMenuItem() {
-    this._init.apply(this, arguments);
+    destroy() {
+        this.disconnect(this._handler_id);
+        super.destroy();
+    }
 }
 
-UnitSelectorSubMenuItem.prototype = {
-    __proto__: PopupMenu.PopupSubMenuMenuItem.prototype,
+class UnitSelectorSubMenuItem extends PopupMenu.PopupSubMenuMenuItem {
+    constructor(aParams) {
+        super(" "); // ¬¬
 
-    _init: function(aParams) {
         this.params = Params.parse(aParams, UnitSelectorSubMenuItemParams);
-
-        PopupMenu.PopupSubMenuMenuItem.prototype._init.call(this, " "); // ¬¬
 
         this.setLabel();
         this._populateMenu();
@@ -164,24 +132,22 @@ UnitSelectorSubMenuItem.prototype = {
             this.actor,
             this.params.tooltip
         );
-    },
+    }
 
-    setLabel: function() {
-        this.label.clutter_text.set_markup(
-            this.params.label + " " + this.params.settings.getValue(this.params.value_key) +
-            " " +
-            getUnitPluralForm(
-                this.params.settings.getValue(this.params.units_key),
-                this.params.settings.getValue(this.params.value_key)
-            )
+    setLabel() {
+        const value = this.params.settings.getValue(this.params.value_key);
+        const plural = getUnitPluralForm(
+            this.params.settings.getValue(this.params.units_key),
+            this.params.settings.getValue(this.params.value_key)
         );
-    },
+        this.label.clutter_text.set_markup(`${this.params.label} ${value} ${plural}`);
+    }
 
-    _populateMenu: function() {
+    _populateMenu() {
         this.label.grab_key_focus();
         this.menu.removeAll();
-        for (let unit in UNITS_MAP) {
-            let item = new UnitSelectorMenuItem({
+        for (const unit in UNITS_MAP) {
+            const item = new UnitSelectorMenuItem({
                 submenu: this,
                 label: UNITS_MAP[unit].capital,
                 value: unit,
@@ -189,133 +155,21 @@ UnitSelectorSubMenuItem.prototype = {
             });
             this.menu.addMenuItem(item);
         }
-    },
+    }
 
-    _setCheckedState: function() {
-        let children = this.menu._getMenuItems();
-        let i = 0,
-            iLen = children.length;
-
-        for (; i < iLen; i++) {
-            let item = children[i];
-            if (item instanceof UnitSelectorMenuItem) { // Just in case
-                item._ornament.child._delegate.setToggleState(
-                    this.params.settings.getValue(this.params.units_key) === item.params.value
+    _setCheckedState() {
+        for (const child of this.menu._getMenuItems()) {
+            if (child instanceof UnitSelectorMenuItem) { // Just in case
+                child._ornament.child._delegate.setToggleState(
+                    this.params.settings.getValue(this.params.units_key) === child.params.value
                 );
             }
         }
     }
-};
-
-/*
-A custom PopupSliderMenuItem element whose value is changed by a step of 1.
-*/
-function CustomPopupSliderMenuItem() {
-    this._init.apply(this, arguments);
 }
 
-CustomPopupSliderMenuItem.prototype = {
-    __proto__: PopupMenu.PopupSliderMenuItem.prototype,
-
-    _init: function(aParams) {
-        this.params = Params.parse(aParams, CustomPopupSliderMenuItemParams);
-
-        PopupMenu.PopupBaseMenuItem.prototype._init.call(this, {
-            activate: false
-        });
-        this.sigMan = new SignalManager.SignalManager(null);
-
-        this.sigMan.connect(this.actor, "key-press-event", function(aActor, aEvent) {
-            this._onKeyPressEvent(aActor, aEvent);
-        }.bind(this));
-
-        // Avoid spreading NaNs around
-        if (isNaN(this.params.value)) {
-            throw TypeError("The slider value must be a number.");
-        }
-
-        this._value = Math.max(Math.min(this.params.value, 1), 0);
-
-        this._slider = new St.DrawingArea({
-            style_class: "popup-slider-menu-item",
-            reactive: true
-        });
-        this.addActor(this._slider, {
-            span: -1,
-            expand: true
-        });
-
-        this.sigMan.connect(this._slider, "repaint",
-            function(aArea) {
-                this._sliderRepaint(aArea);
-            }.bind(this)
-        );
-        this.sigMan.connect(this.actor, "button-press-event",
-            function(aActor, aEvent) {
-                this._startDragging(aActor, aEvent);
-            }.bind(this)
-        );
-        this.sigMan.connect(this.actor, "scroll-event",
-            function(aActor, aEvent) {
-                this._onScrollEvent(aActor, aEvent);
-            }.bind(this)
-        );
-
-        this._releaseId = this._motionId = 0;
-        this._dragging = false;
-
-        this.sigMan.connect(this, "value-changed", this.params.value_changed_cb);
-        this.sigMan.connect(this, "drag-begin", this.params.drag_begin_cb);
-        this.sigMan.connect(this, "drag-end", this.params.drag_end_cb);
-    },
-
-    _onScrollEvent: function(aActor, aEvent) {
-        let direction = aEvent.get_scroll_direction();
-        let scale = this.ctrlKey ? SLIDER_SCALE * 11.5 : SLIDER_SCALE;
-
-        if (direction === Clutter.ScrollDirection.DOWN) {
-            // Original "scale" was 0.05.
-            this._value = Math.max(0, this._value - scale);
-        } else if (direction === Clutter.ScrollDirection.UP) {
-            this._value = Math.min(1, this._value + scale);
-        }
-
-        this._slider.queue_repaint();
-        this.emit("value-changed", this._value);
-    },
-
-    _onKeyPressEvent: function(aActor, aEvent) {
-        let key = aEvent.get_key_symbol();
-        let scale = this.ctrlKey ? SLIDER_SCALE * 11.5 : SLIDER_SCALE;
-
-        if (key === Clutter.KEY_Right || key === Clutter.KEY_Left) {
-            // Original "scale" was 0.1.
-            let delta = key === Clutter.KEY_Right ? scale : -scale;
-            this._value = Math.max(0, Math.min(this._value + delta, 1));
-            this._slider.queue_repaint();
-            this.emit("value-changed", this._value);
-            this.emit("drag-end");
-            return Clutter.EVENT_STOP;
-        }
-        return Clutter.EVENT_PROPAGATE;
-    },
-
-    destroy: function() {
-        this.sigMan.disconnectAllSignals();
-        PopupMenu.PopupBaseMenuItem.prototype.destroy.call(this);
-    },
-
-    get ctrlKey() {
-        return (Clutter.ModifierType.CONTROL_MASK & global.get_pointer()[2]) !== 0;
-    }
-};
-
-function ArgosLineView() {
-    this._init.apply(this, arguments);
-}
-
-ArgosLineView.prototype = {
-    _init: function(aSettings, aLine = null, aMenuItem = null, aSetEllipsation = false) {
+var ArgosLineView = class ArgosLineView {
+    constructor(aSettings, aLine = null, aMenuItem = null, aSetEllipsation = false) {
         this._settings = aSettings;
         this._menuItem = aMenuItem;
         this._setEllipsation = aSetEllipsation;
@@ -328,9 +182,9 @@ ArgosLineView.prototype = {
         if (aLine !== null) {
             this.setLine(aLine);
         }
-    },
+    }
 
-    setLine: function(aLine) {
+    setLine(aLine) {
         this.line = aLine;
 
         this.actor.remove_all_children();
@@ -345,19 +199,19 @@ ArgosLineView.prototype = {
 
         if (aLine.iconname) {
             let iconName = aLine.iconname;
-            let iconSize = aLine.iconsize ?
+            const iconSize = aLine.iconsize ?
                 aLine.iconsize :
-                this._settings.getValue("pref_default_icon_size");
+                this._settings.getValue("default_icon_size");
 
             // If aLine.iconName is a path to an icon.
             if (iconName[0] === "/" || iconName[0] === "~") {
                 // Expand ~ to the user's home folder.
                 if (/^~\//.test(iconName)) {
-                    iconName = iconName.replace(/^~\//, GLib.get_home_dir() + "/");
+                    iconName = iconName.replace(/^~\//, `${GLib.get_home_dir()}/`);
                 }
 
-                let file = Gio.file_new_for_path(iconName);
-                let iconFile = new Gio.FileIcon({
+                const file = Gio.file_new_for_path(iconName);
+                const iconFile = new Gio.FileIcon({
                     file: file
                 });
 
@@ -383,26 +237,24 @@ ArgosLineView.prototype = {
         }
 
         if (aLine.image || aLine.templateimage) {
-            let image = aLine.image ?
+            const image = aLine.image ?
                 aLine.image :
                 aLine.templateimage ?
                 aLine.templateimage :
                 null;
 
-            try {
+            tryFn(() => {
                 // Source: https://github.com/GNOME/gnome-maps (mapSource.js)
-                let bytes = GLib.Bytes.new(GLib.base64_decode(image));
-                let stream = Gio.MemoryInputStream.new_from_bytes(bytes);
-
-                let pixbuf = GdkPixbuf.Pixbuf.new_from_stream(stream, null);
+                const bytes = GLib.Bytes.new(GLib.base64_decode(image));
+                const stream = Gio.MemoryInputStream.new_from_bytes(bytes);
+                const pixbuf = GdkPixbuf.Pixbuf.new_from_stream(stream, null);
 
                 // TextureCache.load_gicon returns a square texture no matter what the Pixbuf's
                 // actual dimensions are, so we request a size that can hold all pixels of the
                 // image and then resize manually afterwards
-                let size = Math.max(pixbuf.width, pixbuf.height);
-                let texture = St.TextureCache.get_default().load_gicon(null, pixbuf, size, 1);
-
-                let aspectRatio = pixbuf.width / pixbuf.height;
+                const size = Math.max(pixbuf.width, pixbuf.height);
+                const texture = St.TextureCache.get_default().load_gicon(null, pixbuf, size, 1);
+                const aspectRatio = pixbuf.width / pixbuf.height;
 
                 let width = parseInt(aLine.imagewidth, 10);
                 let height = parseInt(aLine.imageheight, 10);
@@ -421,12 +273,12 @@ ArgosLineView.prototype = {
                 this.actor.add_actor(texture);
                 // Do not stretch the texture to the height of the container
                 this.actor.child_set_property(texture, "y-fill", false);
-            } catch (aErr) {
+            }, (aErr) => {
                 // TO TRANSLATORS: Full sentence:
                 // "Unable to load image from Base64 representation: ErrorMessage"
                 global.logError(_("Unable to load image from Base64 representation: %s")
                     .format(aErr));
-            }
+            });
         }
 
         if (aLine.markup.length > 0) {
@@ -437,20 +289,20 @@ ArgosLineView.prototype = {
 
             this.actor.add_actor(this.label);
 
-            let clutterText = this.label.get_clutter_text();
+            const clutterText = this.label.get_clutter_text();
             clutterText.use_markup = true;
             clutterText.text = aLine.markup;
 
             if (this._setEllipsation) {
-                clutterText.ellipsize = this._settings.getValue("pref_prevent_applet_lines_ellipsation") ?
+                clutterText.ellipsize = this._settings.getValue("prevent_applet_lines_ellipsation") ?
                     Pango.EllipsizeMode.NONE :
                     Pango.EllipsizeMode.END;
             }
 
             if (aLine.length) {
-                let maxLength = parseInt(aLine.length, 10);
+                const maxLength = parseInt(aLine.length, 10);
                 // "clutterText.text.length" fails for non-BMP Unicode characters
-                let textLength = clutterText.buffer.get_length();
+                const textLength = clutterText.buffer.get_length();
 
                 if (!isNaN(maxLength) && textLength > maxLength) {
                     clutterText.set_cursor_position(maxLength);
@@ -459,13 +311,13 @@ ArgosLineView.prototype = {
                 }
             }
         }
-    },
+    }
 
-    setMarkup: function(aLine) {
+    setMarkup(aLine) {
         this.setLine(aLine);
-    },
+    }
 
-    destroy: function() {
+    destroy() {
         this.actor.destroy();
     }
 };
@@ -476,27 +328,23 @@ native PopupAlternatingMenuItem.
 I did this so I can keep the applet code as close to the original extension as possible.
 Plus, AltSwitcher is infinitely easier to use than PopupAlternatingMenuItem. So, it's a win-win.
 */
-function AltSwitcher() {
-    this._init.apply(this, arguments);
-}
-
-AltSwitcher.prototype = {
-    _init: function(aMenuItem, aStandard, aAlternate) {
-        this.sigMan = new SignalManager.SignalManager(null);
+class AltSwitcher {
+    constructor(aMenuItem, aStandard, aAlternate) {
+        this.signal_manager = new SignalManager.SignalManager();
 
         this._menuItem = aMenuItem;
 
         this._standard = aStandard;
-        this.sigMan.connect(this._standard, "notify::visible", function() {
+        this.signal_manager.connect(this._standard, "notify::visible", function() {
             this._sync();
         }.bind(this));
 
         this._alternate = aAlternate;
-        this.sigMan.connect(this._alternate, "notify::visible", function() {
+        this.signal_manager.connect(this._alternate, "notify::visible", function() {
             this._sync();
         }.bind(this));
 
-        this.sigMan.connect(global.stage, "captured-event",
+        this.signal_manager.connect(global.stage, "captured-event",
             function(aActor, aEvent) {
                 this._onCapturedEvent(aActor, aEvent);
             }.bind(this)
@@ -505,7 +353,7 @@ AltSwitcher.prototype = {
         this._flipped = false;
 
         this._clickAction = new Clutter.ClickAction();
-        this.sigMan.connect(this._clickAction, "long-press",
+        this.signal_manager.connect(this._clickAction, "long-press",
             function(aAction, aActor, aState) {
                 this._onLongPress(aAction, aActor, aState);
             }.bind(this)
@@ -513,19 +361,19 @@ AltSwitcher.prototype = {
 
         this.actor = new St.Bin();
         this.actor.add_style_class_name("popup-alternating-menu-item");
-        this.sigMan.connect(this.actor, "destroy",
+        this.signal_manager.connect(this.actor, "destroy",
             function() {
                 this._onDestroy();
             }.bind(this)
         );
-        this.sigMan.connect(this.actor, "notify::mapped",
+        this.signal_manager.connect(this.actor, "notify::mapped",
             function() {
                 this._flipped = false;
             }.bind(this)
         );
-    },
+    }
 
-    _sync: function() {
+    _sync() {
         let childToShow = null;
 
         if (this._standard.visible && this._alternate.visible) {
@@ -542,7 +390,7 @@ AltSwitcher.prototype = {
             childToShow = this._alternate;
         }
 
-        let childShown = this.actor.get_child();
+        const childShown = this.actor.get_child();
         if (childShown !== childToShow) {
             if (childShown) {
                 if (childShown.fake_release) {
@@ -552,7 +400,7 @@ AltSwitcher.prototype = {
             }
             childToShow.add_action(this._clickAction);
 
-            let hasFocus = this.actor.contains(global.stage.get_key_focus());
+            const hasFocus = this.actor.contains(global.stage.get_key_focus());
             this.actor.set_child(childToShow);
             if (hasFocus) {
                 childToShow.grab_key_focus();
@@ -568,17 +416,17 @@ AltSwitcher.prototype = {
         }
 
         this.actor.visible = (childToShow !== null);
-    },
+    }
 
-    _onDestroy: function() {
-        this.sigMan.disconnectAllSignals();
-    },
+    _onDestroy() {
+        this.signal_manager.disconnectAllSignals();
+    }
 
-    _onCapturedEvent: function(aActor, aEvent) {
-        let type = aEvent.type();
+    _onCapturedEvent(aActor, aEvent) {
+        const type = aEvent.type();
 
         if (type === Clutter.EventType.KEY_PRESS || type === Clutter.EventType.KEY_RELEASE) {
-            let key = aEvent.get_key_symbol();
+            const key = aEvent.get_key_symbol();
 
             // Nonsense time!!! On Linux Mint 18 with Cinnamon 3.0.7, pressing the Alt Right key
             // gives a keycode of 65027 and Clutter docs say that that keycode belongs
@@ -595,9 +443,9 @@ AltSwitcher.prototype = {
         }
 
         return Clutter.EVENT_PROPAGATE;
-    },
+    }
 
-    _onLongPress: function(aAction, aActor, aState) {
+    _onLongPress(aAction, aActor, aState) {
         if (aState === Clutter.LongPressState.QUERY ||
             aState === Clutter.LongPressState.CANCEL) {
             return Clutter.EVENT_STOP;
@@ -607,32 +455,27 @@ AltSwitcher.prototype = {
         this._sync();
 
         return Clutter.EVENT_STOP;
-    },
+    }
 
     get altKey() {
         return (Clutter.ModifierType.MOD1_MASK & global.get_pointer()[2]) !== 0 ||
             (Clutter.ModifierType.MOD5_MASK & global.get_pointer()[2]) !== 0;
     }
-};
-
-function ArgosMenuItem() {
-    this._init.apply(this, arguments);
 }
 
-ArgosMenuItem.prototype = {
-    __proto__: PopupMenu.PopupBaseMenuItem.prototype,
+var ArgosMenuItem = class ArgosMenuItem extends PopupMenu.PopupBaseMenuItem {
+    constructor(aParams) {
+        const params = Params.parse(aParams, ArgosMenuItemParams);
+        const hasAction = params.line.hasAction || (params.alt_line !== null &&
+            params.alt_line.hasAction);
 
-    _init: function(aParams) {
-        this.params = Params.parse(aParams, ArgosMenuItemParams);
-
-        let hasAction = this.params.line.hasAction || (this.params.alt_line !== null &&
-            this.params.alt_line.hasAction);
-
-        PopupMenu.PopupBaseMenuItem.prototype._init.call(this, {
+        super({
             activate: hasAction,
             hover: hasAction,
             focusOnHover: hasAction
         });
+
+        this.params = params;
 
         if (this.params.line.tooltip && this.params.alt_line && this.params.alt_line.tooltip) {
             this.tooltip = new IntelligentTooltip(this.actor, "");
@@ -643,7 +486,7 @@ ArgosMenuItem.prototype = {
         this._settings = this.params.settings;
 
         this.lineView = new ArgosLineView(this._settings, this.params.line, this);
-        this.lineView.actor.set_style("spacing: " + this._settings.getValue("pref_menu_spacing") + "em;");
+        this.lineView.actor.set_style(`spacing: ${this._settings.getValue("menu_spacing")}em;`);
         this.altSwitcher = null;
         this.alternateLineView = null;
 
@@ -651,7 +494,7 @@ ArgosMenuItem.prototype = {
             this.addActor(this.lineView.actor);
         } else {
             this.alternateLineView = new ArgosLineView(this._settings, this.params.alt_line, this);
-            this.alternateLineView.actor.set_style("spacing: " + this._settings.getValue("pref_menu_spacing") + "em;");
+            this.alternateLineView.actor.set_style(`spacing: ${this._settings.getValue("menu_spacing")}em;`);
             // The following class and pseudo class are set so the AltSwitcher is styled somewhat
             // the same as the Cinnamon's default.
             this.alternateLineView.actor.add_style_class_name("popup-alternating-menu-item");
@@ -664,7 +507,7 @@ ArgosMenuItem.prototype = {
 
         if (hasAction) {
             this.connect("activate", () => {
-                let activeLine = (this.altSwitcher === null) ?
+                const activeLine = (this.altSwitcher === null) ?
                     this.params.line :
                     this.altSwitcher.actor.get_child()._delegate.line;
 
@@ -673,48 +516,48 @@ ArgosMenuItem.prototype = {
                     // Gio.AppInfo.launch_default_for_uri(activeLine.href, null);
                     // Mark for deletion on EOL. Cinnamon 3.6.x+
                     // Implement the use of Gio.AppInfo.launch_default_for_uri_async.
-                    let argv = ["xdg-open", activeLine.href];
-                    try {
-                        let [success, pid] = GLib.spawn_async( // jshint ignore:line
+                    const argv = ["xdg-open", activeLine.href];
+                    tryFn(() => {
+                        const [success, pid] = GLib.spawn_async( // jshint ignore:line
                             null, argv, null, GLib.SpawnFlags.SEARCH_PATH, null
                         );
-                    } catch (aErr) {
+                    }, (aErr) => {
                         Notification.notify([
                             escapeHTML(_("Error opening URL/URI.")),
                             escapeHTML(_("A detailed error has been logged."))
                         ]);
-                        global.logError("%s: %s".format(_("Defined URL/URI"), activeLine.href));
-                        global.logError("%s: %s".format(_("Executed command"), argv.join(" ")));
+                        global.logError(`${_("Defined URL/URI")}: ${activeLine.href}`);
+                        global.logError(`${_("Executed command")}: ${argv.join(" ")}`);
                         global.logError(aErr);
-                    }
+                    });
                 }
 
                 if (activeLine.eval) {
-                    try {
+                    tryFn(() => {
                         eval(activeLine.eval);
-                    } catch (aErr) {
+                    }, (aErr) => {
                         Notification.notify([
                             escapeHTML(_("Error evaluating code.")),
                             escapeHTML(_("A detailed error has been logged."))
                         ]);
-                        global.logError("%s: %s".format(_("Evaluated code"), activeLine.eval));
+                        global.logError(`${_("Evaluated code")}: ${activeLine.eval}`);
                         global.logError(aErr);
-                    }
+                    });
                 }
 
                 if (activeLine.command || activeLine.bash) {
                     let argv = [];
-                    let shell = activeLine.shell ?
+                    const shell = activeLine.shell ?
                         activeLine.shell :
-                        this._settings.getValue("pref_shell") ?
-                        this._settings.getValue("pref_shell") :
+                        this._settings.getValue("shell") ?
+                        this._settings.getValue("shell") :
                         "/bin/bash";
-                    let shellArg = activeLine.shellargument ?
+                    const shellArg = activeLine.shellargument ?
                         activeLine.shellargument :
-                        this._settings.getValue("pref_shell_argument") ?
-                        this._settings.getValue("pref_shell_argument") :
+                        this._settings.getValue("shell_argument") ?
+                        this._settings.getValue("shell_argument") :
                         "-c";
-                    let cmd = activeLine.command ?
+                    const cmd = activeLine.command ?
                         activeLine.command :
                         activeLine.bash ?
                         activeLine.bash :
@@ -724,20 +567,20 @@ ArgosMenuItem.prototype = {
                         // Run shell immediately after executing the command to keep the terminal window open
                         // (see http://stackoverflow.com/q/3512055)
                         argv = [
-                            this._settings.getValue("pref_terminal_emulator"),
-                            this._settings.getValue("pref_terminal_emulator_argument")
+                            this._settings.getValue("terminal_emulator"),
+                            this._settings.getValue("terminal_emulator_argument")
                         ].concat(
                             // Workaround for the terminal that decided to reinvent the wheel. ¬¬
-                            this._settings.getValue("pref_terminal_emulator_argument") === "--" ?
-                            [shell, shellArg, cmd + "; exec " + shell] :
-                            [shell + " " + shellArg + " " + GLib.shell_quote(cmd + "; exec " + shell)]
+                            this._settings.getValue("terminal_emulator_argument") === "--" ? // Dummy comment to force wrapping.
+                            [shell, shellArg, `${cmd}; exec ${shell}`] : // Dummy comment to force wrapping.
+                            [`${shell} ${shellArg} ${GLib.shell_quote(`${cmd}; exec ${shell}`)}`]
                         );
                     } else {
                         argv = [shell, shellArg, cmd];
                     }
 
-                    try {
-                        let [success, pid] = GLib.spawn_async(null, argv, null,
+                    tryFn(() => {
+                        const [success, pid] = GLib.spawn_async(null, argv, null,
                             GLib.SpawnFlags.SEARCH_PATH | GLib.SpawnFlags.DO_NOT_REAP_CHILD, null);
 
                         if (success) {
@@ -747,7 +590,7 @@ ArgosMenuItem.prototype = {
                                 }
                             });
                         }
-                    } catch (aErr) {
+                    }, (aErr) => {
                         /* NOTE: This is only useful for very specific use cases because
                          * commands are not directly executed; they are executed through
                          * a shell and/or a terminal. So, GLib.spawn_async will always succeed
@@ -760,10 +603,10 @@ ArgosMenuItem.prototype = {
                             escapeHTML(_("Error executing command.")),
                             escapeHTML(_("A detailed error has been logged."))
                         ]);
-                        global.logError("%s: %s".format(_("Defined command"), cmd));
-                        global.logError("%s: %s".format(_("Executed command"), argv.join(" ")));
+                        global.logError(`${_("Defined command")}: ${cmd}`);
+                        global.logError(`${_("Executed command")}: ${argv.join(" ")}`);
                         global.logError(aErr);
-                    }
+                    });
                 }
 
                 if (activeLine.refresh) {
@@ -773,14 +616,13 @@ ArgosMenuItem.prototype = {
                 this.params.applet_menu && this.params.applet_menu.close();
             });
         }
-    },
+    }
 
-    destroy: function() {
+    destroy() {
         this.lineView && this.lineView.actor && this.lineView.actor.destroy();
         this.altSwitcher && this.altSwitcher.actor && this.altSwitcher.actor.destroy();
         this.alternateLineView && this.alternateLineView.actor && this.alternateLineView.actor.destroy();
-
-        PopupMenu.PopupBaseMenuItem.prototype.destroy.call(this);
+        super.destroy();
     }
 };
 
@@ -788,15 +630,9 @@ ArgosMenuItem.prototype = {
 I had to implement a custom sub menu item due to the fact that I never could make
 the insert_child_below method to work on Cinnamon.
 */
-function CustomSubMenuItem() {
-    this._init.apply(this, arguments);
-}
-
-CustomSubMenuItem.prototype = {
-    __proto__: PopupMenu.PopupSubMenuMenuItem.prototype,
-
-    _init: function(aSettings, aActor, aMenuLevel) {
-        PopupMenu.PopupBaseMenuItem.prototype._init.call(this);
+var CustomSubMenuItem = class CustomSubMenuItem extends PopupMenu.PopupSubMenuMenuItem {
+    constructor(aSettings, aActor, aMenuLevel) {
+        super();
 
         this._settings = aSettings;
 
@@ -826,7 +662,7 @@ CustomSubMenuItem.prototype = {
             align: St.Align.START
         });
         // Kind of pointless to set a spacing, but it doesn't hurt.
-        aActor.set_style("spacing: " + this._settings.getValue("pref_menu_spacing") + "em;");
+        aActor.set_style(`spacing: ${this._settings.getValue("menu_spacing")}em;`);
 
         // Add the triangle to emulate accurately a sub menu item.
         this.addActor(this._triangleBin, {
@@ -834,28 +670,22 @@ CustomSubMenuItem.prototype = {
             span: -1,
             align: St.Align.END
         });
-    },
+    }
 
-    destroy: function() {
+    destroy() {
         this.menu.close(false);
         this.disconnectAll();
         this.menu.removeAll();
         this.actor.destroy();
+        super.destroy();
+    }
 
-        PopupMenu.PopupSubMenuMenuItem.prototype.destroy.call(this);
-    },
-
-    _subMenuOpenStateChanged: function(aMenu, aOpen) {
-        if (aOpen && this._settings.getValue("pref_keep_one_menu_open")) {
-            let children = aMenu._getTopMenu()._getMenuItems();
-            let i = 0,
-                iLen = children.length;
-            for (; i < iLen; i++) {
-                let item = children[i];
-
-                if (item instanceof CustomSubMenuItem) {
-                    if (aMenu !== item.menu) {
-                        item.menu.close(true);
+    _subMenuOpenStateChanged(aMenu, aOpen) {
+        if (aOpen && this._settings.getValue("keep_one_menu_open")) {
+            for (const child of aMenu._getTopMenu()._getMenuItems()) {
+                if (child instanceof CustomSubMenuItem) {
+                    if (aMenu !== child.menu) {
+                        child.menu.close(true);
                     }
                 }
             }
@@ -880,7 +710,7 @@ function arrowIcon(side) {
             break;
     }
 
-    let arrow = new St.Icon({
+    const arrow = new St.Icon({
         style_class: "popup-menu-arrow",
         icon_name: iconName,
         icon_type: St.IconType.SYMBOLIC,
@@ -907,15 +737,16 @@ function getBoolean(aVal) {
 
 function parseAttributes(aAttrString) {
     let attrs = {};
-    try {
-        let [_, a] = GLib.shell_parse_argv(aAttrString); // jshint ignore:line
-        let i = a.length;
+
+    tryFn(() => {
+        const [_, argvp] = GLib.shell_parse_argv(aAttrString); // jshint ignore:line
+        let i = argvp.length;
         while (i--) {
-            let assignmentIndex = a[i].indexOf("=");
+            const assignmentIndex = argvp[i].indexOf("=");
 
             if (assignmentIndex >= 0) {
-                let key = a[i].substring(0, assignmentIndex).trim().toLowerCase();
-                let value = a[i].substring(assignmentIndex + 1).trim();
+                const key = argvp[i].substring(0, assignmentIndex).trim().toLowerCase();
+                const value = argvp[i].substring(assignmentIndex + 1).trim();
 
                 /* NOTE: Can't check if attribute exists in DefaultAttributes (to avoid
                  * setting attributes that will not be used) due to the existence
@@ -939,12 +770,13 @@ function parseAttributes(aAttrString) {
         /* NOTE: The parameter true at the end is to not throw when a not used
          * attribute is added to a parsed line. Those are just ignored.
          */
-        return Params.parse(attrs, DefaultAttributes, true);
-    } catch (aErr) {
-        global.logError("Unable to parse attributes for line '" + aAttrString + "': " + aErr);
-    }
+        attrs = Params.parse(attrs, DefaultAttributes, true);
+    }, (aErr) => {
+        attrs = Object.assign({}, DefaultAttributes);
+        global.logError(`Unable to parse attributes for line '${aAttrString}': ${aErr}`);
+    });
 
-    return JSON.parse(JSON.stringify(DefaultAttributes));
+    return attrs;
 }
 
 // Performs (mostly) BitBar-compatible output line parsing
@@ -952,7 +784,7 @@ function parseAttributes(aAttrString) {
 function parseLine(aLineString) {
     let line = {};
 
-    let separatorIndex = aLineString.indexOf("|");
+    const separatorIndex = aLineString.indexOf("|");
 
     if (separatorIndex >= 0) {
         line = parseAttributes(aLineString.substring(separatorIndex + 1));
@@ -973,7 +805,7 @@ function parseLine(aLineString) {
      * doesn't allow to insert separators inside sub-menus.
      */
     if (line.isSeparator) {
-        let dashCount = (line.text.trim().match(/\-/g) || []).length - 3;
+        const dashCount = (line.text.trim().match(/\-/g) || []).length - 3;
 
         if (dashCount <= 0) {
             line.menuLevel = 0;
@@ -981,7 +813,7 @@ function parseLine(aLineString) {
             line.menuLevel = Math.floor(dashCount / 2);
         }
     } else {
-        let leadingDashes = line.text.search(/[^-]/);
+        const leadingDashes = line.text.search(/[^-]/);
 
         if (leadingDashes >= 2) {
             line.menuLevel = Math.floor(leadingDashes / 2);
@@ -991,22 +823,22 @@ function parseLine(aLineString) {
         }
     }
 
-    let markupAttributes = [];
+    const markupAttributes = [];
 
     if (line.color) {
-        markupAttributes.push("color='" + GLib.markup_escape_text(line.color, -1) + "'");
+        markupAttributes.push(`color='${GLib.markup_escape_text(line.color, -1)}'`);
     }
 
     if (line.font) {
-        markupAttributes.push("font_family='" + GLib.markup_escape_text(line.font, -1) + "'");
+        markupAttributes.push(`font_family='${GLib.markup_escape_text(line.font, -1)}'`);
     }
 
     if (line.size) {
-        let pointSize = parseFloat(line.size);
+        const pointSize = parseFloat(line.size);
         // Pango expects numerical sizes in 1024ths of a point
         // (see https://developer.gnome.org/pango/stable/PangoMarkupFormat.html)
-        let fontSize = (isNaN(pointSize)) ? line.size : Math.round(1024 * pointSize).toString();
-        markupAttributes.push("font_size='" + GLib.markup_escape_text(fontSize, -1) + "'");
+        const fontSize = (isNaN(pointSize)) ? line.size : Math.round(1024 * pointSize).toString();
+        markupAttributes.push(`font_size='${GLib.markup_escape_text(fontSize, -1)}'`);
     }
 
     line.markup = line.text;
@@ -1017,7 +849,7 @@ function parseLine(aLineString) {
 
     if (line.emojize) {
         line.markup = line.markup.replace(/:([\w+-]+):/g, (aMatch, aEmojiName) => {
-            let emojiName = aEmojiName.toLowerCase();
+            const emojiName = aEmojiName.toLowerCase();
             return emojiName in Emojis ? Emojis[emojiName] : aMatch;
         });
     }
@@ -1039,18 +871,18 @@ function parseLine(aLineString) {
     }
 
     if (markupAttributes.length > 0) {
-        line.markup = "<span " + markupAttributes.join(" ") + ">" + line.markup + "</span>";
+        line.markup = `<span ${markupAttributes.join(" ")}>${line.markup}</span>`;
     }
 
-    for (let a = Constants.EXEC_ATTRIBUTES.length - 1; a >= 0; a--) {
-        let x = Constants.EXEC_ATTRIBUTES[a];
+    for (let a = EXEC_ATTRIBUTES.length - 1; a >= 0; a--) {
+        const x = EXEC_ATTRIBUTES[a];
 
         if (line.hasOwnProperty(x) && line[x]) {
             // Append BitBar's legacy "paramN" attributes to the bash command
             // (Argos allows placing arguments directly in the command string)
             let i = 1;
-            while (line.hasOwnProperty("param" + i)) {
-                line[x] += " " + GLib.shell_quote(line["param" + i]);
+            while (line.hasOwnProperty(`param${i}`)) {
+                line[x] += ` ${GLib.shell_quote(line[`param${i}`])}`;
                 i++;
             }
         }
@@ -1059,7 +891,7 @@ function parseLine(aLineString) {
     // Expand ~ to the user's home folder.
     if (line.href) {
         if (/^~\//.test(line.href)) {
-            line.href = line.href.replace(/^~\//, "file://" + GLib.get_home_dir() + "/");
+            line.href = line.href.replace(/^~\//, `file://${GLib.get_home_dir()}/`);
         }
     }
 
@@ -1068,24 +900,22 @@ function parseLine(aLineString) {
 
 function ansiToMarkup(aText) {
     let markup = "";
-
     let markupAttributes = {};
-
-    let regex = new GLib.Regex("(\\e\\[([\\d;]*)m)", 0, 0);
+    const regex = new GLib.Regex("(\\e\\[([\\d;]*)m)", 0, 0);
 
     // GLib's Regex.split is a fantastic tool for tokenizing strings because of an important detail:
     // If the regular expression contains capturing groups, their matches are also returned.
     // Therefore, tokens will be an array of the form
     //   TEXT, [(FULL_ESC_SEQUENCE, SGR_SEQUENCE, TEXT), ...]
-    let tokens = regex.split(aText, 0);
+    const tokens = regex.split(aText, 0);
 
     let i = 0,
         iLen = tokens.length;
     for (; i < iLen; i++) {
         if (regex.match(tokens[i], 0)[0]) {
             // Default is SGR 0 (reset)
-            let sgrSequence = (tokens[i + 1].length > 0) ? tokens[i + 1] : "0";
-            let sgrCodes = sgrSequence.split(";");
+            const sgrSequence = (tokens[i + 1].length > 0) ? tokens[i + 1] : "0";
+            const sgrCodes = sgrSequence.split(";");
 
             let j = 0,
                 jLen = sgrCodes.length;
@@ -1094,7 +924,7 @@ function ansiToMarkup(aText) {
                     continue;
                 }
 
-                let code = parseInt(sgrCodes[j], 10);
+                const code = parseInt(sgrCodes[j], 10);
 
                 if (code === 0) {
                     // Reset all attributes
@@ -1112,16 +942,16 @@ function ansiToMarkup(aText) {
                 }
             }
 
-            let textToken = tokens[i + 2];
+            const textToken = tokens[i + 2];
 
             if (textToken.length > 0) {
                 let attributeString = "";
-                for (let attribute in markupAttributes) {
-                    attributeString += " " + attribute + "='" + markupAttributes[attribute] + "'";
+                for (const attribute in markupAttributes) {
+                    attributeString += ` ${attribute}='${markupAttributes[attribute]}'`;
                 }
 
                 if (attributeString.length > 0) {
-                    markup += "<span" + attributeString + ">" + textToken + "</span>";
+                    markup += `<span${attributeString}>${textToken}</span>`;
                 } else {
                     markup += textToken;
                 }
@@ -1138,103 +968,15 @@ function ansiToMarkup(aText) {
     return markup;
 }
 
-function CustomPanelItemTooltip() {
-    this._init.apply(this, arguments);
-}
-
-CustomPanelItemTooltip.prototype = {
-    __proto__: Tooltips.PanelItemTooltip.prototype,
-    elementIDs: [
-        "scriptName",
-        "execInterval",
-        "rotationInterval",
-        "scriptExecTime",
-        "outputProcesstime"
-    ],
-
-    _init: function(aApplet, aOrientation) {
-        Tooltips.PanelItemTooltip.prototype._init.call(this, aApplet, "", aOrientation);
-
-        // Destroy the original _tooltip, which is a St.Label.
-        this._tooltip.destroy();
-
-        let tooltipBox = new Clutter.GridLayout({
-            orientation: Clutter.Orientation.VERTICAL
-        });
-
-        this._tooltip = new St.Bin({
-            name: "Tooltip"
-        });
-        this._tooltip.get_text = () => {
-            return "I'm a dummy string.";
-        };
-        this._tooltip.show_on_set_parent = false;
-
-        this._tooltip.set_child(new St.Widget({
-            layout_manager: tooltipBox
-        }));
-
-        let ellipsisObj = {
-            text: Placeholders.ELLIPSIS
-        };
-        let blankObj = {
-            text: Placeholders.BLANK
-        };
-        let markupTemp = "<b>%s</b>: ";
-
-        this.__scriptNameTitle = new St.Label();
-        this.__scriptNameTitle.clutter_text.set_markup(markupTemp
-            .format(_("Script file name")));
-        this.__scriptNameValue = new St.Label(ellipsisObj);
-
-        this.__execIntervalTitle = new St.Label();
-        this.__execIntervalTitle.clutter_text.set_markup(markupTemp
-            .format(_("Execution interval")));
-        this.__execIntervalValue = new St.Label(ellipsisObj);
-
-        this.__rotationIntervalTitle = new St.Label();
-        this.__rotationIntervalTitle.clutter_text.set_markup(markupTemp
-            .format(_("Rotation interval")));
-        this.__rotationIntervalValue = new St.Label(ellipsisObj);
-
-        this.__scriptExecTimeTitle = new St.Label();
-        this.__scriptExecTimeTitle.clutter_text.set_markup(markupTemp
-            .format(_("Script execution time")));
-        this.__scriptExecTimeValue = new St.Label(ellipsisObj);
-
-        this.__outputProcesstimeTitle = new St.Label();
-        this.__outputProcesstimeTitle.clutter_text.set_markup(markupTemp
-            .format(_("Output process time")));
-        this.__outputProcesstimeValue = new St.Label(ellipsisObj);
-
-        let appletName = new St.Label();
-        appletName.clutter_text.set_markup("<b>%s</b>".format(_(XletMeta.name)));
-        tooltipBox.attach(appletName, 0, 0, 1, 1);
-        tooltipBox.attach(new St.Label(blankObj), 0, 1, 1, 1);
-
-        let i = 0,
-            iLen = this.elementIDs.length;
-        for (; i < iLen; i++) {
-            tooltipBox.attach(
-                this["__" + this.elementIDs[i] + "Title"], 0, i + 2, 1, 1
-            );
-            tooltipBox.attach(new St.Label(blankObj), 1, i + 2, 1, 1);
-            tooltipBox.attach(
-                this["__" + this.elementIDs[i] + "Value"], 2, i + 2, 1, 1
-            );
-        }
-
-        Main.uiGroup.add_actor(this._tooltip);
-    },
-
-    set_text: function(aObj) {
-        let i = 0,
-            iLen = this.elementIDs.length;
-        for (; i < iLen; i++) {
-            this["__" + this.elementIDs[i] + "Value"].set_text(aObj[this.elementIDs[i]]);
-        }
-    }
-};
+Debugger.wrapObjectMethods({
+    AltSwitcher: AltSwitcher,
+    ArgosLineView: ArgosLineView,
+    ArgosMenuItem: ArgosMenuItem,
+    CustomSubMenuItem: CustomSubMenuItem,
+    IntelligentTooltip: IntelligentTooltip,
+    UnitSelectorMenuItem: UnitSelectorMenuItem,
+    UnitSelectorSubMenuItem: UnitSelectorSubMenuItem
+});
 
 /* exported parseLine,
             Debugger,
