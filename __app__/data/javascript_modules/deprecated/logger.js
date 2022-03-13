@@ -11,18 +11,14 @@
  * @param {Boolean} aVerbose          - Log the debug level messages.
  * @param {Number}  aSuperfluousCalls - How many superfluous calls to remove from the error stack.
  */
-function Logger() {
-    this._init.apply(this, arguments);
-}
-
-Logger.prototype = {
-    _init: function(aDisplayName, aVerbose = false, aSuperfluousCalls = 3) {
+var Logger = class Logger {
+    constructor(aDisplayName, aVerbose = false, aSuperfluousCalls = 3) {
         this._verbose = aVerbose;
         this._superfluous = aSuperfluousCalls;
         this.base_message = "[" + aDisplayName + "::%s]%s";
-    },
+    }
 
-    _log: function(aLevel, aMsg, aIsRuntime) {
+    _log(aLevel, aMsg, aIsRuntime) {
         if (typeof aMsg === "object") {
             /* NOTE: Logging function in global can handle objects.
              */
@@ -37,7 +33,7 @@ Logger.prototype = {
                 this._formatMessage(aMsg)
             ));
         }
-    },
+    }
 
     /**
      * runtime_error
@@ -46,9 +42,9 @@ Logger.prototype = {
      *
      * @param  {String} aMsg The message to log.
      */
-    runtime_error: function(aMsg) {
+    runtime_error(aMsg) {
         this._log("logError", aMsg, true);
-    },
+    }
 
     /**
      * runtime_info
@@ -57,9 +53,9 @@ Logger.prototype = {
      *
      * @param  {String} aMsg The message to log.
      */
-    runtime_info: function(aMsg) {
+    runtime_info(aMsg) {
         this._log("log", aMsg, true);
-    },
+    }
 
     /**
      * debug
@@ -68,11 +64,11 @@ Logger.prototype = {
      *
      * @param  {String} aMsg The message to log.
      */
-    debug: function(aMsg) {
+    debug(aMsg) {
         if (this.verbose) {
             this._log("log", aMsg);
         }
-    },
+    }
 
     /**
      * error
@@ -81,9 +77,9 @@ Logger.prototype = {
      *
      * @param  {String} aMsg The message to log.
      */
-    error: function(aMsg) {
+    error(aMsg) {
         this._log("logError", aMsg);
-    },
+    }
 
     /**
      * warning
@@ -92,9 +88,9 @@ Logger.prototype = {
      *
      * @param  {String} aMsg The message to log.
      */
-    warning: function(aMsg) {
+    warning(aMsg) {
         this._log("logWarning", aMsg);
-    },
+    }
 
     /**
      * info
@@ -103,9 +99,9 @@ Logger.prototype = {
      *
      * @param {String} aMsg - The message to log.
      */
-    info: function(aMsg) {
+    info(aMsg) {
         this._log("log", aMsg);
-    },
+    }
 
     /**
      * _formatMessage
@@ -115,30 +111,30 @@ Logger.prototype = {
      * @param  {String} aMsg The message to "format".
      * @return {String}      The formatted message.
      */
-    _formatMessage: function(aMsg) {
+    _formatMessage(aMsg) {
         return aMsg ? " " + aMsg : "";
-    },
+    }
 
     /**
      * [_getCaller description]
      * @return {String} A string representing the caller function name plus the
      * file name and line number.
      */
-    _getCaller: function() {
-        let stack = this._getStack();
+    _getCaller() {
+        const stack = this._getStack();
 
         // Remove superfluous function calls on stack
         stack.shift(); // _getCaller --> _getStack
         stack.shift(); // debug --> _getCaller
 
-        let caller = stack[0].split("/");
+        const caller = stack[0].split("/");
         // Return only the caller function and the file name and line number.
         return (caller.shift() + "@" + caller.pop()).replace(/\@+/g, "@");
-    },
+    }
 
-    _getStack: function() {
+    _getStack() {
         // Save original Error.prepareStackTrace
-        let origPrepareStackTrace = Error.prepareStackTrace;
+        const origPrepareStackTrace = Error.prepareStackTrace;
 
         // Override with function that just returns `stack`
         Error.prepareStackTrace = function(_, stack) {
@@ -146,10 +142,10 @@ Logger.prototype = {
         };
 
         // Create a new `Error`, which automatically gets `stack`
-        let err = new Error();
+        const err = new Error();
 
         // Evaluate `err.stack`, which calls our new `Error.prepareStackTrace`
-        let stack = err.stack.split("\n");
+        const stack = err.stack.split("\n");
 
         // Restore original `Error.prepareStackTrace`
         Error.prepareStackTrace = origPrepareStackTrace;
@@ -161,13 +157,16 @@ Logger.prototype = {
         }
 
         return stack;
-    },
+    }
 
     get verbose() {
         return this._verbose;
-    },
+    }
 
     set verbose(aVal) {
         this._verbose = aVal;
     }
 };
+
+/* exported Logger
+ */
