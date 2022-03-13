@@ -1,0 +1,6 @@
+{
+    "external-configuration-app": "settings.py",
+    "name": "Desktop Handler",
+    "max-instances": "-1",
+    "description": "Various shortcuts to handle desktop actions."
+}

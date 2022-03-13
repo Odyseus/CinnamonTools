@@ -1,0 +1,175 @@
+{
+    "info_label_1": {
+        "type": "label",
+        "description": "This window isn't this xlet's \"real\" configuration window."
+    },
+    "settings_button": {
+        "type": "button",
+        "callback": "__openXletSettings",
+        "description": "Open the \"real\" preference window"
+    },
+    "applet_icon": {
+        "type": "generic",
+        "default": "windows-quick-list-symbolic"
+    },
+    "applet_label": {
+        "type": "generic",
+        "default": ""
+    },
+    "applet_width_height": {
+        "type": "generic",
+        "default": 0
+    },
+    "scroll_action": {
+        "type": "generic",
+        "default": "switch_workspace"
+    },
+    "prevent_fast_scroll": {
+        "type": "generic",
+        "default": true
+    },
+    "scroll_delay": {
+        "type": "generic",
+        "default": 200
+    },
+    "separated_scroll_action": {
+        "type": "generic",
+        "default": false
+    },
+    "scroll_up_action": {
+        "type": "generic",
+        "default": "none"
+    },
+    "scroll_down_action": {
+        "type": "generic",
+        "default": "none"
+    },
+    "left_click_action": {
+        "type": "generic",
+        "default": "desktop"
+    },
+    "middle_click_action": {
+        "type": "generic",
+        "default": "cc3"
+    },
+    "windows_list_menu_enabled": {
+        "type": "generic",
+        "default": true
+    },
+    "button_to_open_menu": {
+        "type": "generic",
+        "default": "winlistmenu3"
+    },
+    "show_close_buttons": {
+        "type": "generic",
+        "default": true
+    },
+    "show_close_all_buttons": {
+        "type": "generic",
+        "default": true
+    },
+    "keep_menu_open_when_closing": {
+        "type": "generic",
+        "default": true
+    },
+    "keep_menu_open_when_activating": {
+        "type": "generic",
+        "default": false
+    },
+    "show_context_menu_default_items": {
+        "type": "generic",
+        "default": true
+    },
+    "show_context_menu_help": {
+        "type": "generic",
+        "default": false
+    },
+    "show_context_menu_about": {
+        "type": "generic",
+        "default": false
+    },
+    "show_context_menu_remove": {
+        "type": "generic",
+        "default": false
+    },
+    "hover_delay": {
+        "type": "generic",
+        "default": 200
+    },
+    "hover_action": {
+        "type": "generic",
+        "default": "peek"
+    },
+    "hover_enabled": {
+        "type": "generic",
+        "default": false
+    },
+    "opacify_desktop_icons": {
+        "type": "generic",
+        "default": false
+    },
+    "opacify_desklets": {
+        "type": "generic",
+        "default": false
+    },
+    "peek_opacity": {
+        "type": "generic",
+        "default": 120
+    },
+    "blur_effect_enabled": {
+        "type": "generic",
+        "default": false
+    },
+    "custom_cmd1_action": {
+        "type": "generic",
+        "default": "gnome-system-monitor"
+    },
+    "custom_cmd2_action": {
+        "type": "generic",
+        "default": "gnome-terminal"
+    },
+    "custom_cmd3_action": {
+        "type": "generic",
+        "default": "nohup cinnamon --replace > /dev/null 2>&1 &"
+    },
+    "custom_cmd4_action": {
+        "type": "generic",
+        "default": ""
+    },
+    "switcher_style": {
+        "type": "generic",
+        "default": "default"
+    },
+    "switcher_scope": {
+        "type": "generic",
+        "default": "switch-windows"
+    },
+    "switcher_scope_modified": {
+        "type": "generic",
+        "default": "switch-panels"
+    },
+    "switcher_scope_modifier": {
+        "type": "generic",
+        "default": "4"
+    },
+    "icon_close_all_windows": {
+        "type": "generic",
+        "default": "edit-delete"
+    },
+    "icon_close_all_windows_size": {
+        "type": "generic",
+        "default": 24
+    },
+    "icon_close_window": {
+        "type": "generic",
+        "default": "window-close"
+    },
+    "icon_close_window_size": {
+        "type": "generic",
+        "default": 24
+    },
+    "icon_applications_size": {
+        "type": "generic",
+        "default": 24
+    }
+}

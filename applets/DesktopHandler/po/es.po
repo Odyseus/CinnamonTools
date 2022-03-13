@@ -1,0 +1,1130 @@
+# This is a template file for translating the Cinnamon applet called Desktop Handler.
+# Copyright (C) 2016
+# This file is distributed under the same license as the Desktop Handler applet.
+# Odyseus <EMAIL@ADDRESS>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: DesktopHandler\n"
+"Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
+"POT-Creation-Date: 2022-03-10 23:50-0300\n"
+"PO-Revision-Date: 2020-02-10 20:59-0300\n"
+"Last-Translator: Odyseus\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.7.1\n"
+
+#. NOTE: Always display the configure menu.
+#: ../../__app__/data/javascript_modules/appletsUtils.js:279 applet.js:414
+msgid "Configure..."
+msgstr "Configurar..."
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:64
+msgid "Application Chooser"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:68 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:75 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:448 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1149 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1981 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2836 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1165 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1290 ../../__app__/data/python_modules/xlets_settings/__init__.py:1331 ../../__app__/data/python_modules/xlets_settings/__init__.py:1366 ../../__app__/data/python_modules/xlets_settings/common.py:452 ../../__app__/data/python_modules/xlets_settings/common.py:457
+msgid "_Cancel"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:69
+msgid "_OK"
+msgstr ""
+
+#. Can be programmatically changed if needed.
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:83 ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:708
+msgid "Choose an application"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:206
+msgid "Total applications"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:344
+msgid "Applications list"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:366
+msgid "Application"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:396
+msgid "Add Applications"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:404
+msgid "Remove selected applications"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:412 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2565 ../../__app__/data/python_modules/xlets_settings/__init__.py:413 ../../__app__/python_modules/localized_help_creator.py:324 applet.js:399
+msgid "Help"
+msgstr "Ayuda"
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:450 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2603
+msgid "Duplicated entries will be automatically removed."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:451 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2604
+msgid "Entries will be also sorted alphabetically."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:453 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2606
+msgid "Basic information"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:471
+msgid "Choose one or more applications (Hold Ctrl key)"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:663
+msgid "Clear application"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:771 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:548
+msgid "Invalid app"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:771 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:548
+msgid "No app chosen"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:773
+#, python-format
+msgid "The application with ID '%s' might not be installed anymore."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:73 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:444
+msgid "Choose an Icon"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:76 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:449 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1982
+msgid "_Select"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:132
+msgid "Search..."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:134
+msgid "Browse"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:322
+msgid "Icons shown"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:453
+msgid "Image files"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:576 settings.py:67
+msgid "Icon"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:577
+msgid "The string representing the icon."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:292
+msgid "Click to set a new accelerator key."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:293
+msgid "Press Escape or click again to cancel the operation."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:294
+msgid "Press Backspace to clear the existing keybinding."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:369
+msgid "unassigned"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:410
+msgid "Pick an accelerator"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:554
+#, python-format
+msgid ""
+"\n"
+"This key combination, '<b>%s</b>' cannot be used because it would become impossible to type using this key.\n"
+"\n"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:555
+msgid "Please try again with a modifier key such as Control, Alt or Super (Windows key) at the same time.\n"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:337
+msgid "Information related to this specific section"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1150 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1291 ../../__app__/data/python_modules/xlets_settings/__init__.py:1332 ../../__app__/data/python_modules/xlets_settings/__init__.py:1367 ../../__app__/data/python_modules/xlets_settings/common.py:453
+msgid "_Save"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1728
+msgid "Clear color"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1863
+msgid "Clear path"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1906
+msgid "Non-existent file/location"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1915
+msgid "(None)"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1918 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1970
+msgid "Select a folder"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1920 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1973
+msgid "Select a file"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1956
+msgid "Any files"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2489
+msgid "Strings list"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2530
+msgid "Entries"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2557
+msgid "Remove selected entries"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2746
+msgid "Clear sound"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2837 ../../__app__/data/python_modules/xlets_settings/common.py:458
+msgid "_Open"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2853
+msgid "Sound files"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2877
+msgid "Non-existent file"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2883
+msgid "No sound"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:672
+msgid "Add new item"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:682
+msgid "Remove selected item"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:698
+msgid "Edit selected item"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:710
+msgid "Move selected item up"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:720
+msgid "Move selected item down"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:734
+msgid "Export data"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:747 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1162
+msgid "Import data"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:757
+msgid "Apply changes"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:959
+msgid "Item removal"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:962
+msgid "Are you sure that you want to remove the selected items?"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:963
+msgid "Note"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:964
+msgid "Press and hold Control key to remove items without confirmation."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1166
+msgid "_Overwrite"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1167
+msgid "_Append"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1188
+msgid "Overwrite"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1189
+msgid "replace the current data with the imported data."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1190
+msgid "Append"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1191
+msgid "add the imported data to the current data."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1226
+#, python-format
+msgid "Wrong data type found on file '{%s}'"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1229
+msgid "Error importing data"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1280
+msgid "Add new entry"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1282
+msgid "Edit entry"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:406
+msgid "Import settings from a file"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:407
+msgid "Export settings to a file"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:408
+msgid "Reset settings to defaults"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:409
+msgid "Xlet settings"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:419
+msgid "Use headerbars on dialogs"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:421
+msgid "Application preferences"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:468
+msgid "Previous instance"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:476
+msgid "Next instance"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:835 settings.py:290
+msgid "Other"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1026
+#, python-format
+msgid "Settings for %s"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1327 ../../__app__/data/python_modules/xlets_settings/common.py:451
+msgid "Select or enter file to export to"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1338 ../../__app__/data/python_modules/xlets_settings/__init__.py:1372 ../../__app__/data/python_modules/xlets_settings/common.py:476
+msgid "JSON files"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1362
+msgid "Select a JSON file to import"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1399
+msgid "Trying to reset all settings!!!"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1401
+msgid "Reset all settings to their default values?"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:52
+msgid "It enables the ability to log the output of several functions used by the extension."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:54 ../../__app__/data/python_modules/xlets_settings/builder.py:246
+msgid "Normal"
+msgstr "Normal"
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:54
+msgid "Only log messages caused by non critical errors."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:55
+msgid "Additionally log extra output messages and all HTTP responses."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:55 ../../__app__/data/python_modules/xlets_settings/builder.py:247
+msgid "Verbose"
+msgstr "Detallado"
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:56 ../../__app__/data/python_modules/xlets_settings/builder.py:248
+msgid "Very verbose"
+msgstr "Muy detallado"
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:57
+msgid "Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:241
+msgid "Debugging"
+msgstr "Configuración de depuración"
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:243
+msgid "Logging level"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:252
+msgid "Enable debugger"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:253
+msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
+msgstr "Permite la posibilidad de capturar todas las excepciones que, en el uso normal, no se detectarían."
+
+#: ../../__app__/data/python_modules/xlets_settings/common.py:456
+msgid "Select a file to import"
+msgstr ""
+
+#: ../../__app__/python_modules/app_data.py:316
+msgid "See this xlet help file."
+msgstr "Ver el archivo de ayuda de este xlet."
+
+#: ../../__app__/python_modules/app_data.py:317 ../../__app__/python_modules/localized_help_creator.py:413
+msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
+msgstr "Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación."
+
+#: ../../__app__/python_modules/localized_help_creator.py:253 ../../__app__/python_modules/localized_help_creator.py:327
+#, python-format
+msgid "Help for %s"
+msgstr "Ayuda para %s"
+
+#: ../../__app__/python_modules/localized_help_creator.py:325
+msgid "Contributors"
+msgstr "Colaboradores"
+
+#: ../../__app__/python_modules/localized_help_creator.py:326
+msgid "Changelogs"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:362
+msgid "The following sections are available only in English."
+msgstr "Las siguientes secciones están disponibles sólo en Inglés."
+
+#: ../../__app__/python_modules/localized_help_creator.py:382
+#, python-format
+msgid "This xlet is compatible with Cinnamon %s up to latest Cinnamon version."
+msgstr "Este xlet es compatible con Cinnamon %s hasta la última versión de Cinnamon."
+
+#: ../../__app__/python_modules/localized_help_creator.py:385
+#, python-brace-format
+msgid "This xlet is compatible with Cinnamon {0} up to {1}."
+msgstr "Este xlet es compatible con Cinnamon {0} hasta {1}."
+
+#: ../../__app__/python_modules/localized_help_creator.py:391
+msgid "Cinnamon compatibility"
+msgstr "Compatibilidad con Cinnamon"
+
+#: ../../__app__/python_modules/localized_help_creator.py:408
+msgid "Warning"
+msgstr "Advertencia"
+
+#: ../../__app__/python_modules/localized_help_creator.py:411
+msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
+msgstr "Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet."
+
+#: ../../__app__/python_modules/localized_help_creator.py:429
+msgid "Xlets localization"
+msgstr "Localización de xlets"
+
+#: ../../__app__/python_modules/localized_help_creator.py:433
+msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
+msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente."
+
+#: ../../__app__/python_modules/localized_help_creator.py:434
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
+msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
+
+#: settings.py:24 settings.py:36 __data__/create_localized_help.py:46 __data__/create_localized_help.py:53 applet.js:357 js_modules/constants.js:50
+msgid "Expo"
+msgstr "Visualizar áreas de trabajo"
+
+#: settings.py:25 settings.py:37 __data__/create_localized_help.py:48 __data__/create_localized_help.py:55 js_modules/constants.js:51
+msgid "Overview"
+msgstr "Visión general"
+
+#: settings.py:26 settings.py:38 __data__/create_localized_help.py:47 __data__/create_localized_help.py:54 js_modules/constants.js:52
+msgid "Launch App Switcher"
+msgstr "Lanzar conmutador de aplicaciones"
+
+#: settings.py:27 settings.py:39 settings.py:140 __data__/create_localized_help.py:43 __data__/create_localized_help.py:49
+msgid "Toggle Show desktop"
+msgstr "Activar Mostrar escritorio"
+
+#: settings.py:28 __data__/create_localized_help.py:56 js_modules/constants.js:53
+msgid "Run 1st Custom Command"
+msgstr "Ejecutar 1.º comando personalizado"
+
+#: settings.py:29 __data__/create_localized_help.py:57 js_modules/constants.js:54
+msgid "Run 2nd Custom Command"
+msgstr "Ejecutar 2.º comando personalizado"
+
+#: settings.py:30 __data__/create_localized_help.py:58 js_modules/constants.js:55
+msgid "Run 3rd Custom Command"
+msgstr "Ejecutar 3.º comando personalizado"
+
+#: settings.py:31 __data__/create_localized_help.py:59 js_modules/constants.js:56
+msgid "Run 4rd Custom Command"
+msgstr "Ejecutar 4.º comando personalizado"
+
+#: settings.py:32 settings.py:142 js_modules/constants.js:57
+msgid "None"
+msgstr "Ninguna"
+
+#: settings.py:40 __data__/create_localized_help.py:45
+msgid "Desktop Peek"
+msgstr ""
+
+#: settings.py:44 js_modules/constants.js:58
+msgid "Icons only"
+msgstr "Sólo íconos"
+
+#: settings.py:45 js_modules/constants.js:59
+msgid "Thumbnails only"
+msgstr "Sólo miniaturas"
+
+#: settings.py:46 js_modules/constants.js:60
+msgid "Icons and thumbnails"
+msgstr "Íconos y miniaturas"
+
+#: settings.py:47 js_modules/constants.js:61
+msgid "Icons and window preview"
+msgstr "Íconos y vista previa de ventana"
+
+#: settings.py:48 js_modules/constants.js:62
+msgid "Window preview (no icons)"
+msgstr "Vista previa de ventana (sin íconos)"
+
+#: settings.py:49 js_modules/constants.js:63
+msgid "Coverflow (3D)"
+msgstr "Coverflow (3D)"
+
+#: settings.py:50 js_modules/constants.js:64
+msgid "Timeline (3D)"
+msgstr "Timeline (3D)"
+
+#: settings.py:51 js_modules/constants.js:65
+msgid "System default"
+msgstr "Predeterminado por el sistema"
+
+#: settings.py:55
+msgid "Current workspace"
+msgstr "Espacio de trabajo actual"
+
+#: settings.py:56
+msgid "All workspaces"
+msgstr "Todos los espacios de trabajo"
+
+#: settings.py:57
+msgid "Current Application"
+msgstr "Aplicación actual"
+
+#: settings.py:61
+msgid "Even with this preference disabled, the menu can be kept open if the Control modifier key is pressed while performing the action."
+msgstr ""
+
+#: settings.py:64 settings.py:65
+msgid "Applet settings"
+msgstr ""
+
+#: settings.py:68
+msgid "Select an icon to show in the panel."
+msgstr ""
+
+#: settings.py:71
+msgid "Label"
+msgstr ""
+
+#: settings.py:72
+msgid "Enter custom text to show in the panel."
+msgstr ""
+
+#: settings.py:75
+msgid "Applet custom width/height"
+msgstr ""
+
+#: settings.py:76
+msgid "Set to 0 (zero) to not set a width/height. On horizontal panels it will set a fixed width, and on vertical panels it will set a fixed height."
+msgstr ""
+
+#: settings.py:81 settings.py:253 settings.py:264 settings.py:272
+msgid "pixels"
+msgstr "pixeles"
+
+#: settings.py:84
+msgid "Hover over applet settings"
+msgstr ""
+
+#: settings.py:86
+msgid "Enable hover actions"
+msgstr ""
+
+#: settings.py:89
+msgid "Action on applet hover"
+msgstr ""
+
+#: settings.py:94
+msgid "Hover delay"
+msgstr ""
+
+#: settings.py:100 settings.py:155
+msgid "milliseconds"
+msgstr "milisegundos"
+
+#: settings.py:103
+msgid "Desktop peek settings"
+msgstr ""
+
+#: settings.py:105
+msgid "Opacify the icons on the desktop"
+msgstr "Opacar los íconos en el escritorio"
+
+#: settings.py:108
+msgid "Opacify desklets"
+msgstr "Opacar desklets"
+
+#: settings.py:111
+msgid "Level of opacity"
+msgstr ""
+
+#: settings.py:117
+msgid "Blur windows"
+msgstr ""
+
+#: settings.py:120
+msgid "Mouse settings"
+msgstr ""
+
+#: settings.py:121
+msgid "Mouse click settings"
+msgstr ""
+
+#: settings.py:123
+msgid "Action on applet left click"
+msgstr ""
+
+#: settings.py:128
+msgid "Action on applet middle click"
+msgstr ""
+
+#: settings.py:133
+msgid "Mouse scroll settings"
+msgstr ""
+
+#: settings.py:135
+msgid "Action on scrolling"
+msgstr ""
+
+#: settings.py:138 __data__/create_localized_help.py:42 js_modules/constants.js:66
+msgid "Switch between workspaces"
+msgstr "Alternar entre espacios de trabajo"
+
+#: settings.py:139 __data__/create_localized_help.py:40 js_modules/constants.js:67
+msgid "Adjust opacity of windows"
+msgstr "Ajustar opacidad de ventanas"
+
+#: settings.py:141 __data__/create_localized_help.py:41 js_modules/constants.js:69
+msgid "Switch between windows"
+msgstr "Cambiar entre ventanas"
+
+#: settings.py:146
+msgid "Prevent accidental workspace/window switching on rapid scrolling"
+msgstr "Prevenir cambios accidentales de espacio de trabajo/ventanas al realizar desplazamiento rápido"
+
+#: settings.py:149
+msgid "Minimum delay between scrolls"
+msgstr ""
+
+#: settings.py:158
+msgid "Independent actions for scrolling up and down"
+msgstr "Acciones independientes para desplazamiento hacia arriba y hacia abajo"
+
+#: settings.py:161
+msgid "Action on scrolling up"
+msgstr ""
+
+#: settings.py:166
+msgid "Action on scrolling down"
+msgstr ""
+
+#: settings.py:171
+msgid "Windows list menu"
+msgstr ""
+
+#: settings.py:172
+msgid "Windows list menu settings"
+msgstr ""
+
+#: settings.py:174
+msgid "Enable Windows list menu"
+msgstr "Habilitar menú de lista de ventanas"
+
+#: settings.py:177
+msgid "Mouse button to open menu (It will override mouse click actions)"
+msgstr ""
+
+#: settings.py:180 applet.js:573
+msgid "Left click"
+msgstr "Botón izquierdo"
+
+#: settings.py:181 applet.js:579
+msgid "Middle click"
+msgstr "Botón central"
+
+#: settings.py:182 applet.js:583
+msgid "Right click"
+msgstr "Botón derecho"
+
+#: settings.py:186
+msgid "Show close buttons on windows list"
+msgstr "Mostrar botones de cierre en la lista de ventanas"
+
+#: settings.py:190
+msgid "Show close all windows buttons for workspaces"
+msgstr "Mostrar botones para cerrar todas las ventanas en los espacios de trabajo"
+
+#: settings.py:194
+msgid "Keep menu open while closing windows"
+msgstr "Mantener menú abierto mientras se cierran ventanas"
+
+#: settings.py:199
+msgid "Keep menu open while activating windows"
+msgstr ""
+
+#: settings.py:204
+msgid "Show context menu default items on right click"
+msgstr "Mostrar elementos predeterminados del menú contextual al hacer clic con el botón derecho"
+
+#: settings.py:208
+msgid "Show \"Help\""
+msgstr "Mostrar \"Ayuda\""
+
+#: settings.py:212
+msgid "Show \"About...\""
+msgstr "Mostrar \"Acerca de...\""
+
+#: settings.py:216
+msgid "Show \"Remove\""
+msgstr ""
+
+#: settings.py:220
+msgid "App switcher"
+msgstr ""
+
+#: settings.py:221
+msgid "App switcher settings"
+msgstr ""
+
+#: settings.py:223
+msgid "App switcher style"
+msgstr ""
+
+#: settings.py:227
+msgid "Switch between windows from"
+msgstr ""
+
+#: settings.py:231
+msgid "When a modifier key is pressed, switch between windows from"
+msgstr ""
+
+#: settings.py:235
+msgid "Modifier key"
+msgstr ""
+
+#: settings.py:237
+msgid "Ctrl"
+msgstr "Ctrl"
+
+#: settings.py:238
+msgid "Shift"
+msgstr "Shift"
+
+#: settings.py:242
+msgid "Appearance"
+msgstr ""
+
+#: settings.py:243
+msgid "Appearance settings"
+msgstr ""
+
+#: settings.py:245
+msgid "Close all windows icon"
+msgstr ""
+
+#: settings.py:248
+msgid "Close all windows icon size"
+msgstr ""
+
+#: settings.py:256
+msgid "Close window icon"
+msgstr ""
+
+#: settings.py:259
+msgid "Close window icon size"
+msgstr ""
+
+#: settings.py:267
+msgid "Applications icon size"
+msgstr ""
+
+#: settings.py:275
+msgid "Commands"
+msgstr ""
+
+#: settings.py:276
+msgid "Custom commands"
+msgstr ""
+
+#: settings.py:278
+msgid "1st Custom Command"
+msgstr ""
+
+#: settings.py:281
+msgid "2nd Custom Command"
+msgstr ""
+
+#: settings.py:284
+msgid "3rd Custom Command"
+msgstr ""
+
+#: settings.py:287
+msgid "4rd Custom Command"
+msgstr ""
+
+#: __data__/create_localized_help.py:28
+msgid "Description"
+msgstr "Descripción"
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:31
+msgid "This applet is based on [Smart Panel](https://cinnamon-spices.linuxmint.com/extensions/view/32) extension and [Show Desktop ++](https://cinnamon-spices.linuxmint.com/applets/view/165) applet, both authored by  **mohammad-sn**. I *mixed* both of them into an applet because there is not always room on the panel to perform the actions added by **Smart Panel**. The **Smart Panel** extension can still be installed and activated at the same time than this applet to have even more desktop actions."
+msgstr "Este applet está basado en la extensión [Smart Panel](https://cinnamon-spices.linuxmint.com/extensions/view/32) y en el applet [Show Desktop ++](https://cinnamon-spices.linuxmint.com/applets/view/165), ambos escritos por **mohammad-sn**. Yo *mezclé* ambos en un applet porque no siempre hay espacio en el panel para realizar las acciones agregadas por **Smart Panel**. La extensión **Smart Panel** se puede instalar y activar al mismo tiempo que este applet para tener aún más acciones de escritorio."
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:34
+msgid "An intended effect of using this applet is that it includes the features of the **Scale**, **Expo**, **Show desktop** and **Windows Quick List** applets, and partially some of **Workspace switcher** applet features (all applets shipped with Cinnamon by default)."
+msgstr ""
+
+#: __data__/create_localized_help.py:36
+msgid "Features"
+msgstr "Características"
+
+#: __data__/create_localized_help.py:38
+msgid "The applet icon, label, width (height on vertical panels) can be customized."
+msgstr ""
+
+#: __data__/create_localized_help.py:39
+msgid "Scroll over applet actions."
+msgstr ""
+
+#: __data__/create_localized_help.py:44
+msgid "Hover over applet actions."
+msgstr ""
+
+#: __data__/create_localized_help.py:50
+msgid "Posibility to perform different actions for scrolling up and down."
+msgstr "Posibilidad de realizar diferentes acciones al desplazarse hacia arriba y hacia abajo."
+
+#: __data__/create_localized_help.py:51
+msgid "Posibility to perform different actions on left and middle click."
+msgstr "Posibilidad de realizar diferentes acciones en el clic izquierdo y central."
+
+#: __data__/create_localized_help.py:52
+msgid "Actions for up/down scroll and/or left/middle clicks."
+msgstr "Acciones para los desplazamientos arriba/abajo y/o los clics izquierdo/central."
+
+#: __data__/create_localized_help.py:60
+msgid "Show Desktop"
+msgstr "Mostrar Escritorio"
+
+#: __data__/create_localized_help.py:61
+msgid "Posibility to create a windows list menu."
+msgstr "Posibilidad de crear un menú de lista de ventanas."
+
+#: __data__/create_localized_help.py:62
+msgid "Left/Middle/Right click on applet can be configured to open the windows list menu."
+msgstr "Clic Izquierdo/Medio/Derecho en el applet se puede configurar para abrir el menú de la lista de ventanas."
+
+#: __data__/create_localized_help.py:63
+msgid "Desktop peek functionality with configurable levels of opacity and blur."
+msgstr ""
+
+#: __data__/create_localized_help.py:69
+msgid "Why set a fixed applet width/height?"
+msgstr ""
+
+#: __data__/create_localized_help.py:72
+msgid "This option is for people that wants to use an instance of this applet at the end of a panel without an icon and without a label (like the button seen on Windows taskbars)."
+msgstr ""
+
+#: applet.js:269
+msgid "Sticky windows"
+msgstr ""
+
+#: applet.js:274
+msgid "Close all sticky windows"
+msgstr ""
+
+#: applet.js:318
+msgid "Close all windows from this workspace"
+msgstr ""
+
+#: applet.js:351
+msgid "No open windows"
+msgstr "No hay ventanas abiertas"
+
+#: applet.js:368
+msgid "Close all windows from all workspaces"
+msgstr "Cerrar todas las ventanas de todos los espacios de trabajo"
+
+#: applet.js:406
+msgid "About..."
+msgstr "Acerca de..."
+
+#: applet.js:421
+#, javascript-format
+msgid "Remove '%s'"
+msgstr "Remover '%s'"
+
+#: applet.js:429
+#, javascript-format
+msgid "Are you sure that you want to remove '%s' from your panel?"
+msgstr "¿Está seguro de que desea remover '%s' del panel?"
+
+#: applet.js:431
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: applet.js:432
+msgid "OK"
+msgstr "Aceptar"
+
+#: applet.js:563
+msgid "Scroll Up"
+msgstr "Desplazar hacia arriba"
+
+#: applet.js:564
+msgid "Scroll Down"
+msgstr "Desplazar hacia abajo"
+
+#: applet.js:566
+msgid "Scroll"
+msgstr "Desplazamiento del ratón"
+
+#: js_modules/constants.js:68
+msgid "Toggle show desktop"
+msgstr "Activar Mostrar escritorio"
+
+#: js_modules/constants.js:70
+msgid "Open windows list menu"
+msgstr "Abrir el menú de lista de ventanas"
+
+#: js_modules/utils.js:79
+msgid "Close window"
+msgstr "Cerrar ventana"
+
+#. metadata.json->name
+msgid "Desktop Handler"
+msgstr "Manejador de escritorio"
+
+#. metadata.json->description
+msgid "Various shortcuts to handle desktop actions."
+msgstr "Varios atajos para manejar las acciones de escritorio."
+
+#. settings-schema.json->info_label_1->description
+msgid "This window isn't this xlet's \"real\" configuration window."
+msgstr ""
+
+#. settings-schema.json->settings_button->description
+msgid "Open the \"real\" preference window"
+msgstr ""
+
+#~ msgid "Changelog"
+#~ msgstr "Registro de cambios"
+
+#~ msgid "The applet icon, background color and width can be customized."
+#~ msgstr "El icono, el color de fondo y el ancho del applet se pueden personalizar."
+
+#~ msgid "Scroll over applet actions:"
+#~ msgstr "Acciones al desplazarse sobre el applet:"
+
+#~ msgid "Desktop peek functionality with configurable levels of opacity."
+#~ msgstr "Funcionalidad Desktop Peek con niveles configurables de opacidad."
+
+#~ msgid "Close all windows from this wrokspace"
+#~ msgstr "Cerrar todas las ventanas de este espacio de trabajo"
+
+#~ msgid "Applet options: "
+#~ msgstr "Opciones del applet: "
+
+#~ msgid "Icon for Applet (Leave blank to remove icon):"
+#~ msgstr "Ícono para el applet (Dejar en blanco para eliminar el ícono):"
+
+#~ msgid "Set a custom icon for the applet."
+#~ msgstr "Establecer un ícono personalizado para el applet."
+
+#~ msgid "Applet custom width (Set to 0 (zero) to not set a width):"
+#~ msgstr "Ancho personalizado para el applet (0 (cero) para no establecer un ancho):"
+
+#~ msgid "Background color for the applet:"
+#~ msgstr "Color de fondo para el applet:"
+
+#~ msgid "I mainly added this so it's easy to see the applet the first time is placed in a panel."
+#~ msgstr "He añadido esto para que sea fácil ver el applet la primera vez que se lo coloca en un panel."
+
+#~ msgid "Mouse scroll options: "
+#~ msgstr "Opciones de desplazamiento del ratón: "
+
+#~ msgid "Action on scrolling: "
+#~ msgstr "Acción al desplazar:"
+
+#~ msgid "Minimum delay between scrolls:"
+#~ msgstr "Retardo mínimo entre desplazamientos de ratón:"
+
+#~ msgid "Action on scrolling up: "
+#~ msgstr "Acción al desplazar hacia arriba:"
+
+#~ msgid "Action on scrolling down: "
+#~ msgstr "Acción al desplazar hacia abajo: "
+
+#~ msgid "Mouse click options: "
+#~ msgstr "Opciones de ratón: "
+
+#~ msgid "Action on applet left click: "
+#~ msgstr "Acción del botón izquierdo sobre el applet: "
+
+#~ msgid "Action on applet middle click: "
+#~ msgstr "Acción del botón central sobre el applet: "
+
+#~ msgid "Windows menu options"
+#~ msgstr "Opciones del menú de ventanas"
+
+#~ msgid "Mouse button to open menu (It will override mouse click actions):"
+#~ msgstr "Botón del ratón para abrir el menú (Se anularán acciones de clic del ratón):"
+
+#~ msgid "Show \"Configure...\""
+#~ msgstr "Mostrar \"Configurar...\""
+
+#~ msgid "Show \"Remove this applet\""
+#~ msgstr "Mostrar \"Remover applet\""
+
+#~ msgid "Peek at desktop options:"
+#~ msgstr "Opciones de Desktop peek:"
+
+#~ msgid "Opacify windows on hover (a.k.a. desktop peek)"
+#~ msgstr "Opacar ventanas al pasar el ratón (también conocido como Desktop peek)"
+
+#~ msgid "Take a glance at your desktop and desklets."
+#~ msgstr "Echar un vistazo al escritorio y desklets."
+
+#~ msgid "Peek desktop trigger delay:"
+#~ msgstr "Retardo de disparo de Desktop peek:"
+
+#~ msgid "Level of opacity:"
+#~ msgstr "Nivel de opacidad:"
+
+#~ msgid "Blur windows on hover"
+#~ msgstr "Difuminar ventanas al pasar el ratón"
+
+#~ msgid "Custom Commands: "
+#~ msgstr "Comandos personalizados"
+
+#~ msgid "1st Custom Command:"
+#~ msgstr "1.º comando personalizado"
+
+#~ msgid "2nd Custom Command:"
+#~ msgstr "2.º comando personalizado"
+
+#~ msgid "3rd Custom Command:"
+#~ msgstr "3.º comando personalizado"
+
+#~ msgid "4rd Custom Command:"
+#~ msgstr "4.º comando personalizado"
+
+#~ msgid "App Switcher Settings: "
+#~ msgstr "Opciones del conmutador de aplicaciones:"
+
+#~ msgid "App switcher style: "
+#~ msgstr "Estilo del conmutador de aplicaciones:"
+
+#~ msgid "Switch between windows from: "
+#~ msgstr "Cambiar entre ventanas pertenecientes a: "
+
+#~ msgid "When a modifier key is pressed, switch between windows from: "
+#~ msgstr "Cuando se pulsa una tecla de modificación, cambiar entre ventanas perteneciente a:"
+
+#~ msgid "Modifier key: "
+#~ msgstr "Tecla modificadora: "
+
+#~ msgid "Logging level (*)"
+#~ msgstr "Nivel de registro (*)"
+
+#~ msgid ""
+#~ "It enables the ability to log the output of several functions used by the extension.\n"
+#~ "\n"
+#~ "Normal: Only log messages caused by non critical errors.\n"
+#~ "Verbose: Additionally log extra output messages and all HTTP responses.\n"
+#~ "Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
+#~ msgstr ""
+#~ "Permite la capacidad de registrar la salida de varias funciones utilizadas por la extensión.\n"
+#~ "\n"
+#~ "Normal: solo registra los mensajes causados ​​por errores no críticos.\n"
+#~ "Verbal: registra adicionalmente mensajes de salida adicionales y todas las respuestas HTTP.\n"
+#~ "Muy detallado: registra adicionalmente todas las llamadas de método de todas las clases/prototipos de JavaScript junto con su tiempo de ejecución."
+
+#~ msgid "Enable debugger (*)"
+#~ msgstr "Habilitar depurador (*)"
+
+#~ msgid "(*) Requires Cinnamon restart to enable/disable"
+#~ msgstr "(*) Requiere el reinicio de Cinnamon para habilitar/deshabilitar"
