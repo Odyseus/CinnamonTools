@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """File chooser dialog.
 
@@ -12,7 +12,7 @@ Used as a module from Python to select a single file.
 
 .. code:: python
 
-    #!/usr/bin/python3
+    #!/usr/bin/env python3
     # -*- coding: utf-8 -*-
 
     from file_chooser_dialog import open_dialog
@@ -38,7 +38,7 @@ Used as a module from Python to select multiple files.
 
 .. code:: python
 
-    #!/usr/bin/python3
+    #!/usr/bin/env python3
     # -*- coding: utf-8 -*-
 
     from file_chooser_dialog import open_dialog
@@ -111,6 +111,7 @@ def open_dialog(return_paths=False,
                 select_multiple=False,
                 buttons_labels="",
                 title="Open",
+                last_dir="",
                 pattern_filters=[],
                 mimetype_filters=[],
                 dialog_action="open"):
@@ -130,6 +131,8 @@ def open_dialog(return_paths=False,
         "Cancel:Save".
     title : str, optional
         The dialog title.
+    last_dir : str, optional
+        Description
     pattern_filters : list, optional
         A list of strings representing the file pattern filters that will be attached to the dialog.
 
@@ -188,9 +191,13 @@ def open_dialog(return_paths=False,
         title=title,
         action=action,
         transient_for=transient_for,
+        use_header_bar=True,
         buttons=(cancel_label, Gtk.ResponseType.CANCEL,
                  ok_label, Gtk.ResponseType.OK)
     )
+
+    if last_dir:
+        dialog.set_current_folder(last_dir)
 
     if pattern_filters:
         _attach_filters(dialog, pattern_filters, filter_type="pattern")
@@ -227,39 +234,66 @@ def cli():
 
     .. code::
 
-        usage: file_chooser_dialog.py [-h] [--select-multiple]
+        usage: file_chooser_dialog.py [-h] [--title TITLE]
                                       [--buttons-labels BUTTONS_LABELS]
-                                      [--title TITLE]
                                       [--pattern-filters [PATTERN_FILTERS [PATTERN_FILTERS ...]]]
                                       [--mimetype-filters [MIMETYPE_FILTERS [MIMETYPE_FILTERS ...]]]
-                                      [--action-open | --action-select-folder | --action-save]
+                                      [--select-multiple] [--last-dir LAST_DIR]
+                                      [--action-open | --action-save | --action-select-folder]
 
         optional arguments:
           -h, --help            show this help message and exit
-          --select-multiple
+          --title TITLE         Text to display as the dialog title.
           --buttons-labels BUTTONS_LABELS
-          --title TITLE
+                                Labels for the buttons in the format "_Cancel:_Open"
           --pattern-filters [PATTERN_FILTERS [PATTERN_FILTERS ...]]
+                                Pattern filters.
           --mimetype-filters [MIMETYPE_FILTERS [MIMETYPE_FILTERS ...]]
+                                Mimetype filters.
+          --select-multiple     Enable multiple selection.
+          --last-dir LAST_DIR   Last used directory.
           --action-open
-          --action-select-folder
           --action-save
+          --action-select-folder
+
 
     """
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--select-multiple", dest="select_multiple", action="store_true")
-    parser.add_argument("--buttons-labels", dest="buttons_labels")
-    parser.add_argument("--title", dest="title")
-    parser.add_argument("--pattern-filters", dest="pattern_filters", nargs="*")
-    parser.add_argument("--mimetype-filters", dest="mimetype_filters", nargs="*")
+    parser.add_argument(
+        "--title", dest="title",
+        help="Text to display as the dialog title."
+    )
+    parser.add_argument(
+        "--buttons-labels", dest="buttons_labels",
+        help="Labels for the buttons in the format \"_Cancel:_Open\""
+    )
+    parser.add_argument(
+        "--pattern-filters", dest="pattern_filters", nargs="*",
+        help="Pattern filters."
+    )
+    parser.add_argument(
+        "--mimetype-filters", dest="mimetype_filters", nargs="*",
+        help="Mimetype filters."
+    )
+    parser.add_argument(
+        "--select-multiple", dest="select_multiple", action="store_true",
+        help="Enable multiple selection."
+    )
+    parser.add_argument(
+        "--last-dir", dest="last_dir",
+        help="Last used directory."
+    )
 
     group = parser.add_mutually_exclusive_group()
-    group.add_argument("--action-open", dest="dialog_action", action="store_const", const="open")
-    group.add_argument("--action-select-folder", dest="dialog_action",
-                       action="store_const", const="select_folder")
-    group.add_argument("--action-save", dest="dialog_action", action="store_const", const="save")
+    group.add_argument("--action-open", dest="dialog_action", action="store_const", const="open",
+                       help="Select file/s and print selection to standard output.")
+    group.add_argument("--action-save", dest="dialog_action", action="store_const", const="save",
+                       help="Select file to save to.")
+    group.add_argument("--action-select-folder", dest="dialog_action", action="store_const",
+                       const="select_folder",
+                       help="Select folder/s and print selection to standard output.")
 
     args = parser.parse_args()
     open_dialog(**vars(args))

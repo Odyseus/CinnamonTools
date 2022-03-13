@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """Simple interactive CLI menu.
 
@@ -16,16 +16,24 @@ xlet_has_schema : bool
     Whether or not an xlet contains a directory named schemas.
 """
 import os
+import sys
+
+if sys.version_info < (3, 7):
+    raise SystemExit("Minimum Python version supported: 3.7")
 
 from shutil import which
 from subprocess import run
 
+XLET_DIR = os.path.normpath(os.path.dirname(os.path.abspath(__file__)))
+XLET_UUID = os.path.basename(XLET_DIR)
+XLET_TYPE = os.path.basename(os.path.dirname(XLET_DIR))[:-1]
+
 menu_actions = {}
-schema = "org.cinnamon.{{XLET_TYPE}}s.{{UUID}}"
-schema_path = "/org/cinnamon/{{XLET_TYPE}}s/{{UUID}}/"
-schema_filename = "%s.gschema.xml" % schema
+schema = f'org.cinnamon.{XLET_TYPE}s.{XLET_UUID}'
+schema_path = f'/org/cinnamon/{XLET_TYPE}s/{XLET_UUID}/'
+schema_filename = f'{schema}.gschema.xml'
 schema_storage = "/usr/share/glib-2.0/schemas/"
-xlet_has_schema = "{{XLET_HAS_SCHEMA}}"
+xlet_has_schema = os.path.isfile(os.path.join(XLET_DIR, "schemas", schema_filename))
 
 
 class ANSIColors():

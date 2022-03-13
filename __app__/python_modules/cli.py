@@ -1,6 +1,5 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
 """Main command line application.
 
 Attributes
@@ -8,49 +7,52 @@ Attributes
 docopt_doc : str
     Used to store/define the docstring that will be passed to ``docopt`` as the ``doc`` argument.
 """
-
 import os
 
 from threading import Thread
 
-from . import app_utils
-from .__init__ import __appdescription__
-from .__init__ import __appname__
-from .__init__ import __version__
 from .python_utils import cli_utils
 from .python_utils import exceptions
 
+from . import app_utils
+from . import theme_utils
+from . import xlets_utils
+from .__init__ import __appdescription__
+from .__init__ import __appname__
+from .__init__ import __version__
 
-docopt_doc = """{__appname__} {__version__}
+
+docopt_doc = f"""{__appname__} {__version__}
 
 {__appdescription__}
 
 Usage:
     app.py (-h | --help | --version | --manual | -r | --restart-cinnamon)
     app.py menu
-    app.py build (-a | --all-xlets | -x <name> | --xlet=<name>)
-                 [-x <name>... | --xlet=<name>...]
-                 [-d <domain> | --domain=<domain>]
-                 [-o <dir> | --output=<dir>]
-                 [-e <dir> | --extra-files=<dir>]
-                 [-i | --install-localizations]
-                 [-n | --no-confirmation]
-                 [-r | --restart-cinnamon]
-                 [-y | --dry-run]
+    app.py build_xlets [-x <name>... | --xlet-name=<name>...]
+                       [-d <domain> | --domain=<domain>]
+                       [-o <dir> | --output=<dir>]
+                       [-e <dir> | --extra-files=<dir>]
+                       [-i | --install-localizations]
+                       [-n | --no-confirmation]
+                       [-r | --restart-cinnamon]
     app.py build_themes [-t <name> | --theme-name=<name>]
+                        [-v <name>... | --variant-name=<name>...]
                         [-o <dir> | --output=<dir>]
                         [-n | --no-confirmation]
                         [-r | --restart-cinnamon]
-                        [-y | --dry-run]
-    app.py parse_sass [-y | --dry-run]
-    app.py dev <sub_commands>...
-               [-x <name>... | --xlet=<name>...]
+    app.py dev_xlets <sub_commands>...
+                     [-x <name>... | --xlet-name=<name>...]
+    app.py dev_themes <sub_commands>...
+                      [-s <exec> | --sass-parser=<exec>]
+                      [-v <name>... | --variant-name=<name>...]
     app.py generate (system_executable | docs | docs_no_api | base_xlet |
                     repo_changelog | themes_changelog | all_changelogs)
                     [-f | --force-clean-build]
                     [-u | --update-inventories]
     app.py print_xlets_slugs
-    app.py repo (submodules | subtrees) (init | update) [-y | --dry-run]
+    app.py print_theme_variants
+    app.py repo (submodules | subtrees) (init | update)
 
 Options:
 
@@ -62,9 +64,6 @@ Options:
 
 --version
     Show application version.
-
--a, --all-xlets
-    Build all xlets.
 
 -d <domain>, --domain=<domain>
     This option should be used to define a domain name for use when
@@ -98,6 +97,10 @@ Options:
 -r, --restart-cinnamon
     Restart Cinnamon.
 
+-s <exec>, --sass-parser=<exec>
+    Name or absolute path to Dart Sass executable. This may be needed only if
+    Dart Sass isn't available in a system's PATH.
+
 -t <name>, --theme-name=<name>
     A string used to give a name to the themes. The final theme names will look
     like this: **<theme_name>-<theme_variant>**.
@@ -112,18 +115,52 @@ Options:
     documentation. Inventory files will be updated automatically if they don't
     already exist.
 
--x <name>, --xlet=<name>
-    Specify one or more applets/extensions to build.
+-v <name>, --variant-name=<name>
+    Theme variant name (the name of its folder). If not specified, all theme
+    variants will be worked on.
 
--y, --dry-run
-    Do not perform file system changes. Only display messages informing of the
-    actions that will be performed or commands that will be executed.
-    WARNING! Some file system changes will be performed (e.g. temporary files
-    creation).
+-x <name>, --xlet-name=<name>
+    Specify one or more applets/extensions to build. If none are specified,
+    all xlets will be built.
 
-""".format(__appname__=__appname__,
-           __appdescription__=__appdescription__,
-           __version__=__version__)
+dev_xlets <sub_commands>:
+
+    **generate_meta_file**
+        Generate the file containing all the metadata of all xlets on this
+        repository.
+
+    **update_pot_files**
+        Update all .pot files from all xlets.
+
+    **update_spanish_localizations**
+        Update all Spanish localizations from all xlets.
+
+    **create_xlets_changelogs**
+        Generate the CHANGELOG.md files for all xlets.
+
+    **create_localized_help**
+        Execute the create_localized_help.py script for each xlet to generate
+        their HELP.html files.
+
+    **generate_trans_stats**
+        Generate translations statistics.
+
+    **check_js_modules**
+        Check if a JS module defined in an xlet configuration file is actually
+        used/imported by an xlet and vice versa.
+
+dev_themes <sub_commands>:
+
+    **generate_gtk_sass_includes_index**
+        Generate Gtk includes index file.
+
+    **parse_sass**
+        Parse Sass files.
+
+    **generate_thumbnails**
+        Generate themes thumbnails.
+
+"""
 
 
 class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
@@ -137,30 +174,48 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
         Where ``docopt_args`` is stored.
     action : method
         Set the method that will be executed when calling CommandLineInterface.run().
-    dev_args_order : list
+    dev_theme_args_order : list
         List used as a guide to execute functions in the order they need to.
-    func_names : list
+    dev_themes_func_names : list
+        A list of function names that will be used to execute those functions
+        in the order they were defined (passed as arguments).
+    dev_xlets_args_order : list
+        List used as a guide to execute functions in the order they need to.
+    dev_xlets_func_names : list
         A list of function names that will be used to execute those functions
         in the order they were defined (passed as arguments).
     repo_action : str
         Which action to perform on a repository.
+    theme_helper : ThemeHelperCore
+        An instantiated ``ThemeHelperCore`` instance.
+    theme_variants : list
+        The complete or partial list of theme variants.
     xlets_display_names : list
         The complete or partial list of xlets as returned by :any:`get_xlets_display_names`.
     xlets_helper : XletsHelperCore
         An instantiated ``XletsHelperCore`` instance.
     """
     action = None
-    func_names = []
-    dev_args_order = [
+    dev_xlets_func_names = []
+    dev_themes_func_names = []
+    dev_xlets_args_order = [
         "generate_meta_file",
         "update_pot_files",
         "update_spanish_localizations",
         "create_xlets_changelogs",
         "create_localized_help",
-        "generate_trans_stats"
+        "generate_trans_stats",
+        "check_js_modules"
+    ]
+    dev_theme_args_order = [
+        "generate_gtk_sass_includes_index",
+        "parse_sass",
+        "generate_thumbnails"
     ]
     xlets_display_names = []
+    theme_variants = []
     xlets_helper = None
+    theme_helper = None
 
     def __init__(self, docopt_args):
         """Initialize.
@@ -174,82 +229,106 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
         self._cli_header_blacklist = [
             self.a["--manual"],
             self.a["print_xlets_slugs"],
+            self.a["print_theme_variants"],
             self.a["menu"]
         ]
         self._print_log_blacklist = [
-            self.a["print_xlets_slugs"]
+            self.a["--manual"],
+            self.a["print_xlets_slugs"],
+            self.a["print_theme_variants"]
         ]
 
         super().__init__(__appname__, "tmp/logs")
 
-        if self.a["build"] or self.a["dev"]:
-            all_xlets_display_names = app_utils.get_xlets_display_names()
+        if self.a["build_themes"] or self.a["dev_themes"]:
+            self.theme_variants = sorted(list(set(self.a["--variant-name"])))
+        elif self.a["build_xlets"] or self.a["dev_xlets"]:
+            all_xlets_display_names = xlets_utils.get_xlets_display_names()
 
-            if self.a["--all-xlets"]:
-                self.xlets_display_names = all_xlets_display_names
-            elif self.a["--xlet"]:
+            if self.a["--xlet-name"]:
                 # NOTE: Deduplicate arguments. Workaround docopt issue:
                 # https://github.com/docopt/docopt/issues/134
                 # Not perfect, but good enough for this particular usage case.
-                for x in set(self.a["--xlet"]):
-                    if "Applet " + x in all_xlets_display_names:
-                        self.xlets_display_names.append("Applet " + x)
-                    elif "Extension " + x in all_xlets_display_names:
-                        self.xlets_display_names.append("Extension " + x)
+                for x in set(self.a["--xlet-name"]):
+                    if f"Applet {x}" in all_xlets_display_names:
+                        self.xlets_display_names.append(f"Applet {x}")
+                    elif f"Extension {x}" in all_xlets_display_names:
+                        self.xlets_display_names.append(f"Extension {x}")
+            else:
+                self.xlets_display_names = all_xlets_display_names
 
             self.xlets_display_names = sorted(self.xlets_display_names)
 
-        if self.a["print_xlets_slugs"]:
+        if self.a["print_theme_variants"]:
+            self.action = self.print_theme_variants
+        elif self.a["print_xlets_slugs"]:
             self.action = self.print_xlets_slugs
         elif self.a["--manual"]:
             self.action = self.display_manual_page
         elif self.a["menu"]:
             self.action = self.display_main_menu
-        elif self.a["build"]:
+        elif self.a["build_xlets"]:
             self.action = self.build_xlets
 
-            if self.a["--all-xlets"]:
-                self.logger.info("**Building all xlets.**")
-            elif self.a["--xlet"]:
+            if self.a["--xlet-name"]:
                 self.logger.info("**Building the following xlets:**")
 
                 for x in self.xlets_display_names:
                     self.logger.info(x)
+            else:
+                self.logger.info("**Building all xlets.**")
         elif self.a["build_themes"]:
             self.action = self.build_themes
             self.logger.info("**Building all themes.**")
-        elif self.a["parse_sass"]:
-            self.action = self.parse_sass
-            self.logger.info("**Parsing Sass files.**")
-        elif self.a["dev"]:
+        elif self.a["dev_themes"]:
+            dev_themes_args = list(set(self.a["<sub_commands>"]))
+            dev_themes_args.sort(key=lambda x: self.dev_theme_args_order.index(x))
+
+            pass_variants = bool(self.a["--variant-name"])
+            self.theme_helper = theme_utils.ThemeHelperCore(
+                theme_variants=self.theme_variants if pass_variants else None,
+                sass_parser=self.a["--sass-parser"],
+                logger=self.logger
+            )
+
+            self.logger.info("**Command:** dev_themes")
+            self.logger.info("**Arguments:**")
+
+            for func in dev_themes_args:
+                if func in self.dev_theme_args_order:
+                    self.logger.info(func)
+                    self.dev_themes_func_names.append(func)
+                else:
+                    self.logger.warning("**Non existent function:** %s" % func)
+        elif self.a["dev_xlets"]:
             # NOTE: Deduplicate arguments. Workaround docopt issue:
             # https://github.com/docopt/docopt/issues/134
             dev_args = list(set(self.a["<sub_commands>"]))
             # NOTE: Sort the arguments so one doesn't have to worry about the order
             # in which they are passed.
             # Source: https://stackoverflow.com/a/12814719.
-            dev_args.sort(key=lambda x: self.dev_args_order.index(x))
+            dev_args.sort(key=lambda x: self.dev_xlets_args_order.index(x))
             # NOTE: Do not pass xlets unnecessarily so in the initialization side of
-            # app_utils.XletsHelperCore all the xlets metadata is used and no filtering
+            # xlets_utils.XletsHelperCore all the xlets metadata is used and no filtering
             # is done.
-            pass_xlets = bool(self.a["--xlet"])
-            self.xlets_helper = app_utils.XletsHelperCore(
+            pass_xlets = bool(self.a["--xlet-name"])
+            self.xlets_helper = xlets_utils.XletsHelperCore(
                 xlets_display_names=self.xlets_display_names if pass_xlets else None,
                 logger=self.logger
             )
-            self.logger.info("**Command:** dev")
+            self.logger.info("**Command:** dev_xlets")
             self.logger.info("**Arguments:**")
 
             for func in dev_args:
                 if getattr(self.xlets_helper, func, False):
                     self.logger.info(func)
-                    self.func_names.append(func)
+                    self.dev_xlets_func_names.append(func)
                 else:
                     self.logger.warning("**Non existent function:** %s" % func)
 
             # NOTE: append last so all the errors caught will be printed at the end.
-            if self.func_names:
-                self.func_names.append("log_errors")
+            if self.dev_xlets_func_names:
+                self.dev_xlets_func_names.append("log_errors")
         elif self.a["generate"]:
             if self.a["system_executable"]:
                 self.logger.info("**System executable generation...**")
@@ -296,9 +375,20 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
         threads = []
 
         try:
-            if self.func_names:
-                for func in self.func_names:
+            if self.dev_xlets_func_names:
+                for func in self.dev_xlets_func_names:
                     t = Thread(target=getattr(self.xlets_helper, func, None))
+                    t.daemon = True
+                    t.start()
+                    threads.append(t)
+
+                    for thread in threads:
+                        if thread is not None and thread.is_alive():
+                            thread.join()
+
+            if self.dev_themes_func_names:
+                for func in self.dev_themes_func_names:
+                    t = Thread(target=getattr(self.theme_helper, func, None))
                     t.daemon = True
                     t.start()
                     threads.append(t)
@@ -323,17 +413,14 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
             raise exceptions.KeyboardInterruption()
         else:
             if self.a["--restart-cinnamon"]:
-                if self.a["--dry-run"]:
-                    self.logger.log_dry_run("**Cinnamon will be restarted.**")
-                else:
-                    t = Thread(target=app_utils.restart_cinnamon)
-                    t.daemon = True
-                    t.start()
-                    threads.append(t)
+                t = Thread(target=app_utils.restart_cinnamon)
+                t.daemon = True
+                t.start()
+                threads.append(t)
 
-                    for thread in threads:
-                        if thread is not None and thread.is_alive():
-                            thread.join()
+                for thread in threads:
+                    if thread is not None and thread.is_alive():
+                        thread.join()
 
     def display_main_menu(self):
         """See :any:`app_menu.CLIMenu`
@@ -350,31 +437,24 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
                                                "__app__", "data", "man", "app.py.1"))
 
     def build_xlets(self):
-        """See :any:`app_utils.build_xlets`
+        """See :any:`xlets_utils.build_xlets`
         """
-        app_utils.build_xlets(xlets_display_names=self.xlets_display_names,
-                              domain_name=self.a["--domain"],
-                              build_output=self.a["--output"],
-                              do_not_confirm=self.a["--no-confirmation"],
-                              install_localizations=self.a["--install-localizations"],
-                              extra_files=self.a["--extra-files"],
-                              dry_run=self.a["--dry-run"],
-                              logger=self.logger)
+        xlets_utils.build_xlets(xlets_display_names=self.xlets_display_names,
+                                domain_name=self.a["--domain"],
+                                build_output=self.a["--output"],
+                                do_not_confirm=self.a["--no-confirmation"],
+                                install_localizations=self.a["--install-localizations"],
+                                extra_files=self.a["--extra-files"],
+                                logger=self.logger)
 
     def build_themes(self):
-        """See :any:`app_utils.build_themes`
+        """See :any:`theme_utils.build_themes`
         """
-        app_utils.build_themes(theme_name=self.a["--theme-name"],
-                               build_output=self.a["--output"],
-                               do_not_confirm=self.a["--no-confirmation"],
-                               dry_run=self.a["--dry-run"],
-                               logger=self.logger)
-
-    def parse_sass(self):
-        """See :any:`app_utils.parse_sass`
-        """
-        app_utils.parse_sass(dry_run=self.a["--dry-run"],
-                             logger=self.logger)
+        theme_utils.build_themes(theme_name=self.a["--theme-name"],
+                                 theme_variants=sorted(list(set(self.a["--variant-name"]))),
+                                 build_output=self.a["--output"],
+                                 do_not_confirm=self.a["--no-confirmation"],
+                                 logger=self.logger)
 
     def system_executable_generation(self):
         """See :any:`cli_utils.CommandLineInterfaceSuper._system_executable_generation`.
@@ -403,20 +483,20 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
         app_utils.generate_repo_changelog(logger=self.logger)
 
     def generate_themes_changelog(self):
-        """See :any:`app_utils.generate_themes_changelog`.
+        """See :any:`theme_utils.generate_themes_changelog`.
         """
-        app_utils.generate_themes_changelog(logger=self.logger)
+        theme_utils.generate_themes_changelog(logger=self.logger)
 
     def generate_all_changelogs(self):
-        """See :any:`app_utils.generate_repo_changelog` and :any:`app_utils.generate_themes_changelog`.
+        """See :any:`app_utils.generate_repo_changelog` and :any:`theme_utils.generate_themes_changelog`.
         """
         app_utils.generate_repo_changelog(logger=self.logger)
-        app_utils.generate_themes_changelog(logger=self.logger)
+        theme_utils.generate_themes_changelog(logger=self.logger)
 
     def base_xlet_generation(self):
-        """See :any:`app_utils.BaseXletGenerator`
+        """See :any:`xlets_utils.BaseXletGenerator`
         """
-        base_xlet_generetor = app_utils.BaseXletGenerator(logger=self.logger)
+        base_xlet_generetor = xlets_utils.BaseXletGenerator(logger=self.logger)
         base_xlet_generetor.generate()
 
     def manage_repo_submodules(self):
@@ -428,7 +508,6 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
             "submodule",
             self.repo_action,
             cwd=app_utils.root_folder,
-            dry_run=self.a["--dry-run"],
             logger=self.logger
         )
 
@@ -446,14 +525,18 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
             self.repo_action,
             cwd=app_utils.root_folder,
             subtrees=subtrees,
-            dry_run=self.a["--dry-run"],
             logger=self.logger
         )
 
     def print_xlets_slugs(self):
-        """See :any:`app_utils.print_xlets_slugs`
+        """See :any:`xlets_utils.print_xlets_slugs`
         """
-        app_utils.print_xlets_slugs()
+        xlets_utils.print_xlets_slugs()
+
+    def print_theme_variants(self):
+        """See :any:`theme_utils.print_theme_variants`
+        """
+        theme_utils.print_theme_variants()
 
 
 def main():

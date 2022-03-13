@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """Localized help creator.
 
@@ -98,7 +98,7 @@ class LocalizedHelpCreator():
     sections : list
         The list of sections that contain the localized content.
     xlet_config : dict
-        Xlet configuration defined in a z_config.py file.
+        Xlet configuration defined in a config.yaml file.
     xlet_dir : str
         Path to the xlet directory.
     xlet_meta : dict
@@ -117,7 +117,7 @@ class LocalizedHelpCreator():
         xlet_slug : str, optional
             The name of the folder that contains the source files for an xlet.
         xlet_config : dict, optional
-            Xlet configuration defined in a z_config.py file.
+            Xlet configuration defined in a config.yaml file.
         """
         self.xlet_dir = xlet_dir
         self.xlet_slug = xlet_slug
@@ -134,7 +134,6 @@ class LocalizedHelpCreator():
 
         contributors_path = os.path.join(self.xlet_dir, "__data__", "CONTRIBUTORS.md")
         changelog_path = os.path.join(self.xlet_dir, "__data__", "CHANGELOG.md")
-        old_changelog_path = os.path.join(self.xlet_dir, "__data__", "CHANGELOG-OLD.md")
 
         if os.path.exists(contributors_path):
             try:
@@ -157,16 +156,24 @@ class LocalizedHelpCreator():
                 print(utils.Ansi.LIGHT_RED(err))
                 self.changelog += ""
 
-        if os.path.exists(old_changelog_path):
-            try:
-                with open(old_changelog_path, "r") as old_changelog_file:
-                    old_changelog_rawdata = old_changelog_file.read()
+        old_changelogs_data = ""
 
-                self.changelog += utils.BOXED_CONTAINER.format(
-                    md(old_changelog_rawdata))
-            except Exception as err:
-                print(utils.Ansi.LIGHT_RED(err))
-                self.changelog += ""
+        for c in utils.OLD_CHANGELOGS:
+            changelog_path = os.path.join(self.xlet_dir, "__data__", c["file_name"])
+
+            if os.path.exists(changelog_path):
+                try:
+                    with open(changelog_path, "r") as changelog_file:
+                        old_changelogs_data += changelog_file.read()
+                except Exception as err:
+                    print(utils.Ansi.LIGHT_RED(err))
+                    old_changelogs_data += ""
+
+        if old_changelogs_data:
+            self.changelog += utils.BOXED_CONTAINER.format(utils.COLLAPSIBLE.format(
+                collapsible_label="Display more history",
+                collapsible_content=md(old_changelogs_data)
+            ))
 
     def start(self):
         """Start procedure.
@@ -203,7 +210,7 @@ class LocalizedHelpCreator():
                 this_locale_dir = os.path.join(dummy_locale_path, parts[0], "LC_MESSAGES")
                 os.makedirs(this_locale_dir, exist_ok=True)
                 po = cmd_utils.run_cmd(["msgfmt", "-c", po_file_path, "-o",
-                                        os.path.join(this_locale_dir, "%s.mo" % self.xlet_slug)],
+                                        os.path.join(this_locale_dir, f"{self.xlet_slug}.mo")],
                                        stdout=None)
 
                 if po.stderr:
@@ -229,7 +236,7 @@ class LocalizedHelpCreator():
         """
         print("Creating HTML document...")
         for lang in self.lang_list:
-            print("Processing language: %s" % lang)
+            print(f"Processing language: {lang}")
 
             global current_language
             current_language = lang
@@ -270,7 +277,7 @@ class LocalizedHelpCreator():
         html_doc = utils.HTML_DOC.format(
             # This string doesn't need to be translated.
             # It's the initial title of the page that it's always in English.
-            title="Help for {xlet_name}".format(xlet_name=self.xlet_meta["name"]),
+            title=f'Help for {self.xlet_meta["name"]}',
             # WARNING!!! Insert the inline files (.css and .js) AFTER all string formatting has been done.
             # CSS code interferes with formatting variables. ¬¬
             css_custom=self.get_css_custom(),
@@ -316,7 +323,7 @@ class LocalizedHelpCreator():
 
         xlet_help = _("Help")
         xlet_contributors = _("Contributors")
-        xlet_changelog = _("Changelog")
+        xlet_changelog = _("Changelogs")
         title = _("Help for %s") % _(self.xlet_meta["name"])
         # Define them before self._get_language_stats() is called so these
         # strings are also counted.
@@ -327,7 +334,7 @@ class LocalizedHelpCreator():
             # REMINDER 2: Consider a 95% of translated strings a complete translation.
             # This is done to minimize the display of false percentages in the language selection
             # menu on the HELP.html pages. See REMINDER 1.
-            trans_perc_msg = " (%s%%)" % translated_percentage if translated_percentage < 95 else ""
+            trans_perc_msg = f" ({translated_percentage}%)" if translated_percentage < 95 else ""
 
             return utils.OPTION.format(
                 endonym=endonym,

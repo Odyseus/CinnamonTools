@@ -1,6 +1,6 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Utils for the localized_help_creator module.
+"""Utilities for the localized_help_creator module.
 
 .. note::
 
@@ -11,10 +11,14 @@ Attributes
 ----------
 BOXED_CONTAINER : str
     Boxed container template.
+COLLAPSIBLE : str
+    Collapsible container template.
 HTML_DOC : str
     HTML document template.
 LOCALE_SECTION : str
     Localized section template.
+OLD_CHANGELOGS : list
+    List of old changelogs.
 OPTION : str
     Option tag template.
 README_DOC : str
@@ -38,98 +42,109 @@ repo_folder = os.path.normpath(os.path.join(
     os.path.dirname(os.path.abspath(__file__)), *([os.pardir] * 2)))
 
 
-HTML_DOC = """<!DOCTYPE html>
+HTML_DOC = f"""<!DOCTYPE html>
 <html>
 
-<head>
-    <meta http-equiv="content-type" content="text/html;charset=utf-8">
-    <title>{title}</title>
-    <link rel="shortcut icon" type="image/x-icon" href="./icon.png">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link type="text/css" rel="stylesheet" href="./assets/css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="./assets/css/bootstrap-tweaks.css">
-    <style type="text/css">
-{css_custom}
-    </style>
-</head>
+    <head>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8">
+        <title>{{title}}</title>
+        <link rel="shortcut icon" type="image/x-icon" href="./icon.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link type="text/css" rel="stylesheet" href="./assets/css/bootstrap.min.css">
+        <link type="text/css" rel="stylesheet" href="./assets/css/bootstrap-tweaks.css">
+        <style type="text/css">
+{{css_custom}}
+        </style>
+    </head>
 
-<body>
-<div id="mainarea">
-    <nav class="text-bold py-0 navbar navbar-expand-sm navbar-dark bg-gradient-primary fixed-top" role="navigation">
-        <div class="container-fluid">
-            <div class="nav navbar-nav mr-auto">
-                <!-- The preventDefault() calls are to avoid changing the address in the address bar. -->
-                <a id="nav-xlet-help" class="navbar-brand nav-link" onclick="event.preventDefault();" href="#xlet-help">Help</a>
-                <a id="nav-xlet-contributors" class="navbar-brand nav-link" onclick="event.preventDefault();" href="#xlet-contributors">Contributors</a>
-                <a id="nav-xlet-changelog" class="navbar-brand nav-link" onclick="event.preventDefault();" href="#xlet-changelog">Changelog</a>
-            </div>
-            <form class="form-inline">
-                <div class="input-group input-group-sm">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" for="localization-switch">🌐</span>
+    <body>
+        <div id="mainarea">
+            <nav id="main-navbar"
+                 class="navbar navbar-expand-sm navbar-dark bg-primary fixed-top py-0"
+                 role="navigation">
+                <div class="container-fluid">
+                    <div class="nav navbar-nav mr-auto">
+                        <a id="nav-xlet-help"
+                           class="nav-link"
+                           onclick="event.preventDefault();"
+                           href="#xlet-help">Help</a>
+                        <a id="nav-xlet-contributors"
+                           class="nav-link"
+                           onclick="event.preventDefault();"
+                           href="#xlet-contributors">Contributors</a>
+                        <a id="nav-xlet-changelogs"
+                           class="nav-link"
+                           onclick="event.preventDefault();"
+                           href="#xlet-changelogs">Changelogs</a>
                     </div>
-                    <select class="custom-select custom-select-sm text-bold" id="localization-switch">
-{options}
-                    </select>
+                    <form>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text"
+                                  id="localization-switch-image">🌐</span>
+                            <select class="form-select form-select-sm"
+                                    id="localization-switch"
+                                    aria-describedby="localization-switch-image">
+{{options}}
+                            </select>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </nav>
+            <div id="no-js-main"
+                 class="alert alert-warning mx-5"
+                 role="alert">
+                <p><strong>Oh snap! This page needs JavaScript enabled to display correctly.</strong></p>
+                <p><strong>This page uses JavaScript only to switch between the available languages, smooth scrolling, etc.</strong></p>
+                <p><strong>There are no tracking services of any kind and never will be (at least, not from my side).</strong></p>
+            </div>
+            <span id="xlet-help"></span>
+            <div class="container boxed my-3 py-3">
+{{sections}}
+            </div>
+            <span id="xlet-contributors"></span>
+{{contributors}}
+            <span id="xlet-changelogs"></span>
+{{changelog}}
         </div>
-    </nav>
-<span id="xlet-help">
-<div class="container boxed my-3 py-3">
-<noscript>
-    <div class="alert alert-danger" role="alert">
-        <p><strong>Oh snap! This page needs JavaScript enabled to display correctly.</strong></p>
-        <p><strong>This page uses JavaScript only to switch between the available languages, smooth scrolling, etc.</strong></p>
-        <p><strong>There are no tracking services of any kind and never will be (at least, not from my side).</strong></p>
-    </div>
-    <!-- .alert.alert-danger -->
-</noscript>
-{sections}
-</div> <!-- .container.boxed -->
-<span id="xlet-contributors">
-{contributors}
-<span id="xlet-changelog">
-{changelog}
-</div> <!-- #mainarea -->
-<!--Footer-->
-<footer class="text-bold text-white navbar-dark bg-gradient-primary px-3 pt-4 mt-4">
-    <!--Footer Links-->
-    <div class="container-fluid text-left">
-        <ul class="list-unstyled">
-            <li>
-                <p>Page created with <a href="https://getbootstrap.com">Bootstrap</a>.</p>
-            </li>
-            <li>
-                <p>Boostrap theme created with <a href="https://gitlab.com/PythonCLIApplications/BootstrapThemesGenerator">Bootstrap Theme Generator</a> and based on <a href="https://bootswatch.com">Bootswatch</a>'s <a href="https://bootswatch.com/flatly">Flatly theme</a>.</p>
-            </li>
-            <li>
-                <p><a href="https://github.com/julienetie/smooth-scroll">Smooth Scroll plugin</a> provided by <a href="https://github.com/julienetie">Julien Etienne</a>.</p>
-            </li>
-        </ul>
-    </div>
-    <!--/.Footer Links-->
-    <!--Copyright-->
-    <div class="text-center py-3">
-        <div class="container-fluid">
-            © 2016-%s <a href="%s">Odyseus</a>
-        </div>
-    </div>
-    <!--/.Copyright-->
-</footer>
-<!--/.Footer-->
-<script type="text/javascript" defer src="./assets/js/localizations-handler.min.js"></script>
-<script type="text/javascript">
-{js_custom}
-</script>
-</body>
+        <footer class="fw-bold text-white navbar-dark bg-primary px-3 pt-4 mt-4">
+            <div class="container-fluid text-left">
+                <ul class="list-unstyled">
+                    <li>
+                        <p>Page created with <a href="https://getbootstrap.com">Bootstrap</a>.</p>
+                    </li>
+                    <li>
+                        <p>Boostrap theme created with <a href="https://gitlab.com/PythonCLIApplications/BootstrapThemesGenerator">Bootstrap Theme Generator</a> and based on <a href="https://bootswatch.com">Bootswatch</a>'s <a href="https://bootswatch.com/flatly">Flatly theme</a>.</p>
+                    </li>
+                    <li>
+                        <p><a href="https://github.com/julienetie/smooth-scroll">Smooth Scroll plugin</a> provided by <a href="https://github.com/julienetie">Julien Etienne</a>.</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="text-center py-3">
+                <div class="container-fluid">
+                    © 2016-{datetime.today().year} <a href="{app_data.URLS["repo"]}">Odyseus</a>
+                </div>
+            </div>
+        </footer>
+        <script type="text/javascript" defer src="./assets/js/main.js"></script>
+        <script type="text/javascript">
+{{js_custom}}
+        </script>
+    </body>
+
 </html>
-""" % (datetime.today().year,
-       app_data.URLS["repo"])
+"""
 
 BOXED_CONTAINER = """<div class="container boxed my-3 py-3">
 {0}
 </div> <!-- .container.boxed -->
+"""
+
+COLLAPSIBLE = """
+<button type="button" class="btn btn-primary collapsible">{collapsible_label}</button>
+<div class="collapsible-content">
+{collapsible_content}
+</div>
 """
 
 
@@ -154,6 +169,14 @@ OPTION = """<!-- {endonym} --><option {selected}data-title="{title}" data-xlet-h
 README_DOC = """{readme_compatibility}
 {readme_content}
 """
+
+# WARNING: Order of te items is important.
+# From most recent (the highest number) to oldest (the lowest number).
+OLD_CHANGELOGS = [{
+    "file_name": "CHANGELOG-1.md"
+}, {
+    "file_name": "CHANGELOG-0.md"
+}]
 
 
 class XletMetadata():
@@ -212,7 +235,7 @@ class Translations(object):
                                                    localedir,
                                                    [lang])
             except IOError:
-                print("No translations found for language code '{}'".format(lang))
+                print(f"No translations found for language code '{lang}'")
                 translations = None
 
             if translations is not None:
@@ -287,7 +310,7 @@ def get_timestamp():
     MI = "{0:02d}".format(now.minute)
     ZONE = get_time_zone()
 
-    return "%s-%s-%s %s:%s%s" % (YEAR, MO, DA, HO, MI, ZONE)
+    return f"{YEAR}-{MO}-{DA} {HO}:{MI}{ZONE}"
 
 
 def validate_po_file(pofile_path, lang_name, xlet_meta, xlet_slug):
@@ -380,23 +403,19 @@ def get_bootstrap_alert(context="info", content="", heading="", bold_text=True):
     heading : str, optional
         A title for the alert.
     bold_text : bool, optional
-        Whether to use the "text-bold" class or not.
+        Whether to use the "fw-bold" class or not.
 
     Returns
     -------
     str
         A bootstrap alert.
     """
-    h = ('<h4 class="alert-heading">%s</h4>' % heading) if heading else ""
-    return """
-<div class="alert alert-{context} {bold_text} shadow-sm" role="alert">
-{heading}
+    return f"""
+<div class="alert alert-{context} {"fw-bold" if bold_text else ""} shadow-sm" role="alert">
+{f'<h4 class="alert-heading">{heading}</h4>' if heading else ""}
 {content}
 </div>
-""".format(context=context,
-           content=content,
-           heading=h,
-           bold_text="text-bold" if bold_text else "")
+"""
 
 
 def get_bootstrap_card(context="info",
@@ -428,16 +447,10 @@ def get_bootstrap_card(context="info",
     str
         A bootstrap card.
     """
-    return """<div class="card text-bold my-{marging_y} border-{context} shadow-sm">
-    <div class="card-header bg-{context} {white_header}">{header}</div>
+    return f"""<div class="card fw-bold my-{str(marging_y)} border-{context} shadow-sm">
+    <div class="card-header bg-{context} {"text-white" if white_header else ""}">{header}</div>
     <div class="card-body text-{context} {body_extra_classes}">{body}</div>
-</div>""".format(
-        context=context,
-        body=body,
-        header=header,
-        body_extra_classes=body_extra_classes,
-        marging_y=str(marging_y),
-        white_header="text-white" if white_header else "")
+</div>"""
 
 
 def get_bootstrap_badge(context="info", content="", extra_classes="", is_pill=False):
@@ -453,18 +466,15 @@ def get_bootstrap_badge(context="info", content="", extra_classes="", is_pill=Fa
     extra_classes : str, optional
         Extra classes to set to the <img> element.
     is_pill : bool, optional
-        Whether to use the "badge-pill" class or not.
+        Whether to use the "rounded-pill" class or not.
 
     Returns
     -------
     srt
         A bootstrap badge.
     """
-    return """<span class="badge {is_pill} badge-{context} shadow-sm {extra_classes}">{content}</span>
-""".format(context=context,
-           content=content,
-           extra_classes=extra_classes,
-           is_pill="badge-pill" if is_pill else "")
+    return f"""<span class="badge {"rounded-pill" if is_pill else ""} badge-{context} shadow-sm {extra_classes}">{content}</span>
+"""
 
 
 def get_image_container(extra_classes="", alt="", src="", centered=True):
@@ -487,10 +497,8 @@ def get_image_container(extra_classes="", alt="", src="", centered=True):
         An <img> element or a container with an <img> element.
     """
     container = '<div class="img-centered-container">%s</div>' if centered else "%s"
-    return container % """<img {src} class="img-fluid {extra_classes}" alt="{alt}">
-""".format(alt=alt,
-           src=('src="%s"' % src) if src else "",
-           extra_classes=extra_classes)
+    return container % f"""<img {f'src="{src}"' if src else ""} class="img-fluid {extra_classes}" alt="{alt}">
+"""
 
 
 if __name__ == "__main__":
