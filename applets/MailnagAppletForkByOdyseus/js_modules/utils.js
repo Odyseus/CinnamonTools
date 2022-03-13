@@ -1,19 +1,3 @@
-// {{IMPORTER}}
-
-let XletMeta;
-
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof __meta === "object") {
-    XletMeta = __meta;
-} else {
-    XletMeta = imports.ui.appletManager.appletMeta["{{UUID}}"];
-}
-
-const GlobalConstants = __import("globalConstants.js");
-const GlobalUtils = __import("globalUtils.js");
-const Constants = __import("constants.js");
-const DebugManager = __import("debugManager.js");
-
 const {
     gi: {
         St
@@ -28,30 +12,28 @@ const {
 
 const {
     UNICODE_SYMBOLS
-} = GlobalConstants;
+} = require("js_modules/globalConstants.js");
 
 const {
     _,
     ngettext
-} = GlobalUtils;
+} = require("js_modules/globalUtils.js");
 
 const {
     MailItemParams
-} = Constants;
+} = require("js_modules/constants.js");
 
-var Debugger = new DebugManager.DebugManager();
+const {
+    DebugManager
+} = require("js_modules/debugManager.js");
 
-function MailItem() {
-    this._init.apply(this, arguments);
-}
+var Debugger = new DebugManager(`org.cinnamon.applets.${__meta.uuid}`);
 
-MailItem.prototype = {
-    __proto__: PopupMenu.PopupBaseMenuItem.prototype,
+var MailItem = class MailItem extends PopupMenu.PopupBaseMenuItem {
+    constructor(aParams) {
+        super();
 
-    _init: function(aParams) {
-        PopupMenu.PopupBaseMenuItem.prototype._init.call(this);
-
-        let params = Params.parse(aParams, MailItemParams);
+        const params = Params.parse(aParams, MailItemParams);
 
         this.id = params.id;
         this.subject = params.subject;
@@ -74,7 +56,7 @@ MailItem.prototype = {
         });
 
         // mark read icon
-        let markReadIcon = new St.Icon({
+        const markReadIcon = new St.Icon({
             icon_name: "edit-delete",
             icon_type: St.IconType.SYMBOLIC,
             style_class: "popup-menu-icon"
@@ -100,29 +82,29 @@ MailItem.prototype = {
             expand: false,
             align: St.Align.END
         });
-    },
+    }
 
-    activate: function(aEvent) {
+    activate(aEvent) {
         this.emit("activate", aEvent, true); // keepMenu=True, prevents menu from closing
-    },
+    }
 
-    updateTimeDisplay: function() {
+    updateTimeDisplay() {
         this._datetime_label.text = this.formatDatetime(this.datetime);
-    },
+    }
 
     // formats datetime relative to now
-    formatDatetime: function(aDatetime) {
-        let time_diff = (new Date().getTime() - aDatetime.getTime()) / 1000;
-        let days_diff = Math.floor(time_diff / 86400); // 86400 = Amount of seconds in 24 hours.
+    formatDatetime(aDatetime) {
+        const time_diff = (new Date().getTime() - aDatetime.getTime()) / 1000;
+        const days_diff = Math.floor(time_diff / 86400); // 86400 = Amount of seconds in 24 hours.
 
         if (days_diff === 0) { // today
             if (time_diff < 60) { // <1 minute
                 return _("just now");
             } else if (time_diff < 3600) { // <1 hour
-                let m = Math.floor(time_diff / 60);
+                const m = Math.floor(time_diff / 60);
                 return ngettext("%d minute ago", "%d minutes ago", m).format(m);
             } else {
-                let h = Math.floor(time_diff / 3600);
+                const h = Math.floor(time_diff / 3600);
                 return ngettext("%d hour ago", "%d hours ago", h).format(h);
             }
         } else { // before today
@@ -131,7 +113,7 @@ MailItem.prototype = {
             } else if (days_diff < 7) {
                 return ngettext("%d day ago", "%d days ago", days_diff).format(days_diff);
             } else if (days_diff < 30) {
-                let w = Math.ceil(days_diff / 7);
+                const w = Math.ceil(days_diff / 7);
                 return ngettext("%d week ago", "%d weeks ago", w).format(w);
             } else {
                 return aDatetime.toLocaleDateString();
@@ -140,21 +122,15 @@ MailItem.prototype = {
     }
 };
 
-function AccountMenu() {
-    this._init.apply(this, arguments);
-}
-
-AccountMenu.prototype = {
-    __proto__: PopupMenu.PopupSubMenuMenuItem.prototype,
-
-    _init: function(aAccount, aOrientation) {
-        PopupMenu.PopupSubMenuMenuItem.prototype._init.call(this, aAccount, false);
+var AccountMenu = class AccountMenu extends PopupMenu.PopupSubMenuMenuItem {
+    constructor(aAccount, aOrientation) {
+        super(aAccount, false);
         this._orientation = aOrientation; // needed for sorting
         this.label.style_class = "mailnag-account-label";
         this.menuItems = {};
-    },
+    }
 
-    add: function(aMailMenuItem) {
+    add(aMailMenuItem) {
         if (this._orientation === St.Side.TOP) {
             this.menu.addMenuItem(aMailMenuItem, 0); // add to top of menu
         } else {
@@ -175,7 +151,7 @@ function ellipsize(aString, aMaxLen) {
         aString;
 }
 
-DebugManager.wrapObjectMethods(Debugger, {
+Debugger.wrapObjectMethods({
     AccountMenu: AccountMenu,
     MailItem: MailItem
 });

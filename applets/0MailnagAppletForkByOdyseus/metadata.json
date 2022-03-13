@@ -1,7 +1,0 @@
-{
-    "description": "Mailnag mail notifier applet",
-    "max-instances": -1,
-    "comments": "Bug reports, feature requests and contributions should be done on this xlet's repository linked next.",
-    "contributors": "See this xlet help file.",
-    "name": "Mailnag (Fork By Odyseus)"
-}

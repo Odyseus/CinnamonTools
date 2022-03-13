@@ -1,19 +1,9 @@
-// {{IMPORTER}}
-
-const GlobalConstants = __import("globalConstants.js");
-const GlobalUtils = __import("globalUtils.js");
-const Constants = __import("constants.js");
-const DebugManager = __import("debugManager.js");
-const DesktopNotificationsUtils = __import("desktopNotificationsUtils.js");
-const $ = __import("utils.js");
-
 const {
     gi: {
+        Clutter,
         Gio,
-        GLib,
         St
     },
-    mainloop: Mainloop,
     misc: {
         util: Util
     },
@@ -21,55 +11,59 @@ const {
         applet: Applet,
         main: Main,
         messageTray: MessageTray,
-        popupMenu: PopupMenu,
-        settings: Settings
+        popupMenu: PopupMenu
     }
 } = imports;
 
 const {
     UNICODE_SYMBOLS
-} = GlobalConstants;
+} = require("js_modules/globalConstants.js");
 
 const {
     _,
     ngettext,
     escapeHTML,
-    xdgOpen
-} = GlobalUtils;
+    tryFn,
+    launchUri
+} = require("js_modules/globalUtils.js");
 
 const {
-    MailnagProxy,
+    APPLET_PREFS,
     DBUS_NAME,
     DBUS_PATH,
+    MailnagProxy,
     NotificationMode
-} = Constants;
+} = require("js_modules/constants.js");
 
 const {
     CustomNotificationSource
-} = DesktopNotificationsUtils;
+} = require("js_modules/notificationsUtils.js");
 
-function Mailnag() {
-    this._init.apply(this, arguments);
-}
+const {
+    AccountMenu,
+    Debugger,
+    ellipsize,
+    MailItem
+} = require("js_modules/utils.js");
 
-Mailnag.prototype = {
-    __proto__: Applet.TextIconApplet.prototype,
+const {
+    getBaseAppletClass
+} = require("js_modules/appletsUtils.js");
 
-    _init: function(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
-        Applet.TextIconApplet.prototype._init.call(this, aOrientation, aPanelHeight, aInstanceId);
+class Mailnag extends getBaseAppletClass(Applet.TextIconApplet) {
+    constructor(aMetadata, aOrientation, aPanelHeight, aInstanceID) {
+        super({
+            metadata: aMetadata,
+            orientation: aOrientation,
+            panel_height: aPanelHeight,
+            instance_id: aInstanceID,
+            init_signal_manager: false,
+            pref_keys: APPLET_PREFS
+        });
 
-        // Condition needed for retro-compatibility.
-        // Mark for deletion on EOL. Cinnamon 3.2.x+
-        if (Applet.hasOwnProperty("AllowedLayout")) {
-            this.setAllowedLayout(Applet.AllowedLayout.BOTH);
-        }
+        this.menu_keybinding_name = this.$.metadata.uuid + "-" + this.$.instance_id;
 
-        this.metadata = aMetadata;
-        this.orientation = aOrientation;
-        this.instance_id = aInstanceId;
-        this.menu_keybinding_name = this.metadata.uuid + "-" + this.instance_id;
-
-        this._initializeSettings(() => {
+        this.__initializeApplet(() => {
             this._expandAppletContextMenu();
         }, () => {
             this.set_applet_icon_symbolic_name("mail-read");
@@ -80,12 +74,8 @@ Mailnag.prototype = {
             this.accountMenus = {};
             this._onMailsAddedId = 0;
             this._onMailsRemovedId = 0;
-            this._panelDrawerHandlerId = 0;
             this.busWatcherId = 0;
 
-            this.menuManager = new PopupMenu.PopupMenuManager(this);
-            this.menu = new Applet.AppletPopupMenu(this, this.orientation);
-            this.menuManager.addMenu(this.menu);
             this.menu.connect("open-state-changed",
                 (aMenu, aOpen) => this._onMenuOpenStateChanged(aMenu, aOpen));
 
@@ -96,7 +86,6 @@ Mailnag.prototype = {
             this.notification = null;
             this._notiticationParams = {
                 titleMarkup: true,
-                bannerMarkup: true,
                 bodyMarkup: true
             };
 
@@ -107,84 +96,31 @@ Mailnag.prototype = {
                 Gio.BusType.SESSION, DBUS_NAME, Gio.BusNameOwnerFlags.NONE,
                 () => this.onBusAppeared(), () => this.onBusVanished());
         });
-    },
+    }
 
-    _initializeSettings: function(aDirectCallback, aIdleCallback) {
-        this.settings = new Settings.AppletSettings(
-            this,
-            this.metadata.uuid,
-            this.instance_id
-        );
-
-        this._bindSettings();
-        aDirectCallback();
-
-        Mainloop.idle_add(() => {
-            aIdleCallback();
-
-            return GLib.SOURCE_REMOVE;
-        });
-    },
-
-    _bindSettings: function() {
-        // Needed for retro-compatibility.
-        // Mark for deletion on EOL. Cinnamon 3.2.x+
-        let bD = {
-            IN: 1,
-            OUT: 2,
-            BIDIRECTIONAL: 3
-        };
-        let prefKeysArray = [
-            "pref_overlay_key",
-            "pref_notification_mode",
-            "pref_notification_custom_template",
-            "pref_notification_max_mails",
-            "pref_notification_sender_max_chars",
-            "pref_notification_subject_max_chars",
-            "pref_launch_client_on_click",
-            "pref_client",
-            "pref_middle_click_behavior",
-            "pref_keep_one_menu_open",
-            "pref_logging_level",
-            "pref_debugger_enabled",
-            "pref_third_party_integration_panel_drawer"
-        ];
-        let newBinding = typeof this.settings.bind === "function";
-        for (let pref_key of prefKeysArray) {
-            // Condition needed for retro-compatibility.
-            // Mark for deletion on EOL. Cinnamon 3.2.x+
-            // Abandon this.settings.bindProperty and keep this.settings.bind.
-            if (newBinding) {
-                this.settings.bind(pref_key, pref_key, this._onSettingsChanged, pref_key);
-            } else {
-                this.settings.bindProperty(bD.BIDIRECTIONAL, pref_key, pref_key, this._onSettingsChanged, pref_key);
-            }
-        }
-    },
-
-    _expandAppletContextMenu: function() {
-        let menuItem = new Applet.MenuItem(
+    _expandAppletContextMenu() {
+        let menuItem = new PopupMenu.PopupIconMenuItem(
             _("Configure Mailnag daemon"),
             "system-run-symbolic",
-            () => {
-                Util.spawn_async(["mailnag-config"], null);
-            }
+            St.IconType.SYMBOLIC
         );
+        menuItem.connect("activate", () => Util.spawn_async(["mailnag-config"], null));
+
         this._applet_context_menu.addMenuItem(menuItem);
 
-        menuItem = new Applet.MenuItem(
+        menuItem = new PopupMenu.PopupIconMenuItem(
             _("Help"),
             "dialog-information",
-            () => {
-                xdgOpen(this.metadata.path + "/HELP.html");
-            }
+            St.IconType.SYMBOLIC
         );
+        menuItem.connect("activate", () => this.__openHelpPage());
+
         this._applet_context_menu.addMenuItem(menuItem);
-    },
+    }
 
     // called on applet startup (even though mailnag bus already exists)
-    onBusAppeared: function() {
-        let bus = Gio.bus_get_sync(Gio.BusType.SESSION, null);
+    onBusAppeared() {
+        const bus = Gio.bus_get_sync(Gio.BusType.SESSION, null);
         this.mailnag = new MailnagProxy(bus, DBUS_NAME, DBUS_PATH);
 
         // connect mailnag signals
@@ -196,9 +132,9 @@ Mailnag.prototype = {
         this.loadMails();
 
         this.mailnagWasRunning = true;
-    },
+    }
 
-    onBusVanished: function() {
+    onBusVanished() {
         // disconnect signals
         if (this._onMailsAddedId > 0) {
             this.mailnag.disconnectSignal(this._onMailsAddedId);
@@ -215,14 +151,14 @@ Mailnag.prototype = {
         } else {
             this.showError(_("Mailnag daemon isn't running! Do you have it installed?"));
         }
-    },
+    }
 
-    loadMails: function() {
+    loadMails() {
         this.menu.removeAll();
         this.menuItems = {};
         this.accountMenus = {};
 
-        try {
+        tryFn(() => {
             let mails = this.getMails();
 
             if (mails.length > 0) {
@@ -238,22 +174,20 @@ Mailnag.prototype = {
                     iLen = mails.length;
 
                 for (; i < iLen; i++) {
-                    let mi = this.makeMenuItem(mails[i]);
+                    const mi = this.makeMenuItem(mails[i]);
                     this.addMailMenuItem(mi);
                 }
             } else {
                 this.showNoUnread();
             }
             this.showMailCount();
-        } catch (aErr) {
             // TODO: show error message in menu
-            global.logError(aErr);
-        }
-    },
+        }, (aErr) => global.logError(aErr));
+    }
 
-    getMails: function() {
+    getMails() {
         try {
-            let mails = this.mailnag.GetMailsSync();
+            const mails = this.mailnag.GetMailsSync();
             return this.fromDbusMailList(mails).new;
         } catch (aErr) {
             // TODO: show error message in menu
@@ -261,19 +195,19 @@ Mailnag.prototype = {
         }
 
         return [];
-    },
+    }
 
     // converts the mail list returned from dbus to a list of dictionaries
-    fromDbusMailList: function(aDBusList) {
-        let mList = {
+    fromDbusMailList(aDBusList) {
+        const mList = {
             new: [],
             all: []
         };
 
         for (let m in mList) {
-            let idx = m === "new" ? 0 : 1;
-            let mails = aDBusList[idx];
-            let r = mList[m];
+            const idx = m === "new" ? 0 : 1;
+            const mails = aDBusList[idx];
+            const r = mList[m];
 
             if (!mails) {
                 continue;
@@ -283,23 +217,21 @@ Mailnag.prototype = {
                 iLen = mails.length;
 
             for (; i < iLen; i++) {
-                let mail = mails[i];
-                let [sender, size1] = mail["sender_name"].get_string(); // jshint ignore:line
-                let [sender_address, size2] = mail["sender_addr"].get_string(); // jshint ignore:line
-                let [subject, size3] = mail["subject"].get_string(); // jshint ignore:line
+                const mail = mails[i];
+                const [sender, size1] = mail["sender_name"].get_string(); // jshint ignore:line
+                const [sender_address, size2] = mail["sender_addr"].get_string(); // jshint ignore:line
+                const [subject, size3] = mail["subject"].get_string(); // jshint ignore:line
                 let [mail_id, size4] = mail["id"].get_string(); // jshint ignore:line
-                let datetime = new Date(mail["datetime"].get_int32() * 1000); // sec to ms
+                const datetime = new Date(mail["datetime"].get_int32() * 1000); // sec to ms
                 let account = "";
 
-                try {
-                    let [accountx, size5] = mail["account_name"].get_string(); // jshint ignore:line
+                tryFn(() => {
+                    const [accountx, size5] = mail["account_name"].get_string(); // jshint ignore:line
                     account = accountx;
 
                     // make mail id unique in case same mail appears in multiple accounts (in case of mail forwarding)
                     mail_id += "_" + account;
-                } catch (e) {
-                    // ignored
-                }
+                }, (aErr) => {}); // jshint ignore:line
 
                 r.push({
                     id: mail_id,
@@ -313,22 +245,22 @@ Mailnag.prototype = {
         }
 
         return mList;
-    },
+    }
 
-    sortMails: function(aMails) {
+    sortMails(aMails) {
         // ascending order
         aMails.sort((m1, m2) => {
             return m1.datetime - m2.datetime;
         });
         return aMails;
-    },
+    }
 
-    onMailsAdded: function(source, t, aDBusMailList) {
+    onMailsAdded(source, t, aDBusMailList) {
         this.removeNoUnread();
 
-        let mails = this.fromDbusMailList(aDBusMailList);
+        const mails = this.fromDbusMailList(aDBusMailList);
         let newMails = mails.new;
-        let allMails = mails.all;
+        const allMails = mails.all;
         newMails = this.sortMails(newMails);
 
         if (this.currentMailCount() + newMails.length > 0) {
@@ -339,7 +271,7 @@ Mailnag.prototype = {
             iLen = newMails.length;
 
         for (; i < iLen; i++) {
-            let mi = this.makeMenuItem(newMails[i]);
+            const mi = this.makeMenuItem(newMails[i]);
             this.addMailMenuItem(mi);
         }
 
@@ -349,22 +281,20 @@ Mailnag.prototype = {
             this.showMarkAllRead();
         }
 
-        Mainloop.idle_add(() => {
+        this.$.schedule_manager.idleCall("on_mails_added", function() {
             this.notify(newMails, allMails);
 
-            if (iLen && this.pref_third_party_integration_panel_drawer) {
+            if (iLen && this.$._.third_party_integration_panel_drawer) {
                 this.actor.show();
             }
+        }.bind(this));
+    }
 
-            return GLib.SOURCE_REMOVE;
-        });
-    },
-
-    onMailsRemoved: function(source, t, aRemainingMails) {
+    onMailsRemoved(source, t, aRemainingMails) {
         aRemainingMails = this.fromDbusMailList(aRemainingMails).new;
 
         // make a list of remaining ids
-        let ids = new Set();
+        const ids = new Set();
         let i = 0,
             iLen = aRemainingMails.length;
 
@@ -373,16 +303,16 @@ Mailnag.prototype = {
         }
 
         // remove menu item if its id isn't in the list
-        for (let id in this.menuItems) {
+        for (const id in this.menuItems) {
             if (this.menuItems.hasOwnProperty(id) &&
                 !ids.has(id)) {
                 this.removeMailMenuItem(id);
             }
         }
-    },
+    }
 
-    makeMenuItem: function(aMail) {
-        let mi = new $.MailItem({
+    makeMenuItem(aMail) {
+        const mi = new MailItem({
             id: aMail.id,
             sender: aMail.sender,
             sender_address: aMail.sender_address,
@@ -396,59 +326,57 @@ Mailnag.prototype = {
         this.menuItems[aMail.id] = mi;
 
         return mi;
-    },
+    }
 
-    makeAccountMenu: function(aAccount) {
-        let accmenu = new $.AccountMenu(aAccount, this.orientation);
+    makeAccountMenu(aAccount) {
+        const accmenu = new AccountMenu(aAccount, this.$.orientation);
         accmenu.menu.connect("open-state-changed",
             (aMenu, aOpen) => this._subMenuOpenStateChanged(aMenu, aOpen));
 
         this.accountMenus[aAccount] = accmenu;
 
-        if (this.orientation === St.Side.TOP) {
+        if (this.$.orientation === St.Side.TOP) {
             this.menu.addMenuItem(accmenu, 0);
         } else {
             this.menu.addMenuItem(accmenu);
         }
 
         return accmenu;
-    },
+    }
 
-    _subMenuOpenStateChanged: function(aMenu, aOpen) {
-        if (aOpen && this.pref_keep_one_menu_open) {
-            let children = aMenu._getTopMenu()._getMenuItems();
+    _subMenuOpenStateChanged(aMenu, aOpen) {
+        if (aOpen && this.$._.keep_one_menu_open) {
+            const children = aMenu._getTopMenu()._getMenuItems();
 
             for (let i = children.length - 1; i >= 0; i--) {
-                let item = children[i];
+                const item = children[i];
 
                 if (item instanceof PopupMenu.PopupSubMenuMenuItem ||
-                    item instanceof $.AccountMenu) {
+                    item instanceof AccountMenu) {
                     if (aMenu !== item.menu) {
                         item.menu.close(true);
                     }
                 }
             }
         }
-    },
+    }
 
-    _onMenuOpenStateChanged: function(aMenu, aOpen) {
+    _onMenuOpenStateChanged(aMenu, aOpen) {
         if (aOpen) {
-            Mainloop.idle_add(() => {
-                for (let id in this.menuItems) {
+            this.$.schedule_manager.idleCall("on_menu_open_state_changed", function() {
+                for (const id in this.menuItems) {
                     if (this.menuItems.hasOwnProperty(id)) {
                         this.menuItems[id].updateTimeDisplay();
                     }
                 }
-
-                return GLib.SOURCE_REMOVE;
-            });
+            }.bind(this));
         }
-    },
+    }
 
     // Adds a MailItem to the menu. If `account` is defined it's added
     // to its 'account menu'. An 'account menu' is created if it
     // doesn't exist.
-    addMailMenuItem: function(aMailItem) {
+    addMailMenuItem(aMailItem) {
         if (aMailItem.hasOwnProperty("account") && aMailItem.account) {
             let accmenu;
             if (aMailItem.account in this.accountMenus) {
@@ -458,16 +386,16 @@ Mailnag.prototype = {
             }
             accmenu.add(aMailItem);
         } else {
-            if (this.orientation === St.Side.TOP) {
+            if (this.$.orientation === St.Side.TOP) {
                 this.menu.addMenuItem(aMailItem, 0); // add to top of menu
             } else {
                 this.menu.addMenuItem(aMailItem); // add to bottom of menu
             }
         }
-    },
+    }
 
-    notify: function(aNewMails, aAllMails, aTest = false) {
-        if (this.pref_notification_mode === NotificationMode.DISABLED) {
+    notify(aNewMails, aAllMails, aTest = false) {
+        if (this.$._.notification_mode === NotificationMode.DISABLED) {
             return;
         }
 
@@ -479,24 +407,24 @@ Mailnag.prototype = {
          * Creating a Set of mail IDs seems to be working the same way as in the Python side.
          * Keep an eye on it for now.
          */
-        let newMailsIDs = new Set(aNewMails.map((m) => {
+        const newMailsIDs = new Set(aNewMails.map((m) => {
             return m.id;
         }));
-        let mails = aNewMails.concat(aAllMails.filter((m) => {
+        const mails = [...aNewMails, ...aAllMails.filter((m) => {
             return !newMailsIDs.has(m.id);
-        }));
-        let mailCount = mails.length;
-        let title = escapeHTML(ngettext("You have %d new mail!", "You have %d new mails!", mailCount)
+        })];
+        const mailCount = mails.length;
+        const title = escapeHTML(ngettext("You have %d new mail!", "You have %d new mails!", mailCount)
             .format(mailCount));
         let body = "";
-        let markReadButtonLabel = mailCount > 1 ?
+        const markReadButtonLabel = mailCount > 1 ?
             _("Mark All Read") :
             _("Mark Read");
-        let mailsToShow = mailCount <= this.pref_notification_max_mails ?
+        const mailsToShow = mailCount <= this.$._.notification_max_mails ?
             mailCount :
-            this.pref_notification_max_mails;
+            this.$._.notification_max_mails;
         let msgTemplate;
-        switch (this.pref_notification_mode) {
+        switch (this.$._.notification_mode) {
             case NotificationMode.SUMMARY_EXPANDED:
                 msgTemplate = "%s\n<i>%s</i>\n\n";
                 break;
@@ -507,7 +435,7 @@ Mailnag.prototype = {
                 msgTemplate = "%s - <i>%s</i>\n";
                 break;
             case NotificationMode.SUMMARY_CUSTOM:
-                msgTemplate = this.pref_notification_custom_template;
+                msgTemplate = this.$._.notification_custom_template;
                 break;
         }
 
@@ -517,17 +445,17 @@ Mailnag.prototype = {
              * So, eradicate them! And since I don't like surprises, eradicate them
              * from the sender and the account to.
              */
-            let sender = $.ellipsize(mails[c].sender || mails[c].sender_address,
-                    this.pref_notification_sender_max_chars)
+            const sender = ellipsize(mails[c].sender || mails[c].sender_address,
+                    this.$._.notification_sender_max_chars)
                 .replace(/\s+/g, " ");
-            let account = $.ellipsize(mails[c].account,
-                    this.pref_notification_sender_max_chars)
+            const account = ellipsize(mails[c].account,
+                    this.$._.notification_sender_max_chars)
                 .replace(/\s+/g, " ");
-            let subject = $.ellipsize(mails[c].subject,
-                    this.pref_notification_subject_max_chars)
+            const subject = ellipsize(mails[c].subject,
+                    this.$._.notification_subject_max_chars)
                 .replace(/\s+/g, " ");
 
-            if (this.pref_notification_mode === NotificationMode.SUMMARY_CUSTOM) {
+            if (this.$._.notification_mode === NotificationMode.SUMMARY_CUSTOM) {
                 /* NOTE: Since the format function added by CJS is very limited (it doesn't
                  * support keyword arguments), I had to improvise and implement placeholders.
                  */
@@ -536,7 +464,7 @@ Mailnag.prototype = {
                     .replace("{{account}}", account)
                     .replace("{{subject}}", subject);
             } else {
-                let from = this.pref_notification_mode === NotificationMode.SUMMARY_COMPRESSED ?
+                const from = this.$._.notification_mode === NotificationMode.SUMMARY_COMPRESSED ?
                     sender :
                     sender + " " + UNICODE_SYMBOLS.black_rightwards_arrowhead + " " + account;
 
@@ -547,8 +475,8 @@ Mailnag.prototype = {
             }
         }
 
-        if (mailCount > this.pref_notification_max_mails) {
-            let additionalMailsCount = mailCount - this.pref_notification_max_mails;
+        if (mailCount > this.$._.notification_max_mails) {
+            const additionalMailsCount = mailCount - this.$._.notification_max_mails;
             body += "<i>%s</i>".format(
                 escapeHTML(
                     ngettext("(and %d more)", "(and %d more)", additionalMailsCount)
@@ -573,7 +501,7 @@ Mailnag.prototype = {
             );
             this.notification.addButton("mark-read", markReadButtonLabel);
 
-            if (this.pref_client) {
+            if (this.$._.mail_client_command_or_url) {
                 this.notification.addButton("open-client", _("Open Mail client"));
             }
 
@@ -604,7 +532,7 @@ Mailnag.prototype = {
              * thrown by the custom template. And use Main.criticalNotify() and not
              * this.notification to avoid possible infinite loops.
              */
-            try {
+            tryFn(() => {
                 this.notification.update(
                     title,
                     body,
@@ -612,27 +540,27 @@ Mailnag.prototype = {
                 );
 
                 this._notificationSource.notify(this.notification);
-            } catch (aErr) {
-                let icon = new St.Icon({
+            }, (aErr) => {
+                const icon = new St.Icon({
                     icon_name: "dialog-error",
                     icon_type: St.IconType.SYMBOLIC,
                     icon_size: 24
                 });
 
                 Main.criticalNotify(
-                    escapeHTML(_(this.metadata.name)),
+                    escapeHTML(_(this.$.metadata.name)),
                     escapeHTML(aErr),
                     icon
                 );
                 global.logError(aErr);
-            }
+            });
         }
-    },
+    }
 
-    _ensureNotificationSource: function() {
+    _ensureNotificationSource() {
         if (!this._notificationSource) {
             this._notificationSource = new CustomNotificationSource(
-                escapeHTML(_(this.metadata.name))
+                escapeHTML(_(this.$.metadata.name))
             );
             this._notificationSource.connect("destroy", () => {
                 this._notificationSource = null;
@@ -642,16 +570,16 @@ Mailnag.prototype = {
                 Main.messageTray.add(this._notificationSource);
             }
         }
-    },
+    }
 
-    _destroyNotification: function() {
+    _destroyNotification() {
         /* NOTE: The notification source is also destroyed when the notification is destroyed.
          */
         this.notification && this.notification.destroy();
-    },
+    }
 
-    _testNotifications: function() {
-        let mails = [];
+    _testNotifications() {
+        const mails = [];
 
         let i = 0,
             iLen = 10;
@@ -667,9 +595,9 @@ Mailnag.prototype = {
         }
 
         this.notify(mails, [], true);
-    },
+    }
 
-    showMarkAllRead: function() {
+    showMarkAllRead() {
         this.removeMarkAllRead();
 
         this._markAllRead = new PopupMenu.PopupMenuItem(_("Mark All Read"));
@@ -677,16 +605,16 @@ Mailnag.prototype = {
 
         this._markAllRead.connect("activate", () => this.markAllRead());
 
-        if (this.orientation === St.Side.TOP) {
+        if (this.$.orientation === St.Side.TOP) {
             this.menu.addMenuItem(this._separator);
             this.menu.addMenuItem(this._markAllRead);
         } else {
             this.menu.addMenuItem(this._markAllRead, 0);
             this.menu.addMenuItem(this._separator, 1);
         }
-    },
+    }
 
-    removeMarkAllRead: function() {
+    removeMarkAllRead() {
         if (this.hasOwnProperty("_markAllRead") &&
             this._markAllRead instanceof PopupMenu.PopupMenuItem) {
             this._markAllRead.destroy();
@@ -698,20 +626,20 @@ Mailnag.prototype = {
             this._separator.destroy();
             delete this._separator;
         }
-    },
+    }
 
     // removes all items from menu and adds a message
-    showNoUnread: function() {
+    showNoUnread() {
         this.menu.removeAll();
         this.accountMenus = {};
         this.menuItems = {};
         this._noUnreadItem = this.menu.addAction(_("No unread mails."));
         this._noUnreadItem.actor.reactive = false;
         this.set_applet_icon_symbolic_name("mail-read");
-    },
+    }
 
     // makes sure "no unread mail" is not shown
-    removeNoUnread: function() {
+    removeNoUnread() {
         if (this.hasOwnProperty("_noUnreadItem") &&
             this._noUnreadItem instanceof PopupMenu.PopupMenuItem) {
             this._noUnreadItem.destroy();
@@ -719,25 +647,25 @@ Mailnag.prototype = {
         }
 
         this.set_applet_icon_symbolic_name("mail-unread");
-    },
+    }
 
-    currentMailCount: function() {
+    currentMailCount() {
         return Object.keys(this.menuItems).length;
-    },
+    }
 
-    showMailCount: function() {
+    showMailCount() {
         // display '?' if mailnag proxy is not present
         if (!this.mailnag || typeof this.mailnag !== "object") {
             this.set_applet_label("?");
             this.set_applet_tooltip(_("Mailnag daemon is not running!"));
         } else {
-            let num = this.currentMailCount();
+            const num = this.currentMailCount();
             this.set_applet_label(num.toString());
             if (num > 0) {
                 if (num === 1) {
                     let s = "";
 
-                    for (let id in this.menuItems) {
+                    for (const id in this.menuItems) {
                         if (this.menuItems.hasOwnProperty(id)) {
                             s = _("You have a mail from %s!").format(this.menuItems[id].sender);
                         }
@@ -752,9 +680,9 @@ Mailnag.prototype = {
                 this.set_applet_tooltip(_("No unread mails."));
             }
         }
-    },
+    }
 
-    showError: function(message) {
+    showError(message) {
         global.logError("Mailnag applet ERROR: " + message);
 
         this.menu.removeAll();
@@ -762,39 +690,31 @@ Mailnag.prototype = {
         this.set_applet_tooltip(_("Click to see error!"));
         this.menu.addAction("%s: ".format(_("Error")) + message);
         this.set_applet_icon_symbolic_name("mail-unread");
-    },
+    }
 
-    markMailRead: function(aId) {
-        if (this._panelDrawerHandlerId > 0) {
-            Mainloop.source_remove(this._panelDrawerHandlerId);
-            this._panelDrawerHandlerId = 0;
-        }
+    markMailRead(aId) {
+        this.$.schedule_manager.clearSchedule("panel_drawer_handler");
 
         // remove account name from mail id
-        let actual_id = aId.slice(0, aId.indexOf("_"));
+        const actual_id = aId.slice(0, aId.indexOf("_"));
 
         // tell mailnag
         this.mailnag.MarkMailAsReadSync(actual_id);
 
         this.removeMailMenuItem(aId);
 
-        this._panelDrawerHandlerId = Mainloop.timeout_add(500, () => {
-            this.autoHideApplet();
-            this._panelDrawerHandlerId = 0;
+        this.$.schedule_manager.setTimeout("panel_drawer_handler", this.autoHideApplet.bind(this), 500);
+    }
 
-            return GLib.SOURCE_REMOVE;
-        });
-    },
-
-    removeMailMenuItem: function(id) {
+    removeMailMenuItem(id) {
         // switch the focus to `menu` from `menuItem` to prevent menu from closing
         this.menu.actor.grab_key_focus();
 
         if (id in this.menuItems && this.menuItems[id].hasOwnProperty("account")) {
             // update account menu if there is one
-            let account = this.menuItems[id].account;
+            const account = this.menuItems[id].account;
             if (account && account in this.accountMenus) {
-                let accountMenu = this.accountMenus[account];
+                const accountMenu = this.accountMenus[account];
                 delete accountMenu.menuItems[id];
 
                 if (Object.keys(accountMenu.menuItems).length === 0) {
@@ -826,54 +746,54 @@ Mailnag.prototype = {
          * the MailsAdded daemon signal, and this removeMailMenuItem function
          * just handles actors in the applet menu.
          */
-    },
+    }
 
-    markMailsRead: function(aMails) {
+    markMailsRead(aMails) {
         let i = 0,
             iLen = aMails.length;
 
         for (; i < iLen; i++) {
             this.markMailRead(aMails[i].id);
         }
-    },
+    }
 
-    markAllRead: function() {
-        for (let id in this.menuItems) {
+    markAllRead() {
+        for (const id in this.menuItems) {
             if (this.menuItems.hasOwnProperty(id)) {
                 this.markMailRead(id);
             }
         }
-    },
+    }
 
-    autoHideApplet: function() {
-        if (this.pref_third_party_integration_panel_drawer &&
+    autoHideApplet() {
+        if (this.$._.third_party_integration_panel_drawer &&
             this.actor.hasOwnProperty("__HandledByPanelDrawer") &&
             !Object.keys(this.menuItems).length) {
             this.actor.hide();
         }
-    },
+    }
 
-    launchClient: function(aFromMenuItem = false) {
-        if (aFromMenuItem && !this.pref_launch_client_on_click) {
+    launchClient(aFromMenuItem = false) {
+        if (aFromMenuItem && !this.$._.launch_client_on_click) {
             return;
         }
 
         this.menu.close();
 
-        if (this.pref_client.startsWith("http")) { // client is a web page
-            xdgOpen(this.pref_client);
+        if (this.$._.mail_client_command_or_url.startsWith("http")) { // client is a web page
+            launchUri(this.$._.mail_client_command_or_url);
         } else { // client is a command
-            Util.spawn_async(this.pref_client, null);
+            Util.spawn_async(this.$._.mail_client_command_or_url, null);
         }
-    },
+    }
 
-    on_applet_clicked: function() {
+    on_applet_clicked() {
         this.menu.toggle();
-    },
+    }
 
-    _onButtonPressEvent: function(aActor, aEvent) {
-        if (aEvent.get_button() === 2) { // 2: middle button
-            switch (this.pref_middle_click_behavior) {
+    _onButtonPressEvent(aActor, aEvent) {
+        if (aEvent.get_button() === Clutter.BUTTON_MIDDLE) { // 2: middle button
+            switch (this.$._.middle_click_behavior) {
                 case "mark_read":
                     this.markAllRead();
                     break;
@@ -885,16 +805,17 @@ Mailnag.prototype = {
                     break;
             }
         }
-        return Applet.Applet.prototype._onButtonPressEvent.call(this, aActor, aEvent);
-    },
 
-    on_orientation_changed: function(aOrientation) {
-        this.orientation = aOrientation;
+        return super._onButtonPressEvent(aActor, aEvent);
+    }
+
+    on_orientation_changed() {
+        super.on_orientation_changed();
         this.loadMails();
-    },
+    }
 
-    on_applet_removed_from_panel: function() {
-        Main.keybindingManager.removeHotKey(this.menu_keybinding_name);
+    on_applet_removed_from_panel() {
+        super.on_applet_removed_from_panel();
 
         this._destroyNotification();
 
@@ -912,56 +833,35 @@ Mailnag.prototype = {
             Gio.bus_unwatch_name(this.busWatcherId);
             this.busWatcherId = 0;
         }
+    }
 
-        if (this.settings) {
-            this.settings.finalize();
-        }
-    },
+    _updateKeybindings() {
+        this.$.keybinding_manager.addKeybinding("toggle_menu", this.$._.toggle_menu_keybinding, () => {
+            if (!Main.overview.visible && !Main.expo.visible) {
+                this.on_applet_clicked();
+            }
+        });
+    }
 
-    _updateKeybindings: function() {
-        Main.keybindingManager.removeHotKey(this.menu_keybinding_name);
-
-        if (this.pref_overlay_key !== "") {
-            Main.keybindingManager.addHotKey(
-                this.menu_keybinding_name,
-                this.pref_overlay_key,
-                () => {
-                    if (!Main.overview.visible && !Main.expo.visible) {
-                        this.on_applet_clicked();
-                    }
-                }
-            );
-        }
-    },
-
-    _onSettingsChanged: function(aPrefValue, aPrefKey) { // jshint ignore:line
-        /* NOTE: On Cinnamon versions greater than 3.2.x, two arguments are passed to the
-         * settings callback instead of just one as in older versions. The first one is the
-         * setting value and the second one is the user data. To workaround this nonsense,
-         * check if the second argument is undefined to decide which
-         * argument to use as the pref key depending on the Cinnamon version.
-         */
-        // Mark for deletion on EOL. Cinnamon 3.2.x+
-        // Remove the following variable and directly use the second argument.
-        let pref_key = aPrefKey || aPrefValue;
-        switch (pref_key) {
-            case "pref_overlay_key":
+    _onSettingsChanged(aPrefValue, aPrefKey) {
+        switch (aPrefKey) {
+            case "toggle_menu_keybinding":
                 this._updateKeybindings();
                 break;
-            case "pref_logging_level":
-            case "pref_debugger_enabled":
-                $.Debugger.logging_level = this.pref_logging_level;
-                $.Debugger.debugger_enabled = this.pref_debugger_enabled;
+            case "logging_level":
+            case "debugger_enabled":
+                Debugger.logging_level = this.$._.logging_level;
+                Debugger.debugger_enabled = this.$._.debugger_enabled;
                 break;
         }
     }
-};
+}
 
-function main(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
-    DebugManager.wrapObjectMethods($.Debugger, {
+function main() {
+    Debugger.wrapObjectMethods({
         CustomNotificationSource: CustomNotificationSource,
         Mailnag: Mailnag
     });
 
-    return new Mailnag(aMetadata, aOrientation, aPanelHeight, aInstanceId);
+    return new Mailnag(...arguments);
 }

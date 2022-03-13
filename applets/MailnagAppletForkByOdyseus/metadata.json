@@ -1,0 +1,5 @@
+{
+    "description": "Mailnag mail notifier applet",
+    "max-instances": -1,
+    "name": "Mailnag (Fork By Odyseus)"
+}

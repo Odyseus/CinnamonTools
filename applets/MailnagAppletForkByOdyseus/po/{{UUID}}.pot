@@ -1,12 +1,12 @@
-# This is a template file for translating the 0MailnagAppletForkByOdyseus package.
-# Copyright (C) 2017-2020
-# This file is distributed under the same license as the 0MailnagAppletForkByOdyseus package.
-# Odyseus <EMAIL@ADDRESS>, 2017-2020.
+# This is a template file for translating the MailnagAppletForkByOdyseus package.
+# Copyright (C) 2017-2022
+# This file is distributed under the same license as the MailnagAppletForkByOdyseus package.
+# Odyseus <EMAIL@ADDRESS>, 2017-2022.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 0MailnagAppletForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2020-07-25 21:49-0300\n"
+"Project-Id-Version: MailnagAppletForkByOdyseus VERSION\n"
+"POT-Creation-Date: 2022-03-10 23:50-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,244 +15,251 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Make Cinnamon Xlet POT 2020-04-11 06:23:52.163\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:246 ../../__app__/python_modules/localized_help_creator.py:320
+#: ../../__app__/data/javascript_modules/appletsUtils.js:279
+msgid "Configure..."
+msgstr ""
+
+#: ../../__app__/python_modules/app_data.py:316
+msgid "See this xlet help file."
+msgstr ""
+
+#: ../../__app__/python_modules/app_data.py:317 ../../__app__/python_modules/localized_help_creator.py:413
+msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:253 ../../__app__/python_modules/localized_help_creator.py:327
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:317 applet.js:176
+#: ../../__app__/python_modules/localized_help_creator.py:324 applet.js:114
 msgid "Help"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:318
+#: ../../__app__/python_modules/localized_help_creator.py:325
 msgid "Contributors"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:319
-msgid "Changelog"
+#: ../../__app__/python_modules/localized_help_creator.py:326
+msgid "Changelogs"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:355
+#: ../../__app__/python_modules/localized_help_creator.py:362
 msgid "The following sections are available only in English."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:375
+#: ../../__app__/python_modules/localized_help_creator.py:382
 #, python-format
 msgid "This xlet is compatible with Cinnamon %s up to latest Cinnamon version."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:378
+#: ../../__app__/python_modules/localized_help_creator.py:385
 #, python-brace-format
 msgid "This xlet is compatible with Cinnamon {0} up to {1}."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:384
+#: ../../__app__/python_modules/localized_help_creator.py:391
 msgid "Cinnamon compatibility"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:401
+#: ../../__app__/python_modules/localized_help_creator.py:408
 msgid "Warning"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:404
+#: ../../__app__/python_modules/localized_help_creator.py:411
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
-#. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:406
-msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
-msgstr ""
-
-#: ../../__app__/python_modules/localized_help_creator.py:422
+#: ../../__app__/python_modules/localized_help_creator.py:429
 msgid "Xlets localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:426
+#: ../../__app__/python_modules/localized_help_creator.py:433
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:427
+#: ../../__app__/python_modules/localized_help_creator.py:434
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
-#: z_create_localized_help.py:27
+#: __data__/create_localized_help.py:27
 msgid "Description"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:30
+#: __data__/create_localized_help.py:30
 msgid "This applet is a fork of [Mailnag](https://cinnamon-spices.linuxmint.com/applets/view/244) applet by [Hasan Yavuz](https://github.com/hyOzd) (a.k.a. hyOzd)."
 msgstr ""
 
-#: z_create_localized_help.py:32
+#: __data__/create_localized_help.py:32
 msgid "Differences with the original applet"
 msgstr ""
 
-#: z_create_localized_help.py:34
+#: __data__/create_localized_help.py:34
 msgid "Added keyboard shortcut to be able to open/close the menu."
 msgstr ""
 
-#: z_create_localized_help.py:35
+#: __data__/create_localized_help.py:35
 msgid "Added option to keep just one sub-menu open."
 msgstr ""
 
-#: z_create_localized_help.py:36
+#: __data__/create_localized_help.py:36
 msgid "Removed obsolete code. Mostly features that doesn't exist anymore in modern JavaScript."
 msgstr ""
 
-#: z_create_localized_help.py:37
+#: __data__/create_localized_help.py:37
 msgid "Added more notification options that complements with the options existing in Mailnag's."
 msgstr ""
 
-#: z_create_localized_help.py:39
+#: __data__/create_localized_help.py:39
 msgid "Dependencies"
 msgstr ""
 
-#: z_create_localized_help.py:42
+#: __data__/create_localized_help.py:42
 msgid "Mailnag is a daemon program that checks POP3 and IMAP servers for new mail."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:44
+#: __data__/create_localized_help.py:44
 msgid "Detailed installation instructions can be found on [Mailnag's repository](https://github.com/pulb/mailnag)."
 msgstr ""
 
-#: z_create_localized_help.py:45
+#: __data__/create_localized_help.py:45
 msgid "Cinnamon needs to be restarted after installing Mailnag if the applet was already placed in a panel."
 msgstr ""
 
-#: z_create_localized_help.py:47
+#: __data__/create_localized_help.py:47
 msgid "Usage"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:50
+#: __data__/create_localized_help.py:50
 msgid "To configure Mailnag, launch its configuration program found in the applications menu, or from this applet context menu or by running the `mailnag-config` command."
 msgstr ""
 
-#: z_create_localized_help.py:53
+#: __data__/create_localized_help.py:53
 msgid "E-mail accounts can be directly added through Mailnag's configuration program or automatically detected by installing [Mailnag GNOME Online Accounts plugin](https://github.com/pulb/mailnag-goa-plugin)."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:55
+#: __data__/create_localized_help.py:55
 msgid "The Mailnag plug-in called **DBus Service** needs to be enabled for this applet to be able to use the daemon."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:57
+#: __data__/create_localized_help.py:57
 msgid "Mailnag can be configured further by editing its configuration file at **~/.config/mailnag/mailnag.cfg**."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:59
+#: __data__/create_localized_help.py:59
 msgid "It is recommended to install the Mailnag's optional dependency package `gir1.2-gnomekeyring-1.0` (or whatever the package is called in a given distribution) so Mailnag uses the keyring to store passwords."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:61
+#: __data__/create_localized_help.py:61
 msgid "The Mailnag's **LibNotify Notifications** plug-in cannot add notification actions such as mark mails as read or open mail client directly from the notification. These features are available only for Gnome (a limitation hard-coded into the plug-in itself). This applet implements its own configurable notifications to bypass such limitations. Needless to say, if one choses to use the notifications provided by this applet, the **LibNotify Notifications** plug-in must be disabled to avoid receiving duplicated notifications."
 msgstr ""
 
-#: applet.js:167
+#: applet.js:105
 msgid "Configure Mailnag daemon"
 msgstr ""
 
-#: applet.js:214
+#: applet.js:152
 msgid "Mailnag daemon stopped working!"
 msgstr ""
 
-#: applet.js:216
+#: applet.js:154
 msgid "Mailnag daemon isn't running! Do you have it installed?"
 msgstr ""
 
-#: applet.js:489
+#: applet.js:423
 #, javascript-format
 msgid "You have %d new mail!"
 msgid_plural "You have %d new mails!"
 msgstr[0] ""
 msgstr[1] ""
 
-#: applet.js:493 applet.js:675
+#: applet.js:427 applet.js:609
 msgid "Mark All Read"
 msgstr ""
 
-#: applet.js:494
+#: applet.js:428
 msgid "Mark Read"
 msgstr ""
 
-#: applet.js:554
+#: applet.js:488
 #, javascript-format
 msgid "(and %d more)"
 msgid_plural "(and %d more)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: applet.js:577
+#: applet.js:511
 msgid "Open Mail client"
 msgstr ""
 
-#: applet.js:708 applet.js:752
+#: applet.js:642 applet.js:686
 msgid "No unread mails."
 msgstr ""
 
-#: applet.js:732
+#: applet.js:666
 msgid "Mailnag daemon is not running!"
 msgstr ""
 
-#: applet.js:742
+#: applet.js:676
 #, javascript-format
 msgid "You have a mail from %s!"
 msgstr ""
 
-#: applet.js:748
+#: applet.js:682
 #, javascript-format
 msgid "You have %d unread mail!"
 msgid_plural "You have %d unread mails!"
 msgstr[0] ""
 msgstr[1] ""
 
-#: applet.js:762
+#: applet.js:696
 msgid "Click to see error!"
 msgstr ""
 
-#: applet.js:763
+#: applet.js:697
 msgid "Error"
 msgstr ""
 
 #. 86400 = Amount of seconds in 24 hours.
 #. today
 #. <1 minute
-#: utils.js:120
+#: js_modules/utils.js:102
 msgid "just now"
 msgstr ""
 
-#: utils.js:123
+#: js_modules/utils.js:105
 #, javascript-format
 msgid "%d minute ago"
 msgid_plural "%d minutes ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:126
+#: js_modules/utils.js:108
 #, javascript-format
 msgid "%d hour ago"
 msgid_plural "%d hours ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:130
+#: js_modules/utils.js:112
 msgid "yesterday"
 msgstr ""
 
-#: utils.js:132
+#: js_modules/utils.js:114
 #, javascript-format
 msgid "%d day ago"
 msgid_plural "%d days ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:135
+#: js_modules/utils.js:117
 #, javascript-format
 msgid "%d week ago"
 msgid_plural "%d weeks ago"
@@ -263,10 +270,6 @@ msgstr[1] ""
 msgid "Mailnag mail notifier applet"
 msgstr ""
 
-#. metadata.json->contributors
-msgid "See this xlet help file."
-msgstr ""
-
 #. metadata.json->name
 msgid "Mailnag (Fork By Odyseus)"
 msgstr ""
@@ -275,35 +278,35 @@ msgstr ""
 msgid "Applet Settings"
 msgstr ""
 
-#. settings-schema.json->pref_overlay_key->description
+#. settings-schema.json->toggle_menu_keybinding->description
 msgid "Keyboard shortcut to open and close the menu"
 msgstr ""
 
-#. settings-schema.json->pref_middle_click_behavior->description
+#. settings-schema.json->middle_click_behavior->description
 msgid "Middle click on applet action"
 msgstr ""
 
-#. settings-schema.json->pref_middle_click_behavior->tooltip
+#. settings-schema.json->middle_click_behavior->tooltip
 msgid "What to do when middle clicked on applet icon"
 msgstr ""
 
-#. settings-schema.json->pref_middle_click_behavior->options
+#. settings-schema.json->middle_click_behavior->options
 msgid "Mark all read"
 msgstr ""
 
-#. settings-schema.json->pref_middle_click_behavior->options
+#. settings-schema.json->middle_click_behavior->options
 msgid "Launch mail client"
 msgstr ""
 
-#. settings-schema.json->pref_middle_click_behavior->options
+#. settings-schema.json->middle_click_behavior->options
 msgid "Do nothing"
 msgstr ""
 
-#. settings-schema.json->pref_client->description
+#. settings-schema.json->mail_client_command_or_url->description
 msgid "Mail client to launch (or webpage)"
 msgstr ""
 
-#. settings-schema.json->pref_client->tooltip
+#. settings-schema.json->mail_client_command_or_url->tooltip
 msgid "Enter the command to launch your mail client here. You can also enter a web address that starts with 'http'."
 msgstr ""
 
@@ -311,19 +314,19 @@ msgstr ""
 msgid "Menu Settings"
 msgstr ""
 
-#. settings-schema.json->pref_launch_client_on_click->description
+#. settings-schema.json->launch_client_on_click->description
 msgid "Launch mail client on click"
 msgstr ""
 
-#. settings-schema.json->pref_launch_client_on_click->tooltip
+#. settings-schema.json->launch_client_on_click->tooltip
 msgid "Mail client is launched when clicked on a menu item."
 msgstr ""
 
-#. settings-schema.json->pref_keep_one_menu_open->description
+#. settings-schema.json->keep_one_menu_open->description
 msgid "Keep just one sub menu open"
 msgstr ""
 
-#. settings-schema.json->pref_keep_one_menu_open->tooltip
+#. settings-schema.json->keep_one_menu_open->tooltip
 msgid "When enabled, the previously opened sub menu will be automatically closed."
 msgstr ""
 
@@ -331,65 +334,65 @@ msgstr ""
 msgid "Notifications Settings"
 msgstr ""
 
-#. settings-schema.json->pref_notification_mode->description
+#. settings-schema.json->notification_mode->description
 msgid "Notification mode"
 msgstr ""
 
-#. settings-schema.json->pref_notification_mode->options
+#. settings-schema.json->notification_mode->options
 msgid "Disabled"
 msgstr ""
 
-#. settings-schema.json->pref_notification_mode->options
+#. settings-schema.json->notification_mode->options
 msgid "Detailed summary (expanded)"
 msgstr ""
 
-#. settings-schema.json->pref_notification_mode->options
+#. settings-schema.json->notification_mode->options
 msgid "Detailed summary (compact)"
 msgstr ""
 
-#. settings-schema.json->pref_notification_mode->options
+#. settings-schema.json->notification_mode->options
 msgid "Detailed summary (compressed)"
 msgstr ""
 
-#. settings-schema.json->pref_notification_mode->options
+#. settings-schema.json->notification_mode->options
 msgid "Custom summary"
 msgstr ""
 
-#. settings-schema.json->pref_notification_max_mails->units
+#. settings-schema.json->notification_max_mails->units
 msgid "mails"
 msgstr ""
 
-#. settings-schema.json->pref_notification_max_mails->description
+#. settings-schema.json->notification_max_mails->description
 msgid "Maximum mails to show"
 msgstr ""
 
-#. settings-schema.json->pref_notification_max_mails->tooltip
+#. settings-schema.json->notification_max_mails->tooltip
 msgid "The amount of mails to show in the detailed summary."
 msgstr ""
 
-#. settings-schema.json->pref_notification_sender_max_chars->units
-#. settings-schema.json->pref_notification_subject_max_chars->units
+#. settings-schema.json->notification_sender_max_chars->units
+#. settings-schema.json->notification_subject_max_chars->units
 msgid "characters"
 msgstr ""
 
-#. settings-schema.json->pref_notification_sender_max_chars->description
+#. settings-schema.json->notification_sender_max_chars->description
 msgid "Sender's truncation point"
 msgstr ""
 
-#. settings-schema.json->pref_notification_sender_max_chars->tooltip
-#. settings-schema.json->pref_notification_subject_max_chars->tooltip
+#. settings-schema.json->notification_sender_max_chars->tooltip
+#. settings-schema.json->notification_subject_max_chars->tooltip
 msgid "The amount of characters at which the text in the detailed summary is truncated."
 msgstr ""
 
-#. settings-schema.json->pref_notification_subject_max_chars->description
+#. settings-schema.json->notification_subject_max_chars->description
 msgid "Subject's truncation point"
 msgstr ""
 
-#. settings-schema.json->pref_notification_custom_template->description
+#. settings-schema.json->notification_custom_template->description
 msgid "Custom summary template"
 msgstr ""
 
-#. settings-schema.json->pref_notification_custom_template->tooltip
+#. settings-schema.json->notification_custom_template->tooltip
 msgid ""
 "A template string used to represent each mail in the notification body. The template can contain some basic Pango markup (like <b>, <i>, and <u> tags, everything else is filtered out by Cinnamon) and must contain at least one of the following placeholders:\n"
 "\n"
@@ -406,11 +409,11 @@ msgstr ""
 msgid "Third party integrations"
 msgstr ""
 
-#. settings-schema.json->pref_third_party_integration_panel_drawer->description
+#. settings-schema.json->third_party_integration_panel_drawer->description
 msgid "Panel Drawer applet integration"
 msgstr ""
 
-#. settings-schema.json->pref_third_party_integration_panel_drawer->tooltip
+#. settings-schema.json->third_party_integration_panel_drawer->tooltip
 msgid "Display applet when receiving new items. Hide applet when marking items as read and there are no unread items left."
 msgstr ""
 
@@ -418,11 +421,11 @@ msgstr ""
 msgid "Debugging"
 msgstr ""
 
-#. settings-schema.json->pref_logging_level->description
+#. settings-schema.json->logging_level->description
 msgid "Logging level (*)"
 msgstr ""
 
-#. settings-schema.json->pref_logging_level->tooltip
+#. settings-schema.json->logging_level->tooltip
 msgid ""
 "It enables the ability to log the output of several functions used by the extension.\n"
 "\n"
@@ -431,23 +434,23 @@ msgid ""
 "Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
 msgstr ""
 
-#. settings-schema.json->pref_logging_level->options
+#. settings-schema.json->logging_level->options
 msgid "Normal"
 msgstr ""
 
-#. settings-schema.json->pref_logging_level->options
+#. settings-schema.json->logging_level->options
 msgid "Verbose"
 msgstr ""
 
-#. settings-schema.json->pref_logging_level->options
+#. settings-schema.json->logging_level->options
 msgid "Very verbose"
 msgstr ""
 
-#. settings-schema.json->pref_debugger_enabled->description
+#. settings-schema.json->debugger_enabled->description
 msgid "Enable debugger (*)"
 msgstr ""
 
-#. settings-schema.json->pref_debugger_enabled->tooltip
+#. settings-schema.json->debugger_enabled->tooltip
 msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
 msgstr ""
 
