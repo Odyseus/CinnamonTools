@@ -1,0 +1,5 @@
+{
+    "external-configuration-app": "settings.py",
+    "name": "Desktop Effects Applier",
+    "description": "Apply effects to windows/screen (OpenGL shaders, colors, brightness, contrast and desaturation)."
+}

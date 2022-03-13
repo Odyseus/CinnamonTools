@@ -1,19 +1,9 @@
-## Desktop Effects Applier changelog
-
-**This change log is only valid for the version of the xlet hosted on [its original repository](https://gitlab.com/Odyseus/CinnamonTools).**
-
-***
-
-**Date:** Tue, 14 Apr 2020 01:59:47 -0300<br/>
-**Commit:** [04ca5b1](https://gitlab.com/Odyseus/CinnamonTools/commit/04ca5b1)<br/>
-**Author:** Odyseus<br/>
-
-- Removed unnecessary file.
-
+<br/>
+<br/>
 ***
 
 **Date:** Sun, 5 Apr 2020 16:14:01 -0300<br/>
-**Commit:** [155d228](https://gitlab.com/Odyseus/CinnamonTools/commit/155d228)<br/>
+**Commit:** [02e2827](https://gitlab.com/Odyseus/CinnamonTools/commit/02e2827)<br/>
 **Author:** Odyseus<br/>
 
 WARNING: Undo/Ignore the warning in previous commit (73b77bc).

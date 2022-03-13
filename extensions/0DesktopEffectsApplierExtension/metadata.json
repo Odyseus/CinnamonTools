@@ -1,7 +1,0 @@
-{
-    "external-configuration-app": "settings.py",
-    "name": "Desktop Effects Applier",
-    "description": "Apply effects to windows/screen (OpenGL shaders, colors, brightness, contrast and desaturation).",
-    "contributors": "See this xlet help file.",
-    "comments": "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
-}

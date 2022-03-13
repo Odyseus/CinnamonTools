@@ -5,74 +5,70 @@
     },
     "settings_button": {
         "type": "button",
-        "callback": "openXletSettings",
+        "callback": "__openXletSettings",
         "description": "Open the \"real\" preference window"
     },
-    "pref_shader_list": {
+    "shader_list": {
         "type": "generic",
         "default": []
     },
-    "pref_color_list": {
+    "color_list": {
         "type": "generic",
         "default": []
     },
-    "pref_desaturation_list": {
+    "desaturation_list": {
         "type": "generic",
         "default": []
     },
-    "pref_contrast_list": {
+    "contrast_list": {
         "type": "generic",
         "default": []
     },
-    "pref_brightness_list": {
+    "brightness_list": {
         "type": "generic",
         "default": []
     },
-    "pref_extra_shaders_path": {
+    "extra_shaders_path": {
         "type": "generic",
         "default": ""
     },
-    "pref_global_keybindings": {
+    "global_keybindings": {
         "type": "generic",
         "default": []
     },
-    "pref_apply_cinnamon_injections": {
+    "apply_cinnamon_injections": {
         "type": "generic",
         "default": true
     },
-    "trigger_shader_list_changed": {
+    "shader_list_apply": {
         "type": "generic",
         "default": false
     },
-    "trigger_color_list_changed": {
+    "color_list_apply": {
         "type": "generic",
         "default": false
     },
-    "trigger_desaturation_list_changed": {
+    "desaturation_list_apply": {
         "type": "generic",
         "default": false
     },
-    "trigger_contrast_list_changed": {
+    "contrast_list_apply": {
         "type": "generic",
         "default": false
     },
-    "trigger_brightness_list_changed": {
+    "brightness_list_apply": {
         "type": "generic",
         "default": false
     },
-    "trigger_global_keybindings_changed": {
+    "global_keybindings_apply": {
         "type": "generic",
         "default": false
     },
-    "pref_imp_exp_last_selected_directory": {
+    "imp_exp_last_selected_directory": {
         "type": "generic",
         "default": ""
     },
-    "pref_usage_notified": {
-        "type": "generic",
-        "default": false
-    },
-    "pref_desktop_file_generated": {
+    "usage_notified": {
         "type": "generic",
         "default": false
     }

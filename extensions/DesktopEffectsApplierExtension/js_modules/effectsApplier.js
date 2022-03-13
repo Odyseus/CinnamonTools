@@ -1,29 +1,22 @@
-// {{IMPORTER}}
-
-let XletMeta;
-
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof __meta === "object") {
-    XletMeta = __meta;
-} else {
-    XletMeta = imports.ui.extensionSystem.extensionMeta["{{UUID}}"];
-}
-
-const Constants = __import("constants.js");
-
-const {
-    DEFAULT_SHADER_FILE_RE,
-    URI_RE,
-    EFFECTS_PROP_NAME
-} = Constants;
-
 const {
     gi: {
         Clutter,
-        Gio,
         GObject
     }
 } = imports;
+
+const {
+    URI_RE,
+    EFFECTS_PROP_NAME
+} = require("js_modules/constants.js");
+
+const {
+    tryFn
+} = require("js_modules/globalUtils.js");
+
+const {
+    File
+} = require("js_modules/customFileUtils.js");
 
 function _getEffectSourceAsync(aEffectParams, aCallback) {
     switch (aEffectParams.type) {
@@ -41,48 +34,30 @@ function _getEffectSourceAsync(aEffectParams, aCallback) {
                 return;
             }
 
-            let fileName = aEffectParams.base_name;
+            const fileName = aEffectParams.base_name;
             let filePath = null;
 
-            if (DEFAULT_SHADER_FILE_RE.test(fileName)) {
-                filePath = XletMeta.path + "/shaders/" + fileName.replace(DEFAULT_SHADER_FILE_RE, "");
+            if (fileName.startsWith("::")) {
+                filePath = `${__meta.path}/shaders/${fileName.replace("::", "")}`;
             } else {
-                filePath = aEffectParams.extra_shaders_path.replace(URI_RE, "") + "/" + fileName;
+                filePath = `${aEffectParams.extra_shaders_path.replace(URI_RE, "")}/${fileName}`;
             }
 
-            let shaderFile = filePath ? Gio.file_new_for_path(filePath) : null;
-
-            if (shaderFile && shaderFile.query_exists(null)) {
-                shaderFile.load_contents_async(null,
-                    (aFile, aResponce) => {
-                        let success,
-                            contents = "",
-                            tag;
-
-                        try {
-                            [success, contents, tag] = aFile.load_contents_finish(aResponce);
-                        } catch (aErr) {
-                            global.logError(aErr.message);
-                            return;
-                        }
-
-                        if (!success) {
-                            global.logError("Error reading shader file: %s".format(shaderFile.get_path()));
-                            return;
-                        }
-
-                        try {
-                            /* NOTE: Store the shader source so the file doesn't need to be read
-                             * every time the effect is "re-used" (e.g. is applied to windows clones).
-                             */
-                            aEffectParams["source"] = String(contents);
-                            aCallback(String(contents));
-                        } catch (aErr) {
-                            global.logError(aErr);
-                        }
-                    }
-                );
-            }
+            const shaderFile = filePath ? new File(filePath) : null;
+            shaderFile && shaderFile.read()
+                .then((aData) => {
+                    tryFn(() => {
+                        /* NOTE: Store the shader source so the file doesn't need to be read
+                         * every time the effect is "re-used" (e.g. is applied to windows clones).
+                         */
+                        aEffectParams["source"] = aData;
+                        aCallback(aData);
+                    }, (aErr) => {
+                        global.logError(aErr);
+                    });
+                }, (aErr) => {
+                    global.logError(aErr);
+                });
             break;
         case "contrast":
         case "brightness":
@@ -122,7 +97,7 @@ function _getNewEffectInstance(aEffectSource, aEffectParams, aActor) {
         case "contrast":
         case "brightness":
             effect = new Clutter.BrightnessContrastEffect();
-            effect["set_" + aEffectParams.type + "_full"](
+            effect[`set_${aEffectParams.type}_full`](
                 parseFloat(aEffectParams.red),
                 parseFloat(aEffectParams.green),
                 parseFloat(aEffectParams.blue)
@@ -135,8 +110,8 @@ function _getNewEffectInstance(aEffectSource, aEffectParams, aActor) {
 
 function addEffect(aEffectParams, aActor) {
     _getEffectSourceAsync(aEffectParams, (aEffectSource) => {
-        let state = _getEffectState(aActor, aEffectParams.id);
-        let effect = _getNewEffectInstance(aEffectSource, aEffectParams, aActor);
+        const state = _getEffectState(aActor, aEffectParams.id);
+        const effect = _getNewEffectInstance(aEffectSource, aEffectParams, aActor);
 
         if (!effect) {
             return;
@@ -185,7 +160,7 @@ function _getEffectState(aActor, aEffectId) {
     if (!aActor.hasOwnProperty(EFFECTS_PROP_NAME)) {
         aActor[EFFECTS_PROP_NAME] = {
             removeAllEffects: function() {
-                for (let prop in this) {
+                for (const prop in this) {
                     if (this.hasOwnProperty(prop) &&
                         this[prop].hasOwnProperty("__state__")) {
                         _resetEffectState(this[prop].actor, this[prop].effectId);
@@ -218,12 +193,12 @@ function _resetEffectState(aActor, aEffectId) {
         return;
     }
 
-    let state = (aActor.hasOwnProperty(EFFECTS_PROP_NAME) &&
+    const state = (aActor.hasOwnProperty(EFFECTS_PROP_NAME) &&
             aActor[EFFECTS_PROP_NAME].hasOwnProperty(aEffectId)) ?
         aActor[EFFECTS_PROP_NAME][aEffectId] : null;
 
     if (state && state.actor) {
-        for (let connectionId of ["actorDestroyedId", "newFrameId", "sizeChangedId"]) {
+        for (const connectionId of ["actorDestroyedId", "newFrameId", "sizeChangedId"]) {
             if (state[connectionId] > 0) {
                 state.actor.disconnect(state[connectionId]);
             }
