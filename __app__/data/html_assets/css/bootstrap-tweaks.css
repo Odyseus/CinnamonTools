@@ -3,3 +3,13 @@
 body {
     padding-top: 50px !important;
 }
+
+.collapsible {
+    width: 100%;
+    text-align: left;
+}
+
+.collapsible-content {
+    display: none;
+    overflow: hidden;
+}

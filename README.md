@@ -1,7 +1,5 @@
-![Platform: GNU/Linux](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/images/Platform-name.svg "Platform: GNU/Linux")
-![Cinnamon: 3.0+](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/images/Cinnamon-version.svg "Cinnamon: 3.0+")
-![Gtk+: 3.18+](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/images/Gtk-version.svg "Gtk+: 3.18+")
-![Python: 3.5+](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/images/Python-version.svg "Python: 3.5+")
+<!-- NOTE: Using img tags to be able to set bigger badge sizes. -->
+<img alt="Platform: GNU/Linux" src="https://odyseus.gitlab.io/cinnamon_tools_docs/_static/images/badge-platform.svg" width="189" height="27" /> <img alt="Cinnamon: 5.0+" src="https://odyseus.gitlab.io/cinnamon_tools_docs/_static/images/badge-cinnamon-version.svg" width="153" height="27" /> <img alt="Gtk: 3.24+" src="https://odyseus.gitlab.io/cinnamon_tools_docs/_static/images/badge-gtk-version.svg" width="108" height="27" /> <img alt="Python: 3.7+" src="https://odyseus.gitlab.io/cinnamon_tools_docs/_static/images/badge-python-version.svg" width="129" height="27" />
 
 ## Cinnamon Tools
 
@@ -14,7 +12,7 @@ Applets/Extensions/Themes for the [Cinnamon desktop environment](https://github.
 
 ## Dependencies
 
-The application used in this repository to build xlets and several other tasks requires Python 3.5+ to be available in `/usr/bin/python3`. All xlets that are shipped with Python scripts to perform different tasks have the exact same requirement.
+The application used in this repository to build xlets and several other tasks requires Python 3.7+ to be available in `/usr/bin/python3`. All xlets that are shipped with Python scripts to perform different tasks have the exact same requirement.
 
 Additionally, each xlet can depend on certain commands to be available on PATH or packages to be installed on a system. These dependencies are listed in each xlet help pages. See [Xlets help pages](#xlets-help-pages).
 
@@ -41,7 +39,7 @@ $ ./app.py menu
 The command bellow will perform the following actions:
 
 ```shell
-$ ./app.py build --all-xlets --domain="domain.com" --output="$HOME/.local/share/cinnamon" --no-confirmation --restart-cinnamon
+$ ./app.py build_xlets --all-xlets --domain="domain.com" --output="$HOME/.local/share/cinnamon" --no-confirmation --restart-cinnamon
 ```
 
 - `--all-xlets`: Build **all xlets** found on the repository.
@@ -54,7 +52,7 @@ $ ./app.py build --all-xlets --domain="domain.com" --output="$HOME/.local/share/
 
 #### [Building themes](https://odyseus.gitlab.io/cinnamon_tools_docs/includes/01-usage.html#app-py-build-themes)
 
-The theme building process is interactive (the build process will ask for Cinnamon version, Cinnamon's theme default font size/family, GTK+ 3 version, and Gtk+ 3 client-side-decorated windows shadows). There is only one theme variant in this repository, but an infinite number of variants can be created. See [How to create a custom theme variant?](https://odyseus.gitlab.io/cinnamon_tools_docs/includes/01-usage.html#how-to-create-custom-variant-reference).
+The theme building process is interactive (the build process will ask for Cinnamon version, GTK+ 3/4 versions, etc.). There are 11 theme variants in this repository, but an infinite number of variants can be created. See [How to create a custom theme variant?](https://odyseus.gitlab.io/cinnamon_tools_docs/includes/01-usage.html#how-to-create-custom-variant-reference).
 
 The command bellow will perform the following actions:
 
@@ -80,25 +78,25 @@ The help pages are standalone HTML files named **HELP.html** that can be found i
 
 Applet's help pages can be accessed from an applet context menu (item named **Help**).
 
-- [Argos for Cinnamon](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0ArgosForCinnamon/index.html)
-- [Cinnamon Menu (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0CinnamonMenuForkByOdyseus/index.html)
-- [Desktop Capture (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0DesktopCaptureForkByOdyseus/index.html)
-- [Desktop Handler](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0DesktopHandler/index.html)
-- [Feeds Reader (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0FeedsByJonbrettForkByOdyseus/index.html)
-- [Mailnag (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0MailnagAppletForkByOdyseus/index.html)
-- [Panel Drawer (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0PanelDrawerForkByOdyseus/index.html)
-- [Quick Menu](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0QuickMenu/index.html)
-- [Simple ToDo List](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0SimpleToDoList/index.html)
-- [System Monitor (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0SystemMonitorByOrcusForkByOdyseus/index.html)
-- [Weather (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0WeatherAppletForkByOdyseus/index.html)
-- [Window list (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0WindowListForkByOdyseus/index.html)
+- [Argos for Cinnamon](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/ArgosForCinnamon/index.html)
+- [Cinnamon Menu (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/CinnamonMenuForkByOdyseus/index.html)
+- [Desktop Capture (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/DesktopCaptureForkByOdyseus/index.html)
+- [Desktop Handler](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/DesktopHandler/index.html)
+- [Feeds Reader (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/FeedsByJonbrettForkByOdyseus/index.html)
+- [Mailnag (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/MailnagAppletForkByOdyseus/index.html)
+- [Panel Drawer (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/PanelDrawerForkByOdyseus/index.html)
+- [Quick Menu](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/QuickMenu/index.html)
+- [Simple ToDo List](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/SimpleToDoList/index.html)
+- [System Monitor (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/SystemMonitorByOrcusForkByOdyseus/index.html)
+- [Weather (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/WeatherAppletForkByOdyseus/index.html)
+- [Window list (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/WindowListForkByOdyseus/index.html)
 
 ### Extensions help pages
 
-- [Cinnamon Tweaks](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0CinnamonTweaks/index.html)
-- [Color Blindness Assistant](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0ColorBlindnessAssistant/index.html)
-- [Desktop Effects Applier](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0DesktopEffectsApplierExtension/index.html)
-- [Multi Translator](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0MultiTranslatorExtension/index.html)
+- [Cinnamon Tweaks](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/CinnamonTweaks/index.html)
+- [Color Blindness Assistant](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/ColorBlindnessAssistant/index.html)
+- [Desktop Effects Applier](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/DesktopEffectsApplierExtension/index.html)
+- [Multi Translator](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/MultiTranslatorExtension/index.html)
 
 ## [Documentation](https://odyseus.gitlab.io/cinnamon_tools_docs)
 

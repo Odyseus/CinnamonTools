@@ -4,96 +4,6 @@
 
 ***
 
-**Date:** Sun, 13 Mar 2022 02:05:08 -0300<br/>
-**Commit:** [e7c1144](https://gitlab.com/Odyseus/CinnamonTools/commit/e7c1144)<br/>
-**Author:** Odyseus<br/>
-
-### Python modules
-
-- Main Python application:
-    - Renamed `build` command to `build_xlets`.
-    - Removed `--all-xlets` parameter from `build_xlets` command. If no `--xlet-name` parameter is passed, all xlets will be built.
-    - Removed `--dry-run` parameter. Too annoying to maintain.
-    - Added `--variant-name` parameter to the `build_themes` command to allow to build/develop specific variants instead of always building/developing all variants.
-    - Renamed `dev` command to `dev_xlets`.
-    - Added `dev_themes` command to perform development tasks with themes.
-    - Added theme variant selector to the interactive CLI menu.
-- `file_chooser_dialog`: Added `--action-save` and `--last-dir` parameters.
-- Updated `helper.py` script to recognize if an xlet has a gsettings schema at execution time instead of the *hacky* way previously used.
-
-***
-
-**Date:** Sun, 13 Mar 2022 00:54:18 -0300<br/>
-**Commit:** [1ccca3c](https://gitlab.com/Odyseus/CinnamonTools/commit/1ccca3c)<br/>
-**Author:** Odyseus<br/>
-
-### General
-
-- Updated README template.
-- Updated Bash completions template.
-- Updated system executable template.
-- Update BaseXlet.
-
-***
-
-**Date:** Sun, 13 Mar 2022 00:48:29 -0300<br/>
-**Commit:** [4abcff4](https://gitlab.com/Odyseus/CinnamonTools/commit/4abcff4)<br/>
-**Author:** Odyseus<br/>
-
-### Xlets settings framework
-
-- Removed all retro-compatible code.
-- Implemented **scale** widget (called **Range** internally).
-- Implemented **soundfilechooser** widget.
-- Implemented a `builder` to help in the creation of window definitions inside the **settings.py** files. Advantages:
-    - Window definitions code reduced by +-30% and creation time (time spent in creating them) reduced even more.
-    - No more need of *safely getting values* from the definitions.
-- Removed the need to always pass certain CLI arguments to the **settings.py** files when dealing with applets/desklets. This allows to open the settings window from anywhere. Notes:
-    - I'm still creating .desktop files to open extension's settings. Because having to open a window to be able to open another window is ultra-mega-annoying.
-    - I'm still overriding the **Configure...** context menu for applets. Because this item is still hardcoded to only open the Cinnamon's native settings window and completely ignore the application defined in `external-configuration-app` inside **metadata.json** files.
-- Added **textviewbutton** widget, a new widget similar to the **textview** widget that is rendered as a button that opens a text view.
-- Added **stringslist** widget, a new widget that allows to store a list of strings.
-
-***
-
-**Date:** Sun, 13 Mar 2022 00:47:10 -0300<br/>
-**Commit:** [faf0951](https://gitlab.com/Odyseus/CinnamonTools/commit/faf0951)<br/>
-**Author:** Odyseus<br/>
-
-### JavaScript modules
-
-- Removed all retro-compatible code.
-- Removed all polyfills. I never used them and now none of them are needed.
-- Updated all existent modules to JavaScript class notation and other ES6 useless nonsense.
-- Added **appletsUtils.js** module. A module with "boilerplate" code to facilitate applets creation.
-- Added **extensionsUtils.js** module. A module with "boilerplate" code to facilitate extensions creation.
-- Added **customPopupMenu.js** module. A module with custom elements based on elements found in Cinnamon's **popupMenu.js** module.
-- Removed the **xletsSettingsUtils.js** module in favor of the **extensionsUtils.js** module.
-- **globalUtils.js** module:
-    - Added `ScheduleManager` class. A class used to manage timeouts/intervals without the need to keep track of them. Similar to how the `SignalManager` class of Cinnamon's **signalManager.js** module works.
-    - Added `KeybindingsManager` class. A class used to manage key bindings created with the `KeybindingManager` class found in Cinnamon's **keybindings.js** module. It's main purpose is to be able to remove all registered key bindings "in bulk".
-    - Added `InjectionsManager` class. A class to assist with functions injections/overrides.
-    - Added `check_version` method. A function that is a proxy to the `versionCompare` function to allow a more "natural" usage.
-    - Removed `safeGet` method. Now there is the optional chaining operator `?.`.
-- **customTooltips.js** module: Removed the `CustomPanelTooltip` (that wasn't used by any of my xlets) class and added the `CustomPanelItemTooltip` class. The `CustomPanelItemTooltip` class has a mechanism to display data in a grid for easy reading and comprehension.
-
-***
-
-**Date:** Sun, 13 Mar 2022 00:24:14 -0300<br/>
-**Commit:** [4f75779](https://gitlab.com/Odyseus/CinnamonTools/commit/4f75779)<br/>
-**Author:** Odyseus<br/>
-
-### General
-
-- Updated Sublime Text project file.
-- Updated GitLab bug report template.
-- Updated .eslintrc.json file.
-- Updated .gitignore file.
-- Updated .jshintrc file.
-- Added .esformatter.json file.
-
-***
-
 **Date:** Sun, 10 Jan 2021 12:43:04 -0300<br/>
 **Commit:** [f2995dd](https://gitlab.com/Odyseus/CinnamonTools/commit/f2995dd)<br/>
 **Author:** Odyseus<br/>
@@ -123,21 +33,6 @@
 ### Python modules
 
 - Updated list of ignored modules when building the documentation.
-
-***
-
-**Date:** Sat, 25 Jul 2020 21:57:11 -0300<br/>
-**Commit:** [3d1a3b8](https://gitlab.com/Odyseus/CinnamonTools/commit/3d1a3b8)<br/>
-**Author:** Odyseus<br/>
-
-### Squashed '__app__/python_modules/python_utils/' changes from 9e1b1b0..5a8ac36
-
-5a8ac36 Added sublime_text_utils; an assortment of utilities for use with Sublime Text plugins
-df574e2 mistune_utils.py
-9bb3558 Added fix_imports.py module
-
-git-subtree-dir: __app__/python_modules/python_utils
-git-subtree-split: 5a8ac36ad112f57ecaf49c304a55d70eb543d596
 
 ***
 
@@ -171,19 +66,6 @@ git-subtree-split: 5a8ac36ad112f57ecaf49c304a55d70eb543d596
 
 - Updated changelogs.
 - Updated help pages.
-
-***
-
-**Date:** Sat, 18 Apr 2020 14:10:54 -0300<br/>
-**Commit:** [195482b](https://gitlab.com/Odyseus/CinnamonTools/commit/195482b)<br/>
-**Author:** Odyseus<br/>
-
-### Squashed '__app__/python_modules/python_utils/' changes from 1f78d0f..9e1b1b0
-
-9e1b1b0 docopt.py
-
-git-subtree-dir: __app__/python_modules/python_utils
-git-subtree-split: 9e1b1b0ecbfbbc79939ef89f3d664d77027e8bc0
 
 ***
 
@@ -237,33 +119,6 @@ git-subtree-split: 9e1b1b0ecbfbbc79939ef89f3d664d77027e8bc0
 ### Python modules
 
 - Corrected some warnings when using Python 3.8.
-
-***
-
-**Date:** Tue, 14 Apr 2020 01:55:45 -0300<br/>
-**Commit:** [85be886](https://gitlab.com/Odyseus/CinnamonTools/commit/85be886)<br/>
-**Author:** Odyseus<br/>
-
-### Squashed '__app__/python_modules/python_utils/' changes from 5969fd6..1f78d0f
-
-1f78d0f Various formatting changes
-0f4b91e Corrected comparison warning on git_utils.py
-08ca914 Corrected comparison warning on log_system.py
-119d228 Corrected warning on a RegEx string in titlecase.py
-de8c156 Removed all Python 2 compatibility from polib.py
-0083aab Updated tqdm to version 4.45.0
-dcc8b18 Updated pyperclip to version 1.8.0 and removed all Python 2 compatibility
-6aac1f7 cli_utils.py
-10a4bba mail_system.py
-0f54907 Added diff_match_patch module
-f448f35 cmd_utils.py
-d0038f9 Make `parse_case` function of the case_conversion module "public"
-c4e5366 Added case_conversion module
-71c45d9 misc_utils.py
-b5f7609 cmd_utils.py
-
-git-subtree-dir: __app__/python_modules/python_utils
-git-subtree-split: 1f78d0f8903ad476a199857f0a749217696e59b2
 
 ***
 
@@ -407,34 +262,6 @@ git-subtree-split: 1f78d0f8903ad476a199857f0a749217696e59b2
 
 ***
 
-**Date:** Fri, 20 Mar 2020 22:59:32 -0300<br/>
-**Commit:** [2603fde](https://gitlab.com/Odyseus/CinnamonTools/commit/2603fde)<br/>
-**Author:** Odyseus<br/>
-
-### Squashed '__app__/python_modules/python_utils/' changes from 8346a64..5969fd6
-
-5969fd6 Updated README.md
-
-git-subtree-dir: __app__/python_modules/python_utils
-git-subtree-split: 5969fd64821334baf9e074f15a71548d93af60b1
-
-***
-
-**Date:** Fri, 20 Mar 2020 22:22:15 -0300<br/>
-**Commit:** [34a3432](https://gitlab.com/Odyseus/CinnamonTools/commit/34a3432)<br/>
-**Author:** Odyseus<br/>
-
-### Squashed '__app__/python_modules/python_utils/' changes from 63cfefc..8346a64
-
-8346a64 bottle_utils.py
-44cac46 cmd_utils.py
-138f395 Added bottle_utils.py module
-
-git-subtree-dir: __app__/python_modules/python_utils
-git-subtree-split: 8346a6431674384f40f8069a37f6f26c26986f75
-
-***
-
 **Date:** Sun, 8 Mar 2020 12:56:15 -0300<br/>
 **Commit:** [cf6beb8](https://gitlab.com/Odyseus/CinnamonTools/commit/cf6beb8)<br/>
 **Author:** Odyseus<br/>
@@ -497,19 +324,6 @@ git-subtree-split: 8346a6431674384f40f8069a37f6f26c26986f75
 
 ***
 
-**Date:** Thu, 20 Feb 2020 23:25:32 -0300<br/>
-**Commit:** [8ad41ce](https://gitlab.com/Odyseus/CinnamonTools/commit/8ad41ce)<br/>
-**Author:** Odyseus<br/>
-
-### Squashed '__app__/python_modules/python_utils/' changes from 9d71d37..63cfefc
-
-63cfefc Docstrings update
-
-git-subtree-dir: __app__/python_modules/python_utils
-git-subtree-split: 63cfefce1b613baa78ebfe797c8e64f5e3162b09
-
-***
-
 **Date:** Thu, 20 Feb 2020 23:25:06 -0300<br/>
 **Commit:** [33395bc](https://gitlab.com/Odyseus/CinnamonTools/commit/33395bc)<br/>
 **Author:** Odyseus<br/>
@@ -519,19 +333,6 @@ git-subtree-split: 63cfefce1b613baa78ebfe797c8e64f5e3162b09
 - Updated sub-modules.
 - Updated manual page.
 - Updated docstrings.
-
-***
-
-**Date:** Thu, 20 Feb 2020 22:42:33 -0300<br/>
-**Commit:** [16839e9](https://gitlab.com/Odyseus/CinnamonTools/commit/16839e9)<br/>
-**Author:** Odyseus<br/>
-
-### Squashed '__app__/python_modules/python_utils/' changes from 2fd381d..9d71d37
-
-9d71d37 Docstrings update
-
-git-subtree-dir: __app__/python_modules/python_utils
-git-subtree-split: 9d71d37ec8fefb2dc19c137f41b0cb040b9b2605
 
 ***
 
@@ -547,20 +348,6 @@ git-subtree-split: 9d71d37ec8fefb2dc19c137f41b0cb040b9b2605
 
 ***
 
-**Date:** Thu, 20 Feb 2020 13:50:37 -0300<br/>
-**Commit:** [05164af](https://gitlab.com/Odyseus/CinnamonTools/commit/05164af)<br/>
-**Author:** Odyseus<br/>
-
-### Squashed '__app__/python_modules/python_utils/' changes from 4085ef1..2fd381d
-
-2fd381d ansi_colors.py
-1cd5754 ansi_colors.py
-
-git-subtree-dir: __app__/python_modules/python_utils
-git-subtree-split: 2fd381de468e12ba54156050d0317dbfabb4e99b
-
-***
-
 **Date:** Thu, 20 Feb 2020 03:08:40 -0300<br/>
 **Commit:** [252030c](https://gitlab.com/Odyseus/CinnamonTools/commit/252030c)<br/>
 **Author:** Odyseus<br/>
@@ -568,22 +355,6 @@ git-subtree-split: 2fd381de468e12ba54156050d0317dbfabb4e99b
 ### General
 
 - Updated CHANGELOG.md.
-
-***
-
-**Date:** Thu, 20 Feb 2020 03:07:29 -0300<br/>
-**Commit:** [0c36044](https://gitlab.com/Odyseus/CinnamonTools/commit/0c36044)<br/>
-**Author:** Odyseus<br/>
-
-### Squashed '__app__/python_modules/python_utils/' changes from 392c472..4085ef1
-
-4085ef1 cmd_utils.py
-3ae1376 ansi_colors.py
-1eb6882 ansi_colors.py
-a65f36c All modules
-
-git-subtree-dir: __app__/python_modules/python_utils
-git-subtree-split: 4085ef10284be77d754e56275fc3072480b314ad
 
 ***
 
@@ -605,36 +376,6 @@ git-subtree-split: 4085ef10284be77d754e56275fc3072480b314ad
 ### General
 
 - Updated CHANGELOG.md.
-
-***
-
-**Date:** Wed, 19 Feb 2020 12:19:21 -0300<br/>
-**Commit:** [9fde278](https://gitlab.com/Odyseus/CinnamonTools/commit/9fde278)<br/>
-**Author:** Odyseus<br/>
-
-### Squashed '__app__/python_modules/python_utils/' changes from a96d049..392c472
-
-392c472 Removed jsonschema module
-a80133c json_schema_utils.py
-
-git-subtree-dir: __app__/python_modules/python_utils
-git-subtree-split: 392c472792de54556e80290f22bea2742e84c82e
-
-***
-
-**Date:** Wed, 19 Feb 2020 05:42:58 -0300<br/>
-**Commit:** [202edc0](https://gitlab.com/Odyseus/CinnamonTools/commit/202edc0)<br/>
-**Author:** Odyseus<br/>
-
-### Squashed '__app__/python_modules/python_utils/' changes from e60e30e..a96d049
-
-a96d049 bottle.py
-31f0f13 sphinx_docs_utils.py
-4a6400f All modules
-74b9cb5 mistune.py
-
-git-subtree-dir: __app__/python_modules/python_utils
-git-subtree-split: a96d0497008bdd6d1003c755baf1542999525309
 
 ***
 
@@ -1061,19 +802,6 @@ git-subtree-split: a96d0497008bdd6d1003c755baf1542999525309
 
 ***
 
-**Date:** Tue, 11 Feb 2020 01:00:46 -0300<br/>
-**Commit:** [5f6a9fb](https://gitlab.com/Odyseus/CinnamonTools/commit/5f6a9fb)<br/>
-**Author:** Odyseus<br/>
-
-### Squashed '__app__/python_modules/python_utils/' changes from 639a5e5..e60e30e
-
-e60e30e cmd_utils.py
-
-git-subtree-dir: __app__/python_modules/python_utils
-git-subtree-split: e60e30e3defcb721b4fc84230e8c9b23e6e847f0
-
-***
-
 **Date:** Tue, 11 Feb 2020 01:00:11 -0300<br/>
 **Commit:** [f39a9cd](https://gitlab.com/Odyseus/CinnamonTools/commit/f39a9cd)<br/>
 **Author:** Odyseus<br/>
@@ -1251,19 +979,6 @@ git-subtree-split: e60e30e3defcb721b4fc84230e8c9b23e6e847f0
 
 ***
 
-**Date:** Wed, 29 Jan 2020 03:09:54 -0300<br/>
-**Commit:** [189c3cd](https://gitlab.com/Odyseus/CinnamonTools/commit/189c3cd)<br/>
-**Author:** Odyseus<br/>
-
-### Squashed '__app__/python_modules/python_utils/' changes from 0f986ce..639a5e5
-
-639a5e5 cli_utils.py
-
-git-subtree-dir: __app__/python_modules/python_utils
-git-subtree-split: 639a5e5b4862250dc1b8efeb1afb8de6f72cba7b
-
-***
-
 **Date:** Wed, 29 Jan 2020 00:44:14 -0300<br/>
 **Commit:** [5591e57](https://gitlab.com/Odyseus/CinnamonTools/commit/5591e57)<br/>
 **Author:** Odyseus<br/>
@@ -1350,22 +1065,6 @@ git-subtree-split: 639a5e5b4862250dc1b8efeb1afb8de6f72cba7b
 - Updated Spanish localizations.
 - Updated change logs.
 - Updated help pages.
-
-***
-
-**Date:** Mon, 27 Jan 2020 00:20:36 -0300<br/>
-**Commit:** [2e774b8](https://gitlab.com/Odyseus/CinnamonTools/commit/2e774b8)<br/>
-**Author:** Odyseus<br/>
-
-### Squashed '__app__/python_modules/python_utils/' changes from efb13da..0f986ce
-
-0f986ce General
-27ad57d All modules
-ac56d68 sphinx_docs_utils.py
-b6c5298 Renamed .sublime folder to .editor
-
-git-subtree-dir: __app__/python_modules/python_utils
-git-subtree-split: 0f986ce8790ac1699bc3d86402527f2d834d079e
 
 ***
 
@@ -1657,21 +1356,6 @@ Taking advantage of the redesign done upstream to the Cinnamons's settings style
 
 ***
 
-**Date:** Wed, 5 Jun 2019 19:44:19 -0300<br/>
-**Commit:** [a8579bb](https://gitlab.com/Odyseus/CinnamonTools/commit/a8579bb)<br/>
-**Author:** Odyseus<br/>
-
-### Squashed '__app__/python_modules/python_utils/' changes from 106f577..efb13da
-
-efb13da simple_validators.py
-7915f2c Added simple_validators.py module
-d9c0599 file_utils.py
-
-git-subtree-dir: __app__/python_modules/python_utils
-git-subtree-split: efb13dafc2bac8360025fa0a1bf096b70fbff10e
-
-***
-
 **Date:** Sun, 2 Jun 2019 21:07:10 -0300<br/>
 **Commit:** [178210d](https://gitlab.com/Odyseus/CinnamonTools/commit/178210d)<br/>
 **Author:** Odyseus<br/>
@@ -1702,19 +1386,6 @@ git-subtree-split: efb13dafc2bac8360025fa0a1bf096b70fbff10e
 - Fixed chosen domain name not recognized when building xlets in interactive mode (from the menu).
 - Corrected interactivity of the themes building process. When re-implementing interactivity in a previous commit, I forgot to adapt the themes building process.
 - Restart Cinnamon (when requested) only if there were no exceptions when executing any of the tasks.
-
-***
-
-**Date:** Sun, 2 Jun 2019 14:45:47 -0300<br/>
-**Commit:** [10d02b7](https://gitlab.com/Odyseus/CinnamonTools/commit/10d02b7)<br/>
-**Author:** Odyseus<br/>
-
-### Squashed '__app__/python_modules/python_utils/' changes from befc87b..106f577
-
-106f577 cli_utils.py
-
-git-subtree-dir: __app__/python_modules/python_utils
-git-subtree-split: 106f577ba3fca608080300729bddfca6c34b601e
 
 ***
 
@@ -1755,19 +1426,6 @@ INFO: All users that take advantage of the Python application's executable being
 - Updated Spanish localizations.
 - Updated change logs.
 - Updated help pages.
-
-***
-
-**Date:** Sun, 2 Jun 2019 07:56:45 -0300<br/>
-**Commit:** [ffb61c6](https://gitlab.com/Odyseus/CinnamonTools/commit/ffb61c6)<br/>
-**Author:** Odyseus<br/>
-
-### Squashed '__app__/python_modules/python_utils/' changes from ad13980..befc87b
-
-befc87b cli_utils.py
-
-git-subtree-dir: __app__/python_modules/python_utils
-git-subtree-split: befc87b737955eb7ea1350b0cac199ff9b12dd7b
 
 ***
 
@@ -2650,21 +2308,6 @@ See https://gitlab.com/Odyseus/CinnamonToolsLegacy.
 
 ***
 
-**Date:** Tue, 25 Dec 2018 21:06:28 -0300<br/>
-**Commit:** [862da4d](https://gitlab.com/Odyseus/CinnamonTools/commit/862da4d)<br/>
-**Author:** Odyseus<br/>
-
-### Squashed '__app__/python_modules/python_utils/' changes from 8569483..ad13980
-
-ad13980 mistune_utils.py
-ba65e36 json_schema_utils.py
-3af411f Updated README
-
-git-subtree-dir: __app__/python_modules/python_utils
-git-subtree-split: ad139808b4cf9c17033c1c39e8b17bc6054e36a0
-
-***
-
 **Date:** Tue, 25 Dec 2018 21:06:08 -0300<br/>
 **Commit:** [6c3ae09](https://gitlab.com/Odyseus/CinnamonTools/commit/6c3ae09)<br/>
 **Author:** Odyseus<br/>
@@ -2733,22 +2376,6 @@ git-subtree-split: ad139808b4cf9c17033c1c39e8b17bc6054e36a0
 
 ***
 
-**Date:** Wed, 19 Dec 2018 07:07:29 -0300<br/>
-**Commit:** [2248f0a](https://gitlab.com/Odyseus/CinnamonTools/commit/2248f0a)<br/>
-**Author:** Odyseus<br/>
-
-### Squashed '__app__/python_modules/python_utils/' changes from 699056e..8569483
-
-8569483 template_utils.py
-c01c0d4 string_utils.py
-8905cb7 sphinx_docs_utils.py
-ec1750a misc_utils.py
-
-git-subtree-dir: __app__/python_modules/python_utils
-git-subtree-split: 8569483f1f0dafca898fb58f3009646ab04df07b
-
-***
-
 **Date:** Wed, 19 Dec 2018 06:08:01 -0300<br/>
 **Commit:** [0b08f75](https://gitlab.com/Odyseus/CinnamonTools/commit/0b08f75)<br/>
 **Author:** Odyseus<br/>
@@ -2762,46 +2389,6 @@ git-subtree-split: 8569483f1f0dafca898fb58f3009646ab04df07b
     - Previous build data can now be previewed.
     - Added support for building version 4.0.x+ of the Cinnamon theme.
     - Unified missing theme/domain name messages.
-
-***
-
-**Date:** Mon, 17 Dec 2018 15:43:52 -0300<br/>
-**Commit:** [8493bf3](https://gitlab.com/Odyseus/CinnamonTools/commit/8493bf3)<br/>
-**Author:** Odyseus<br/>
-
-### Squashed '__app__/python_modules/python_utils/' changes from a85ed7f..699056e
-
-699056e git_utils.py
-64f5075 mail_system.py
-b22fc10 log_system.py
-008e543 All modules
-1a62085 template_utils.py
-aa6d2f5 prompts.py
-07e4d3e menu.py
-31c4987 exceptions.py
-3ffca3a log_system.py
-86479b9 ansi_colors.py
-067297c cli_utils.py
-8dd6b24 Added json_schema_utils.py module
-6eefefa shell_utils.py
-2452b3f Added jsonschema module
-
-git-subtree-dir: __app__/python_modules/python_utils
-git-subtree-split: 699056ecc3e79a1e746a8ec22957748bbbb47932
-
-***
-
-**Date:** Thu, 29 Nov 2018 10:27:03 -0300<br/>
-**Commit:** [a1afdc0](https://gitlab.com/Odyseus/CinnamonTools/commit/a1afdc0)<br/>
-**Author:** Odyseus<br/>
-
-### Squashed '__app__/python_modules/python_utils/' changes from 32f916b..a85ed7f
-
-a85ed7f Updated README
-ab11c25 mistune_utils.py
-
-git-subtree-dir: __app__/python_modules/python_utils
-git-subtree-split: a85ed7f9e80a4d2f6cac663485dd3e2e9f9fadfe
 
 ***
 
@@ -2824,28 +2411,6 @@ git-subtree-split: a85ed7f9e80a4d2f6cac663485dd3e2e9f9fadfe
 
 - localized_help_creator.py module:
     - Implemented the use of the new python_utils.mistune_utils module.
-
-***
-
-**Date:** Wed, 28 Nov 2018 06:43:21 -0300<br/>
-**Commit:** [9598609](https://gitlab.com/Odyseus/CinnamonTools/commit/9598609)<br/>
-**Author:** Odyseus<br/>
-
-### Squashed '__app__/python_modules/python_utils/' changes from 87d1c2c..32f916b
-
-32f916b Added mistune_utils.py module
-0ad9296 mistune.py
-e1481ae sphinx_docs_utils.py
-97a519e All modules
-6691d3a All modules
-322ff84 file_utils.py
-a138fcf prompts.py
-ebfe98e string_utils.py
-9f1d45f All modules docstrings
-aaf3797 string_utils.py
-
-git-subtree-dir: __app__/python_modules/python_utils
-git-subtree-split: 32f916b66253389a537f0995dddac7ab2d894812
 
 ***
 
@@ -2898,17 +2463,6 @@ git-subtree-split: 32f916b66253389a537f0995dddac7ab2d894812
 - Updated sub-modules.
 - Updated manual page.
 - Updated Bash completions script.
-
-***
-
-**Date:** Fri, 23 Nov 2018 02:06:44 -0300<br/>
-**Commit:** [1849b4f](https://gitlab.com/Odyseus/CinnamonTools/commit/1849b4f)<br/>
-**Author:** Odyseus<br/>
-
-### Squashed '__app__/python_modules/python_utils/' content from commit 87d1c2c
-
-git-subtree-dir: __app__/python_modules/python_utils
-git-subtree-split: 87d1c2c3b61ac837797fbcd9c6549a955e8607fa
 
 ***
 

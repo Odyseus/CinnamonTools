@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "APP.PY" "1" "Jul 25, 2020" "" "Cinnamon Tools"
-.SH NAME
-app.py \- CLI utility to build xlets/themes and to perform development tasks on Cinnamon Tools' repository.
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "APP.PY" "1" "Aug 30, 2021" "" "Cinnamon Tools"
+.SH NAME
+app.py \- CLI utility to build xlets/themes and to perform development tasks on Cinnamon Tools' repository.
 .SH HINT
 .sp
 This Python application can generate a system executable with Bash completions support. See \fBapp.py generate\fP\&.
@@ -50,21 +50,22 @@ app.py build (\-a | \-\-all\-xlets | \-x <name> | \-\-xlet=<name>)
              [\-i | \-\-install\-localizations]
              [\-n | \-\-no\-confirmation]
              [\-r | \-\-restart\-cinnamon]
-             [\-y | \-\-dry\-run]
 app.py build_themes [\-t <name> | \-\-theme\-name=<name>]
+                    [\-v <name>... | \-\-variant\-name=<name>...]
                     [\-o <dir> | \-\-output=<dir>]
                     [\-n | \-\-no\-confirmation]
                     [\-r | \-\-restart\-cinnamon]
-                    [\-y | \-\-dry\-run]
-app.py parse_sass [\-y | \-\-dry\-run]
 app.py dev <sub_commands>...
            [\-x <name>... | \-\-xlet=<name>...]
+app.py dev_themes <sub_commands>...
+                  [\-v <name>... | \-\-variant\-name=<name>...]
 app.py generate (system_executable | docs | docs_no_api | base_xlet |
                 repo_changelog | themes_changelog | all_changelogs)
                 [\-f | \-\-force\-clean\-build]
                 [\-u | \-\-update\-inventories]
 app.py print_xlets_slugs
-app.py repo (submodules | subtrees) (init | update) [\-y | \-\-dry\-run]
+app.py print_themes_variants
+app.py repo (submodules | subtrees) (init | update)
 
 .ft P
 .fi
@@ -73,7 +74,15 @@ app.py repo (submodules | subtrees) (init | update) [\-y | \-\-dry\-run]
 .SH REQUIREMENTS
 .SS Xlets/Themes building requirements
 .sp
-No mayor requirements are needed to build xlets/themes other than Python 3.5+.
+No mayor requirements are needed to build xlets/themes other than Python 3.7+. End users can simply perform the following steps:
+.INDENT 0.0
+.IP 1. 3
+Download the source code from CinnamonTools\(aq repository or from any of its mirrors and unpack it.
+.IP 2. 3
+Open a terminal from inside the extracted source code and run the command \fB\&./app.py menu\fP\&.
+.IP 3. 3
+The CLI menu is completely interactive, just follow instructions.
+.UNINDENT
 .SS Development tasks requirements
 .sp
 Almost all development tasks require the Cinnamon Tools\(aq repository to be \fIdeep cloned\fP to checkout all the needed sub\-modules.
@@ -93,16 +102,16 @@ git clone \-\-recurse\-submodules \-\-shallow\-submodules <cinnamon_tools_reposi
 .SS Documentation building requirements
 .INDENT 0.0
 .IP \(bu 2
-\fBPython 3.5+\fP
+\fBPython 3.7+\fP
 .IP \(bu 2
-\fBsphinx>=1.8.1\fP: \fBsudo pip3 install sphinx\fP or install from your distribution repositories.
+\fBsphinx>=1.8.1\fP: install from your distribution repositories.
 .UNINDENT
 .sp
 \fBNote:\fP Deep cloning required.
 .SS Cinnamon theme building from Sass sources
 .INDENT 0.0
 .IP \(bu 2
-\fBPython 3.5+\fP
+\fBPython 3.7+\fP
 .IP \(bu 2
 \fBsass\fP: Either of the following implementations can be used to parse Sass files.
 .INDENT 2.0
@@ -121,8 +130,11 @@ SassC: Install from your distribution repositories.
 .SS Xlets help pages building optional requirement
 .INDENT 0.0
 .IP \(bu 2
-\fBpyuca\fP: \fBsudo pip3 install pyuca\fP or install from your distribution repositories.
+\fBpyuca\fP: install from your distribution repositories.
 .UNINDENT
+.SS Python virtual environment
+.sp
+A Python virtual environment can be created inside the \fB\&.venv\fP folder at the root of the repository. The \fB\&.venv\fP folder is already ignored in the repository\(aqs \fB\&.gitignore\fP file. The virtual environment is recommended, but not required since I designed the main Python application \fBto work with all Python 3 versions in existence\fP (or NONE AT ALL).
 .SH DETAILED USAGE
 .SS General app.py options
 .INDENT 0.0
@@ -210,14 +222,6 @@ Core xlet files cannot be copied/overwritten. More precisely, files ending with 
 .IP \(bu 2
 \fB\-r\fP or \fB\-\-restart\-cinnamon\fP: Restart Cinnamon\(aqs shell after finishing the xlets building process.
 .UNINDENT
-.INDENT 0.0
-.IP \(bu 2
-\fB\-y\fP or \fB\-\-dry\-run\fP: Do not perform file system changes. Only display messages informing of the actions that will be performed or commands that will be executed.
-.INDENT 2.0
-.INDENT 3.5
-.UNINDENT
-.UNINDENT
-.UNINDENT
 .SS app.py build_themes
 .sp
 This command is used to build all the themes. Just like xlets, the themes found in Cinnamon Tools\(aq repository aren\(aqt directly usable, they need to be \fIbuilt\fP\&. The themes building process is interactive. The build process will ask for Cinnamon version, Cinnamon\(aqs theme default font size/family, GTK+ 3 version, shadows of windows with CSD , etc.
@@ -233,16 +237,125 @@ There is actually one theme in this repository, but infinite variants (color acc
 \fB\-n\fP or \fB\-\-no\-confirmation\fP: Do not confirm the deletion of an already built theme when the \fB\-\-output\fP option is used. See \fI\%build command \-\-output\fP option notes for more details.
 .IP \(bu 2
 \fB\-r\fP or \fB\-\-restart\-cinnamon\fP: Restart Cinnamon\(aqs shell after finishing the themes building process.
-.IP \(bu 2
-\fB\-y\fP or \fB\-\-dry\-run\fP: See \fI\%build command \-\-dry\-run\fP\&.
 .UNINDENT
-.SS app.py parse_sass
-.sp
-This command parses the Sass files needed to create the themes found in this repository. It\(aqs only usefull for people that wants to create their own themes variants. See requirements\&.
+.SS app.py dev_themes
 .SS Options
 .INDENT 0.0
 .IP \(bu 2
-\fB\-y\fP or \fB\-\-dry\-run\fP: See \fI\%build command \-\-dry\-run\fP\&.
+\fB\-v <name>\fP or \fB\-\-variant\-name=<name>\fP: Specify a theme variant name (the name of its folder). If not specified, all theme variants will be worked on.
+.UNINDENT
+.SS Sub\-commands
+.INDENT 0.0
+.IP \(bu 2
+\fBgenerate_thumbnails\fP: This command generates the thumbnails for the Gtk and Cinnamon themes (the ones seen in Cinnamon\(aq theme selector window). The generated thumbnail is just an image with the variant accent color as its background. See requirements\&.
+.IP \(bu 2
+\fBparse_sass\fP: This command parses the Sass files needed to create the themes found in this repository. It\(aqs only useful for people that wants to create their own themes variants. See requirements\&.
+.UNINDENT
+.SS Detailed differences with the Mint\-X theme family
+.sp
+The theme is basically the \fBMint\-X\fP theme with some graphics from the \fBMint\-Y\fP theme. But with added features that were removed from the previously mentioned default themes.
+.sp
+\fBGTK2/GTK3 themes\fP
+.INDENT 0.0
+.IP \(bu 2
+Restored all removed scroll bars arrows.
+.IP \(bu 2
+Restored all removed outlines from focused elements.
+.IP \(bu 2
+Removed dashed lines feedback (undershoot) from scrolled views (affects GTK3 applications only).
+.IP \(bu 2
+Changed the tooltips appearance of the GTK2 theme to look like the GTK3 tooltips.
+.UNINDENT
+.sp
+\fBCinnamon theme\fP
+.INDENT 0.0
+.IP \(bu 2
+Changed the tooltips appearance to look like the GTK3 tooltips.
+.IP \(bu 2
+Removed center alignment from tooltips.
+.IP \(bu 2
+Changed the switches appearance to look like the GTK3 switches.
+.IP \(bu 2
+Removed fixed sizes for entries inside menus.
+.IP \(bu 2
+Removed all images that were used to create elements with gradients in favor of using CSS rules.
+.UNINDENT
+.sp
+\fBAll themes\fP
+.INDENT 0.0
+.IP \(bu 2
+I added accent color highlights to focused entries. I consider this a usability feature. The entries of the original Mint\-X themes have almost no differences and their state is almost imperceptible from one another. Having a focused entry highlighted with the accent color makes it noticeable at first sight when there are more than one entry on screen.
+.UNINDENT
+.SS How to create a custom theme variant?
+.INDENT 0.0
+.IP 1. 3
+Duplicate any of the folders inside \fBthemes/_variants\fP\&. Name the duplicated folder to whatever name one wants the variant theme to have. All changes described in the following steps should be made inside the newly created folder and nowhere else.
+.IP 2. 3
+Delete the content of the folder except for the file called \fBconfig.py\fP\&.
+.IP 3. 3
+Edit the \fBconfig.py\fP file with the desired colors. This file is commented to facilitate its edition.
+.UNINDENT
+.sp
+4. Parse the Sass files using the Cinnamon Tools command line application. See \fI\%app.py dev_themes parse_sass\fP\&.
+4. Generate the variant theme thumbnails using the Cinnamon Tools command line application. See \fI\%app.py dev_themes generate_thumbnails\fP\&. These thumbnails are used by Cinnamon\(aqs theme selectors as themes previews. This step could be ignored, in which case the thumbnails in the theme selectors will be blank.
+5. Build the themes using the Cinnamon Tools command line application. See \fI\%app.py build_themes\fP\&.
+.SS Customization options
+.sp
+Creating a custom variant of the theme has the advantage of having at ones finger tips the possibility to change certain core aspects of the theme that may otherwise be to complicated to change in a finished theme.
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+# START config.py
+#!/usr/bin/python3
+# \-*\- coding: utf\-8 \-*\-
+"""Theme variant config file.
+
+\- For this file to be usable, the \(ga\(gaaccent_color\(ga\(ga and \(ga\(gareplacement_data\(ga\(ga variables should be declared
+and all data inside the \(ga\(gareplacement_data\(ga\(ga list is mandatory.
+\- All colors, except for the \(ga\(gaaccent_color\(ga\(ga, can be in any notation supported by CSS.
+\- The contextual colors (info_color, error_color, etc.) are exposed for configuration in case that the
+  chosen \(ga\(gaaccent_color\(ga\(ga is too similar to one of them and can be tweaked.
+"""
+
+# This is the accent color used by all themes.
+# It can only be a color in hexadecimal notation. Shorthand (e.g. #fff) is not allowed.
+accent_color = "#398ee7"  # Bright blue
+
+# NOTE: All colors can be in any notation supported by CSS.
+replacement_data = [
+    # Selected background color. Used by all themes.
+    # Background color of selections.
+    ("@selected_bg_color@", accent_color),
+    # Foreground color of selections.
+    # In case that the background color is too bright the foreground color can be darkened.
+    ("@selected_fg_color@", "#f5f5f5"),
+    # Background and foreground colors for tooltips for all themes.
+    ("@tooltip_bg_color@", "#fbeaa0"),  # Yellow
+    ("@tooltip_fg_color@", "#212121"),  # Black
+    # Color that represents an HTML link. Used by all themes.
+    ("@link_color@", "#0000ee"),  # Blue
+    # Color that represents information. Used by GTK3 theme.
+    ("@info_color@", accent_color),
+    # Color that represents a question. Used by GTK3 theme.
+    ("@question_color@", "#55c1ec"),  # Light blue
+    # Color that represents a warning. Used by Cinnamon and GTK3 themes.
+    ("@warning_color@", "#fdde76"),  # Yellow
+    # Color that represents an error. Used by Cinnamon and GTK3 themes.
+    ("@error_color@", "#cc0000"),  # Red
+    # Color that represents success. Used by GTK3 theme.
+    ("@success_color@", "#4e9a06"),  # Green
+]
+# END config.py
+
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.IP \(bu 2
+Most of the tooltips of the theme variants in this repository, and of the default Linux Mint themes, have black text on yellow backgrounds. I exposed for configuration the tooltips appearance so anyone can have their tooltips with the colors they want.
 .UNINDENT
 .SS app.py dev
 .sp
@@ -329,6 +442,6 @@ Command to perform tasks in the Cinnamon Tool\(aqs Git repository. These tasks w
 .SH AUTHOR
 Odyseus
 .SH COPYRIGHT
-2016-2020, Odyseus.
+2016-2021, Odyseus.
 .\" Generated by docutils manpage writer.
 .
