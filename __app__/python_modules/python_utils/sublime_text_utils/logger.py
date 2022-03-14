@@ -45,11 +45,6 @@ def remove_surplus_files(folder, file_pattern, max_files_to_keep=20):
 
 class SublimeLogger():
     """LogSystem class.
-
-    Attributes
-    ----------
-    verbose : bool
-        Display message in terminal.
     """
 
     def __init__(self, logger_name=None, log_file=""):
@@ -57,10 +52,10 @@ class SublimeLogger():
 
         Parameters
         ----------
-        verbose : bool, optional
-            Display message in terminal.
         logger_name : None, optional
             A name for the logger.
+        log_file : str, optional
+            Path to a log file.
 
         Raises
         ------
@@ -111,6 +106,11 @@ class SublimeLogger():
         This is not called at initialization because it would be in vain. self.verbose is set by a Sublime
         setting, and settings aren't ready at import time. So, this function is called by the
         plugin_loaded function that it's called when a plugin is loaded...allegedly.
+
+        Parameters
+        ----------
+        logging_level : str, optional
+            One of the logging leves defined in ``_valid_logging_levels``.
         """
         if logging_level.upper() in _valid_logging_levels:
             level = getattr(logging, logging_level.upper())
@@ -134,24 +134,69 @@ class SublimeLogger():
         return self._log_file
 
     def debug(self, msg):
+        """Log a debug message.
+
+        Parameters
+        ----------
+        msg : str
+            Message to log.
+        """
         self._log(logging.DEBUG, msg)
 
     def info(self, msg):
+        """Log a info message.
+
+        Parameters
+        ----------
+        msg : str
+            Message to log.
+        """
         self._log(logging.INFO, msg)
 
     def error(self, msg, exc_info=False):
+        """Log a error message.
+
+        Parameters
+        ----------
+        msg : str
+            Message to log.
+        exc_info : bool, sys.exc_info, optional
+            Exception info.
+        """
         self._log(logging.ERROR, msg, exc_info=exc_info)
 
     def exception(self, msg):
+        """Log a exception message.
+
+        Parameters
+        ----------
+        msg : str
+            Message to log.
+        """
         self.error(msg, exc_info=sys.exc_info())
 
     def warning(self, msg):
+        """Log a warning message.
+
+        Parameters
+        ----------
+        msg : str
+            Message to log.
+        """
         self._log(logging.WARN, msg)
 
     def _log(self, level, msg, **kwargs):
-        # if kwargs.pop("exc_info", False):
-        #     kwargs["exc_info"] = sys.exc_info()
-        # log = functools.partial(self._logger.log, level, msg, **kwargs)
+        """Log a message.
+
+        Parameters
+        ----------
+        level : int
+            Logging level.
+        msg : str
+            Message to log.
+        **kwargs
+            Keyword arguments.
+        """
         sublime.set_timeout(functools.partial(
             self._logger.log, level, msg, **kwargs
         ), 0)
