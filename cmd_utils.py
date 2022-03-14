@@ -22,6 +22,13 @@ STREAM_BOTH = STREAM_STDOUT + STREAM_STDERR
 
 
 def get_startup_info():
+    """Get startup info.
+
+    Returns
+    -------
+    subprocess.STARTUPINFO
+        Startup info fir Windows processes.
+    """
     if platform.system() == "Windows":
         info = subprocess.STARTUPINFO()
         info.dwFlags |= subprocess.STARTF_USESHOWWINDOW

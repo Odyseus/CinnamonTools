@@ -82,17 +82,19 @@ def has_right_extension(view, file_extensions=[]):
 
 
 def remove_bad_chars(text, bad_chars=[]):
-    """Remove bad characters from selection.
+    """Remove *bad characters* from selection.
 
     Parameters
     ----------
     text : str
         The string to clean.
+    bad_chars : list, optional
+        A list of *bad characters* to remove.
 
     Returns
     -------
     str
-        String with bad characters removed.
+        String with *bad characters* removed.
     """
     if bad_chars and isinstance(bad_chars, Sequence):
         for letter in bad_chars:
@@ -110,6 +112,8 @@ def get_selections(view, extract_words=True, bad_chars=[]):
         A Sublime Text view.
     extract_words : bool, optional
         If no selection is found at region's coordinates, extract words from regions.
+    bad_chars : list, optional
+        A list of *bad characters* to remove.
 
     Returns
     -------
@@ -350,13 +354,38 @@ def get_view_context(view, additional_context=None):
 
 
 def distinct_until_buffer_changed(method):
-    # Sublime has problems to hold the distinction between buffers and views.
-    # It usually emits multiple identical events if you have multiple views
-    # into the same buffer.
+    """Distinct until buffer changed.
+
+    Sublime has problems to hold the distinction between buffers and views.
+    It usually emits multiple identical events if you have multiple views
+    into the same buffer.
+
+    Parameters
+    ----------
+    method : method
+        Method to wrap.
+
+    Returns
+    -------
+    method
+        Wrapped method.
+    """
     last_call = None
 
     @wraps(method)
     def wrapper(self, view):
+        """Wrapper.
+
+        Parameters
+        ----------
+        view : object
+            An instance of ``sublime.View``.
+
+        Returns
+        -------
+        None
+            Halt execution.
+        """
         nonlocal last_call
 
         this_call = (view.buffer_id(), view.change_count())
@@ -370,7 +399,13 @@ def distinct_until_buffer_changed(method):
 
 
 def reload_plugins(prefix):
-    """Reload Sublime 'plugins' using official API."""
+    """Reload Sublime 'plugins' using official API.
+
+    Parameters
+    ----------
+    prefix : str
+        Python module prefix.
+    """
     toplevel = []
     for name, module in sys.modules.items():
         if name.startswith(prefix):
@@ -425,12 +460,26 @@ class SublimeConsoleController():
 
 
 class CompletionsSuperClass():
+    """Register completions from a plugin settings file.
+    """
     _completions_scope = ""
     _completions = []
     _settings = {}
     _logger = None
 
     def __enabled(self, location):
+        """Check if completions should be triggered.
+
+        Parameters
+        ----------
+        location : int
+            A ``sublime.View`` point.
+
+        Returns
+        -------
+        bool
+            If an auto completions should be triggered.
+        """
         if not getattr(self, "view", None) or not self._completions:
             return False
 
@@ -444,6 +493,21 @@ class CompletionsSuperClass():
         return True
 
     def on_query_completions(self, prefix, locations):
+        """On query completions.
+
+        Parameters
+        ----------
+        prefix : str
+            Text to complete.
+        locations : tuple
+            A list of points (a point is an :py:class:`int` that represents the offset from the
+            beginning of the editor buffer).
+
+        Returns
+        -------
+        tuple, None
+            A completions object.
+        """
         if self.__enabled(locations[0]):
             return (
                 self._completions,
@@ -457,6 +521,8 @@ class CompletionsSuperClass():
 
     @classmethod
     def update_completions(self):
+        """Update completions.
+        """
         try:
             self._completions = [[c["trigger"], c["contents"]]
                                  for c in self._settings.get("completions", [])]

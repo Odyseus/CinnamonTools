@@ -1,9 +1,15 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 """Queue.
+
+Attributes
+----------
+MYPY : bool
+    MyPy module utilization(?).
+timers : dict
+    Map from key to :any:`threading.Timer` objects.
 """
 import threading
-
 
 MYPY = False
 if MYPY:
@@ -12,11 +18,26 @@ if MYPY:
     Key = Hashable
 
 
-# Map from key to threading.Timer objects
 timers = {}  # type: Dict[Key, threading.Timer]
 
 
 def debounce(callback, delay, key):
+    """Execute a method after a delay.
+
+    Parameters
+    ----------
+    callback : method
+        Method to execute.
+    delay : int
+        Execution delay.
+    key : str
+        Timer registration key.
+
+    Returns
+    -------
+    threading.Timer
+        Instantiated timer.
+    """
     # type: (Callable[[], None], float, Key) -> threading.Timer
     try:
         timers[key].cancel()
@@ -29,6 +50,13 @@ def debounce(callback, delay, key):
 
 
 def cleanup(key):
+    """Unregister a timer.
+
+    Parameters
+    ----------
+    key : str
+        Timer registration key.
+    """
     # type: (Key) -> None
     try:
         timers.pop(key).cancel()
@@ -37,6 +65,13 @@ def cleanup(key):
 
 
 def unload():
+    """Unregister all timers.
+
+    Returns
+    -------
+    None
+        Continue loop(?).
+    """
     while True:
         try:
             _key, timer = timers.popitem()
