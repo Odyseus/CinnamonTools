@@ -269,7 +269,7 @@ CHANGELOG_HEADER_XLETS = """## {xlet_name} changelogs
 """
 
 # NOTE: Making 'git log' ignore changes for certain paths: https://stackoverflow.com/a/21079437
-GIT_LOG_CMD_REPO = 'git log --no-merges --grep="\\^Squashed \\|{all_xlets_slugs}" --invert-grep --pretty=format:"\
+GIT_LOG_CMD_REPO = 'git log --since="2021-01-10" --no-merges --grep="Squashed \\|{all_xlets_slugs}" --invert-grep --pretty=format:"\
 **Date:** %aD<br/>%n\
 **Commit:** [%h]({repo_url}/commit/%h)<br/>%n\
 **Author:** %aN<br/>%n%n### %B%n***%n" \
@@ -283,7 +283,7 @@ CHANGELOG_HEADER_REPO = """## Repository changelog
 
 """
 
-GIT_LOG_CMD_THEMES = 'git log --pretty=format:"\
+GIT_LOG_CMD_THEMES = 'git log --grep="General" --invert-grep --pretty=format:"\
 **Date:** %aD<br/>%n\
 **Commit:** [%h]({repo_url}/commit/%h)<br/>%n\
 **Author:** %aN<br/>%n%n%b%n***%n" \
