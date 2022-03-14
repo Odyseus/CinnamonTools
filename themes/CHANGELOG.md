@@ -37,16 +37,6 @@
 
 ***
 
-**Date:** Thu, 20 Feb 2020 22:42:07 -0300<br/>
-**Commit:** [e45c0e0](https://gitlab.com/Odyseus/CinnamonTools/commit/e45c0e0)<br/>
-**Author:** Odyseus<br/>
-
-- Updated sub-modules.
-- Updated manual page.
-- Updated docstrings.
-
-***
-
 **Date:** Mon, 10 Feb 2020 22:49:20 -0300<br/>
 **Commit:** [212a45b](https://gitlab.com/Odyseus/CinnamonTools/commit/212a45b)<br/>
 **Author:** Odyseus<br/>
@@ -80,26 +70,6 @@
 - Cinnamon:
     - Added new class that will be available on next Cinnamon version.
     - Added missing cinnamon.css files that was removed due to incorrect rules on the .gitignore file.
-
-***
-
-**Date:** Sat, 18 Jan 2020 14:56:27 -0300<br/>
-**Commit:** [c03b4f4](https://gitlab.com/Odyseus/CinnamonTools/commit/c03b4f4)<br/>
-**Author:** Odyseus<br/>
-
-- General changes:
-    - Made it easier for users to create their own theme variants. Read the documentation for instructions: Usage > app.py build_themes > How to create a custom theme variant?.
-    - Removed MintGreen variant since I never used it and now users can create their own variant.
-    - Exposed for configuration several contextual colors for customization when creating custom variants.
-- Gtk2 theme changes:
-    - Removed unused image.
-- Gtk3 theme changes:
-    - Xfce 4.14 fixes. (Upstream fix)
-    - Add support for GtkStackSidebar needs attention. (Upstream fix)
-    - Compliance with application's request to set a monospace font. (Upstream fix)
-- Cinnamon theme changes:
-    - [GWL] Fixed justification of label inherited from applet-box. (Upstream fix)
-    - [GWL] Adjusted grouped-window-list-thumbnail-menu becoming active. (Upstream fix)
 
 ***
 
@@ -196,17 +166,6 @@
 
 - Removed all hard-coded repository URLs in favor of using a placeholder that will be replaced by the actual URL on xlet build time.
 - Cleaned up and modified some of the `z_create_localized_help.py` scripts to use newly created HTML templates from the `localized_help_utils.py` module.
-
-***
-
-**Date:** Thu, 23 Aug 2018 02:36:01 -0300<br/>
-**Commit:** [cd4f58f](https://gitlab.com/Odyseus/CinnamonTools/commit/cd4f58f)<br/>
-**Author:** Odyseus<br/>
-
-- GitHub eradication. New home is GitLab.
-- Updated documentation's development notes.
-- Re-implemented CHANGELOG.md creation and created all change logs
-- Corrected the execution order of change logs creation on the CLI application.
 
 ***
 
