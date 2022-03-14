@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "APP.PY" "1" "Aug 30, 2021" "" "Cinnamon Tools"
+.TH "APP.PY" "1" "Mar 13, 2022" "" "Cinnamon Tools"
 .SH NAME
 app.py \- CLI utility to build xlets/themes and to perform development tasks on Cinnamon Tools' repository.
 .SH HINT
@@ -42,29 +42,29 @@ This Python application can generate a system executable with Bash completions s
 
 app.py (\-h | \-\-help | \-\-version | \-\-manual | \-r | \-\-restart\-cinnamon)
 app.py menu
-app.py build (\-a | \-\-all\-xlets | \-x <name> | \-\-xlet=<name>)
-             [\-x <name>... | \-\-xlet=<name>...]
-             [\-d <domain> | \-\-domain=<domain>]
-             [\-o <dir> | \-\-output=<dir>]
-             [\-e <dir> | \-\-extra\-files=<dir>]
-             [\-i | \-\-install\-localizations]
-             [\-n | \-\-no\-confirmation]
-             [\-r | \-\-restart\-cinnamon]
+app.py build_xlets [\-x <name>... | \-\-xlet\-name=<name>...]
+                   [\-d <domain> | \-\-domain=<domain>]
+                   [\-o <dir> | \-\-output=<dir>]
+                   [\-e <dir> | \-\-extra\-files=<dir>]
+                   [\-i | \-\-install\-localizations]
+                   [\-n | \-\-no\-confirmation]
+                   [\-r | \-\-restart\-cinnamon]
 app.py build_themes [\-t <name> | \-\-theme\-name=<name>]
                     [\-v <name>... | \-\-variant\-name=<name>...]
                     [\-o <dir> | \-\-output=<dir>]
                     [\-n | \-\-no\-confirmation]
                     [\-r | \-\-restart\-cinnamon]
-app.py dev <sub_commands>...
-           [\-x <name>... | \-\-xlet=<name>...]
+app.py dev_xlets <sub_commands>...
+                 [\-x <name>... | \-\-xlet\-name=<name>...]
 app.py dev_themes <sub_commands>...
+                  [\-s <exec> | \-\-sass\-parser=<exec>]
                   [\-v <name>... | \-\-variant\-name=<name>...]
 app.py generate (system_executable | docs | docs_no_api | base_xlet |
                 repo_changelog | themes_changelog | all_changelogs)
                 [\-f | \-\-force\-clean\-build]
                 [\-u | \-\-update\-inventories]
 app.py print_xlets_slugs
-app.py print_themes_variants
+app.py print_theme_variants
 app.py repo (submodules | subtrees) (init | update)
 
 .ft P
@@ -96,9 +96,12 @@ git clone \-\-recurse\-submodules \-\-shallow\-submodules <cinnamon_tools_reposi
 .fi
 .UNINDENT
 .UNINDENT
-.sp
+.INDENT 0.0
+.IP \(bu 2
 \fB\-\-recurse\-submodules\fP argument will also clone the sub\-modules and all sub\-modules that a sub\-module might have.
+.IP \(bu 2
 \fB\-\-shallow\-submodules\fP argument is to clone the sub\-modules to a depth of one commit to avoid downloading a huge amount of \fBgit\fP history.
+.UNINDENT
 .SS Documentation building requirements
 .INDENT 0.0
 .IP \(bu 2
@@ -108,25 +111,18 @@ git clone \-\-recurse\-submodules \-\-shallow\-submodules <cinnamon_tools_reposi
 .UNINDENT
 .sp
 \fBNote:\fP Deep cloning required.
-.SS Cinnamon theme building from Sass sources
+.SS Gtk 3 and Cinnamon themes building from Sass sources
 .INDENT 0.0
 .IP \(bu 2
 \fBPython 3.7+\fP
 .IP \(bu 2
-\fBsass\fP: Either of the following implementations can be used to parse Sass files.
-.INDENT 2.0
-.INDENT 3.5
+\fBDart Sass\fP: \fI\%Download the appropiate release\fP <\fBhttps://github.com/sass/dart-sass/releases\fP> and \fI\%see installation instructions\fP <\fBhttps://github.com/sass/dart-sass#standalone\fP>\&.
+.UNINDENT
+.SS Gtk and Cinnamon themes thumbnails generation
 .INDENT 0.0
 .IP \(bu 2
-Dart Sass: \fI\%See installation instructions\fP <\fBhttps://github.com/sass/dart-sass/releases\fP>\&.
-.IP \(bu 2
-SassC: Install from your distribution repositories.
+\fBImageMagic\fP: Install from your distribution repositories.
 .UNINDENT
-.UNINDENT
-.UNINDENT
-.UNINDENT
-.sp
-\fBNote:\fP Deep cloning required.
 .SS Xlets help pages building optional requirement
 .INDENT 0.0
 .IP \(bu 2
@@ -148,18 +144,18 @@ A Python virtual environment can be created inside the \fB\&.venv\fP folder at t
 .SS app.py menu
 .sp
 This command starts a CLI menu from which xlets and themes can be built interactively.
-.SS app.py build
+.SS app.py build_xlets
 .sp
 This command is used to build all or specific xlets. All xlets found in Cinnamon Tools\(aq repository aren\(aqt directly usable, they need to be \fIbuilt\fP\&. \fIBuilding\fP an xlet just means that the \fIraw xlet\fP (as found in the repository) will be copied into another location (chosen when performing the building) and a string substitution will be done that will apply a generated UUID (\fBxlet_name@custom_domain_name\fP) to all files (files content and file names). It will also compile the \fBgsettings\fP files (if an xlet contains such files) and copy files common to all xlets (LICENSE.md, localizations installer script, global modules, etc.).
 .SS Options
 .INDENT 0.0
 .IP \(bu 2
-\fB\-x <name>\fP or \fB\-\-xlet=<name>\fP: Specify one or more xlets to build.
+\fB\-x <name>\fP or \fB\-\-xlet\-name=<name>\fP: Specify one or more xlets to build.
 .INDENT 2.0
 .INDENT 3.5
 .INDENT 0.0
 .IP \(bu 2
-Example usage: \fBapp.py build \-x 0ArgosForCinnamon \-x 0CinnamonTweaks\fP
+Example usage: \fBapp.py build_xlets \-x 0ArgosForCinnamon \-x 0CinnamonTweaks\fP
 .IP \(bu 2
 This command will build the Argos for Cinnamon applet and the Cinnamon Tweaks extension into the default output directory.
 .UNINDENT
@@ -168,12 +164,12 @@ This command will build the Argos for Cinnamon applet and the Cinnamon Tweaks ex
 .UNINDENT
 .INDENT 0.0
 .IP \(bu 2
-\fB\-d <domain>\fP or \fB\-\-domain=<domain>\fP: To be able to build any xlet, it is necessary to specify a domain name. This domain name is then used to generate an xlet UUID (and other data). To avoid passing this command line option every time one builds xlets, a file named \fBdomain_name\fP can be created inside a folder named \fBtmp\fP at the root of the repository whose only content should be the desired domain name. This command line option has precedence over the \fBdomain_name\fP file. Which means that if this option is used, the domain name found in an existent \fBdomain_name\fP file will be ignored.
+\fB\-d <domain>\fP or \fB\-\-domain=<domain>\fP: To be able to build any xlet, it is necessary to specify a domain name. This domain name is then used to generate an xlet UUID (and other data). To avoid passing this command line option every time one builds xlets, a file named \fBdomain_name\fP can be created inside a folder named \fBtmp\fP at the root of the repository whose only content should be the desired domain name. This command line option has precedence over the \fBdomain_name\fP file.
 .INDENT 2.0
 .INDENT 3.5
 .INDENT 0.0
 .IP \(bu 2
-Example usage: \fBapp.py build \-x 0ArgosForCinnamon \-d example.com\fP
+Example usage: \fBapp.py build_xlets \-x 0ArgosForCinnamon \-d example.com\fP
 .UNINDENT
 .UNINDENT
 .UNINDENT
@@ -185,7 +181,7 @@ Example usage: \fBapp.py build \-x 0ArgosForCinnamon \-d example.com\fP
 .INDENT 3.5
 .INDENT 0.0
 .IP \(bu 2
-Example usage: \fBapp.py build \-x 0ArgosForCinnamon \-o /home/user_name/.local/share/cinnamon\fP
+Example usage: \fBapp.py build_xlets \-x 0ArgosForCinnamon \-o /home/user_name/.local/share/cinnamon\fP
 .IP \(bu 2
 This command will build the Argos for Cinnamon applet directly into Cinnamon\(aqs install location for xlets.
 .UNINDENT
@@ -197,13 +193,13 @@ This command will build the Argos for Cinnamon applet directly into Cinnamon\(aq
 .INDENT 3.5
 .INDENT 0.0
 .IP \(bu 2
-Example usage: \fBapp.py build \-x 0ArgosForCinnamon \-\-extra\-files=~/MyCinnamonToolsExtraFiles\fP
+Example usage: \fBapp.py build_xlets \-x 0ArgosForCinnamon \-\-extra\-files=~/MyCinnamonToolsExtraFiles\fP
 .IP \(bu 2
 The folder passed to this option should have the same folder structure as the Cinnamon Tools repository.
 .IP \(bu 2
 Only two folders should exist inside this folder; one called \fBapplets\fP and/or another called \fBextensions\fP\&. Any other content will be ignored.
 .IP \(bu 2
-Using the example at the beginning of this list, to add extra files to the built \fB0ArgosForCinnamon\fP xlet, those extra files should reside at \fB~/MyCinnamonToolsExtraFiles/applets/0ArgosForCinnamon\fP\&.
+Using the example at the beginning of this list, to add extra files to the built \fBArgosForCinnamon\fP xlet, those extra files should reside at \fB~/MyCinnamonToolsExtraFiles/applets/ArgosForCinnamon\fP\&.
 .IP \(bu 2
 Copied files that exist at the destination will be overwritten without confirmation.
 .IP \(bu 2
@@ -224,13 +220,13 @@ Core xlet files cannot be copied/overwritten. More precisely, files ending with 
 .UNINDENT
 .SS app.py build_themes
 .sp
-This command is used to build all the themes. Just like xlets, the themes found in Cinnamon Tools\(aq repository aren\(aqt directly usable, they need to be \fIbuilt\fP\&. The themes building process is interactive. The build process will ask for Cinnamon version, Cinnamon\(aqs theme default font size/family, GTK+ 3 version, shadows of windows with CSD , etc.
-.sp
-There is actually one theme in this repository, but infinite variants (color accents) can be created. The existent variant is called \fBGreybirdBlue\fP because it\(aqs the same blue used by the \fI\%Greybird\fP <\fBhttps://github.com/shimmerproject/Greybird\fP> theme.
+This command is used to build all the themes. Just like xlets, the themes found in Cinnamon Tools\(aq repository aren\(aqt directly usable, they need to be \fIbuilt\fP\&. The themes building process is interactive. The build process will ask for Cinnamon version, GTK+ 3/4 versions, theme name, etc.
 .SS Options
 .INDENT 0.0
 .IP \(bu 2
-\fB\-t <name>\fP or \fB\-\-theme\-name=<name>\fP: To be able to build the themes, it is necessary to specify a theme name. This theme name is then used to generate the full theme name (theme_name\-theme_variant). To avoid passing this command line option every time one builds themes, a file named \fBtheme_name\fP can be created at the root of the repository whose only content should be the desired theme name. This command line option has precedence over the \fBtheme_name\fP file. Which means that if this option is used, the theme name found in an existent \fBtheme_name\fP file will be ignored.
+\fB\-t <name>\fP or \fB\-\-theme\-name=<name>\fP: To be able to build the themes, it is necessary to specify a theme name. This theme name is then used to generate the full theme name (theme_name\-theme_variant). To avoid passing this command line option every time one builds themes, a file named \fBtheme_name\fP can be created inside a folder named \fBtmp\fP at the root of the repository whose only content should be the desired theme name. This command line option has precedence over the \fBtheme_name\fP file.
+.IP \(bu 2
+\fB\-v <name>\fP or \fB\-\-variant\-name=<name>\fP: Specify a theme variant name (the name of its folder). If not specified, all theme variants will be built.
 .IP \(bu 2
 \fB\-o <dir>\fP or \fB\-\-output=<dir>\fP: The output directory that will be used to save the built themes. If not specified, the default storage location will be used. See \fI\%build command \-\-output\fP option notes for more details.
 .IP \(bu 2
@@ -247,123 +243,19 @@ There is actually one theme in this repository, but infinite variants (color acc
 .SS Sub\-commands
 .INDENT 0.0
 .IP \(bu 2
+\fBgenerate_gtk_sass_includes_index\fP: The Sass source for the Gtk 3/4 themes is organized by several Sass files. Instead of dealing with dozens of import \fB@import\fP statements every time that I add or remove a file, I only import one index file (\fBthemes/_sass/gtk/includes/__index__.scss\fP) that is automatically generated by this command.
+.IP \(bu 2
 \fBgenerate_thumbnails\fP: This command generates the thumbnails for the Gtk and Cinnamon themes (the ones seen in Cinnamon\(aq theme selector window). The generated thumbnail is just an image with the variant accent color as its background. See requirements\&.
 .IP \(bu 2
 \fBparse_sass\fP: This command parses the Sass files needed to create the themes found in this repository. It\(aqs only useful for people that wants to create their own themes variants. See requirements\&.
 .UNINDENT
-.SS Detailed differences with the Mint\-X theme family
-.sp
-The theme is basically the \fBMint\-X\fP theme with some graphics from the \fBMint\-Y\fP theme. But with added features that were removed from the previously mentioned default themes.
-.sp
-\fBGTK2/GTK3 themes\fP
-.INDENT 0.0
-.IP \(bu 2
-Restored all removed scroll bars arrows.
-.IP \(bu 2
-Restored all removed outlines from focused elements.
-.IP \(bu 2
-Removed dashed lines feedback (undershoot) from scrolled views (affects GTK3 applications only).
-.IP \(bu 2
-Changed the tooltips appearance of the GTK2 theme to look like the GTK3 tooltips.
-.UNINDENT
-.sp
-\fBCinnamon theme\fP
-.INDENT 0.0
-.IP \(bu 2
-Changed the tooltips appearance to look like the GTK3 tooltips.
-.IP \(bu 2
-Removed center alignment from tooltips.
-.IP \(bu 2
-Changed the switches appearance to look like the GTK3 switches.
-.IP \(bu 2
-Removed fixed sizes for entries inside menus.
-.IP \(bu 2
-Removed all images that were used to create elements with gradients in favor of using CSS rules.
-.UNINDENT
-.sp
-\fBAll themes\fP
-.INDENT 0.0
-.IP \(bu 2
-I added accent color highlights to focused entries. I consider this a usability feature. The entries of the original Mint\-X themes have almost no differences and their state is almost imperceptible from one another. Having a focused entry highlighted with the accent color makes it noticeable at first sight when there are more than one entry on screen.
-.UNINDENT
-.SS How to create a custom theme variant?
-.INDENT 0.0
-.IP 1. 3
-Duplicate any of the folders inside \fBthemes/_variants\fP\&. Name the duplicated folder to whatever name one wants the variant theme to have. All changes described in the following steps should be made inside the newly created folder and nowhere else.
-.IP 2. 3
-Delete the content of the folder except for the file called \fBconfig.py\fP\&.
-.IP 3. 3
-Edit the \fBconfig.py\fP file with the desired colors. This file is commented to facilitate its edition.
-.UNINDENT
-.sp
-4. Parse the Sass files using the Cinnamon Tools command line application. See \fI\%app.py dev_themes parse_sass\fP\&.
-4. Generate the variant theme thumbnails using the Cinnamon Tools command line application. See \fI\%app.py dev_themes generate_thumbnails\fP\&. These thumbnails are used by Cinnamon\(aqs theme selectors as themes previews. This step could be ignored, in which case the thumbnails in the theme selectors will be blank.
-5. Build the themes using the Cinnamon Tools command line application. See \fI\%app.py build_themes\fP\&.
-.SS Customization options
-.sp
-Creating a custom variant of the theme has the advantage of having at ones finger tips the possibility to change certain core aspects of the theme that may otherwise be to complicated to change in a finished theme.
-.INDENT 0.0
-.INDENT 3.5
-.sp
-.nf
-.ft C
-# START config.py
-#!/usr/bin/python3
-# \-*\- coding: utf\-8 \-*\-
-"""Theme variant config file.
-
-\- For this file to be usable, the \(ga\(gaaccent_color\(ga\(ga and \(ga\(gareplacement_data\(ga\(ga variables should be declared
-and all data inside the \(ga\(gareplacement_data\(ga\(ga list is mandatory.
-\- All colors, except for the \(ga\(gaaccent_color\(ga\(ga, can be in any notation supported by CSS.
-\- The contextual colors (info_color, error_color, etc.) are exposed for configuration in case that the
-  chosen \(ga\(gaaccent_color\(ga\(ga is too similar to one of them and can be tweaked.
-"""
-
-# This is the accent color used by all themes.
-# It can only be a color in hexadecimal notation. Shorthand (e.g. #fff) is not allowed.
-accent_color = "#398ee7"  # Bright blue
-
-# NOTE: All colors can be in any notation supported by CSS.
-replacement_data = [
-    # Selected background color. Used by all themes.
-    # Background color of selections.
-    ("@selected_bg_color@", accent_color),
-    # Foreground color of selections.
-    # In case that the background color is too bright the foreground color can be darkened.
-    ("@selected_fg_color@", "#f5f5f5"),
-    # Background and foreground colors for tooltips for all themes.
-    ("@tooltip_bg_color@", "#fbeaa0"),  # Yellow
-    ("@tooltip_fg_color@", "#212121"),  # Black
-    # Color that represents an HTML link. Used by all themes.
-    ("@link_color@", "#0000ee"),  # Blue
-    # Color that represents information. Used by GTK3 theme.
-    ("@info_color@", accent_color),
-    # Color that represents a question. Used by GTK3 theme.
-    ("@question_color@", "#55c1ec"),  # Light blue
-    # Color that represents a warning. Used by Cinnamon and GTK3 themes.
-    ("@warning_color@", "#fdde76"),  # Yellow
-    # Color that represents an error. Used by Cinnamon and GTK3 themes.
-    ("@error_color@", "#cc0000"),  # Red
-    # Color that represents success. Used by GTK3 theme.
-    ("@success_color@", "#4e9a06"),  # Green
-]
-# END config.py
-
-.ft P
-.fi
-.UNINDENT
-.UNINDENT
-.INDENT 0.0
-.IP \(bu 2
-Most of the tooltips of the theme variants in this repository, and of the default Linux Mint themes, have black text on yellow backgrounds. I exposed for configuration the tooltips appearance so anyone can have their tooltips with the colors they want.
-.UNINDENT
-.SS app.py dev
+.SS app.py dev_xlets
 .sp
 This command is used to perform development tasks.
 .SS Options
 .INDENT 0.0
 .IP \(bu 2
-\fB\-x <name>\fP or \fB\-\-xlet=<name>\fP: Specify one or more xlets to perform development tasks on. Without specifying any xlet, all xlets will be handled.
+\fB\-x <name>\fP or \fB\-\-xlet\-name=<name>\fP: Specify one or more xlets to perform development tasks on. Without specifying any xlet, all xlets will be handled.
 .UNINDENT
 .SS Sub\-commands
 .INDENT 0.0
@@ -442,6 +334,6 @@ Command to perform tasks in the Cinnamon Tool\(aqs Git repository. These tasks w
 .SH AUTHOR
 Odyseus
 .SH COPYRIGHT
-2016-2021, Odyseus.
+2016-2022, Odyseus.
 .\" Generated by docutils manpage writer.
 .

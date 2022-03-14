@@ -27,7 +27,7 @@ Widget changes
 ==============
 
 - **button**: This widget doesn't use the *proxy* that the Cinnamon implementation uses. Instead, it just toggles a boolean setting that can be bound to any action on the xlet side. Added ``image`` parameter to display an icon on the button. The button can have an icon, a label or both.
-- **buttonsgroup**: A new widget whose sole purpose is to contain **button** widgets.
+- **buttonsgroup**: A new widget whose sole purpose is to contain **button** widgets. It is used only for UI layout and it isn't bound to any setting.
 - **stringslist**: A new widget that allows to store a list of strings. It is rendered in the main window as a simple button that when clicked a dialog will appear with the list of strings represented inside a :py:class:`Gtk.TreeView`.
 - **entry**: This widget has the ``expand-width`` option set to **true** by default.
 - **list**: This widget has several bug fixes (**FIXME**: remember to properly report them if and when I can reproduce them) and several improvements.
