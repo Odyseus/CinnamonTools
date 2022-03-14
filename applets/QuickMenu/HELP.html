@@ -202,6 +202,38 @@ The following sections are available only in English.
 <h2>Quick Menu changelogs</h2>
 <p><strong>These change logs are only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a>.</strong></p>
 <hr>
+<p><strong>Date:</strong> Sun, 13 Mar 2022 00:15:49 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/ebca656">ebca656</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<h4>Warning</h4>
+<ul>
+<li>Complete re-write.</li>
+<li>New settings not compatible with older versions of this xlet.</li>
+</ul>
+<h4>General changes</h4>
+<ul>
+<li>Better organization of xlets files (in their "raw" form and when they are built):<ul>
+<li>JavaScript modules into their own sub-folder <strong>js_modules</strong>. See <strong>config.py</strong> changes.</li>
+<li>Python modules were already in their own sub-folder(<strong>python_modules</strong>). See <strong>config.py</strong> changes.</li>
+<li>In the root folder of an xlet only the applet.js/extension.js files and Python scripts that are meant to be executed.</li>
+<li>All configuration files and/or auto-generated data goes into the <strong><strong>data</strong></strong> folder inside an xlet root folder.</li>
+<li>No need for any file to be prefixed with <code>z_</code> anymore since they don't reside inside an xlet root folder anymore.</li>
+</ul>
+</li>
+<li>Execution permission changes. See <strong>config.py</strong> changes.</li>
+<li><strong>config.py</strong> files changes:<ul>
+<li>Implemented the use of YAML files for configuration files. This file is now named <strong>config.yaml</strong>.</li>
+<li>Implemented <code>set_executable</code> setting. An array of file paths to files relative to an xlet root folder to set as executables instead of setting as executable all files with a specific file extension.</li>
+<li>Implemented <code>python_modules</code> and <code>javascript_modules</code> settings. An array of file/folder paths relative to <strong>REPO_FOLDER/<strong>app</strong>/data/{python_modules|javascript_modules}</strong> to be copied into <strong>XLET_ROOT_FOLDER/{python_modules|js_modules}</strong>. These settings complement the <code>extra_files</code> setting.</li>
+</ul>
+</li>
+<li>Removed starting zeros from all xlets slugs (their folder names). I started naming them like so for convenience, but I found more problems than is worth (Python module names can't start with a number, Gtk application IDs cannot start with a number, etc.).</li>
+</ul>
+<h4>New features and other changes</h4>
+<ul>
+<li>Added drag and drop capabilities.</li>
+</ul>
+<hr>
 
 </div> <!-- .container.boxed -->
 <div class="container boxed my-3 py-3">
