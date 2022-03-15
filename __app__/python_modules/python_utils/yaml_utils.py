@@ -4,22 +4,21 @@
 
 Note
 ----
-The PyYaml module has not one single docstring anywhere! A total and absolute waste use of
+The PyYaml module has not one single docstring anywhere! A total and absolute wasteful use of
 the only programing language in existence that has native documentation capabilities! And its
 manually written documentation (¬¬) is perfect for explaining absolutely nothing with a trillion
 words! Since I don't have a f*cking magic ball to divine what the f*ck each thing is or does, the
 incomplete docstrings on this module can stay as they are.
+
+Note
+----
+I created the ordered load/dump methods because the default sorting capabilities suck (the "a" and "A"
+characters are in the EXACT SAME PLACE ALPHABETICALLY). So, I sort my data my way before dumping
+it to a YAML document.
 """
 from collections import OrderedDict
 
 from . import yaml
-
-try:
-    from .yaml import CSafeDumper as SafeDumper
-    from .yaml import CSafeLoader as SafeLoader
-except ImportError:
-    from .yaml import SafeDumper
-    from .yaml import SafeLoader
 
 
 def load(stream, **kwargs):
@@ -38,7 +37,7 @@ def load(stream, **kwargs):
     object
         A Python object.
     """
-    return yaml.load(stream, Loader=SafeLoader, **kwargs)
+    return yaml.load(stream, Loader=yaml.SafeLoader, **kwargs)
 
 
 def dump(data, stream=None, **kwargs):
@@ -58,10 +57,10 @@ def dump(data, stream=None, **kwargs):
     str, byte, None
         The serialized data if ``stream`` is ``None``.
     """
-    return yaml.dump(data, stream, Dumper=SafeDumper, **kwargs)
+    return yaml.dump(data, stream, Dumper=yaml.SafeDumper, **kwargs)
 
 
-class OrderedLoader(SafeLoader):
+class OrderedLoader(yaml.SafeLoader):
     """Ordered YAML loader.
     """
     pass
@@ -92,7 +91,7 @@ OrderedLoader.add_constructor(
 )
 
 
-class OrderedDumper(SafeDumper):
+class OrderedDumper(yaml.SafeDumper):
     """Ordered YAML dumper.
     """
     pass
