@@ -10,7 +10,7 @@ if sys.version_info < (3, 7):
 from html import escape
 
 XLET_DIR = os.path.normpath(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(XLET_DIR)
+sys.path.insert(0, XLET_DIR)
 
 from python_modules.xlets_settings import _
 from python_modules.xlets_settings import cli

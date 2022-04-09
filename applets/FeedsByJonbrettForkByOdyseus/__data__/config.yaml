@@ -3,8 +3,6 @@
 set_executable:
     - python_modules/feeds_importer.py
     - python_modules/get_feed.py
-make_pot_additional_files:
-    - "../../__app__/data/python_modules/file_chooser_dialog/__init__.py"
 python_modules:
     - file_chooser_dialog
     - xlets_settings
