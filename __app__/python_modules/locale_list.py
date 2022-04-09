@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """A list of locales with their names in English and their endonys (the locale name in
 the locale language).

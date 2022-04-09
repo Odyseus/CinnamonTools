@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """Module with utility functions and classes.
 
@@ -209,6 +208,9 @@ class XletsHelperCore():
                                   "create_xlets_changelogs",
                                   po.stderr.decode("UTF-8"))
 
+    def _obfuscate_root_path(self, p):
+        return p.replace(root_folder, "../..")
+
     def update_pot_files(self):
         """Update POT files.
 
@@ -254,17 +256,19 @@ class XletsHelperCore():
 
                         if file_utils.is_real_file(mod_path):
                             additional_files_to_scan.append(
-                                f'--scan-additional-file={mod_path.replace(root_folder, "../..")}'
+                                f'--scan-additional-file={self._obfuscate_root_path(mod_path)}'
                             )
                         elif file_utils.is_real_dir(mod_path):
                             for root, dirs, files in os.walk(mod_path, topdown=False):
                                 for fname in files:
-                                    # Only deal with a limited set of file extensions.
+                                    # NOTE: Only deal with a limited set of file extensions.
+                                    # Because the make-cinnamon-xlet-pot-cli app. can only scan
+                                    # Python and JavaScript.
                                     if not fname.endswith((".py", ".js")):
                                         continue
                                     additional_files_to_scan.append(
                                         "--scan-additional-file=%s" %
-                                        os.path.join(root, fname).replace(root_folder, "../..")
+                                        self._obfuscate_root_path(os.path.join(root, fname))
                                     )
 
             if file_utils.is_real_file(create_localized_help_file):
