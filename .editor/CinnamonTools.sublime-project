@@ -22,8 +22,14 @@
         "path": ".."
     }],
     "settings": {
-        "python_fiximports": {
-            "autofix_on_save": true,
+        "odyseus_sublime_plugins": {
+            "console_wrap.js": {
+                "console_str": "{title}:  +  {variable}",
+                "console_separator": " + ",
+                "console_func": ["global", "log"],
+                "semicolon": true,
+                "log_types": ["logTrace", "logWarning", "logError", "log"]
+            },
         },
     },
 }
