@@ -4,8 +4,50 @@
 
 ***
 
+**Date:** Sat, 9 Apr 2022 19:45:29 -0300<br/>
+**Commit:** [7a50420](https://gitlab.com/Odyseus/CinnamonTools/commit/7a50420)<br/>
+**Author:** Odyseus<br/>
+
+### General
+
+- Updated sub-modules.
+- Updated editor project file.
+
+***
+
+**Date:** Sat, 9 Apr 2022 19:39:57 -0300<br/>
+**Commit:** [7f706fd](https://gitlab.com/Odyseus/CinnamonTools/commit/7f706fd)<br/>
+**Author:** Odyseus<br/>
+
+### Xlets settings framework
+
+- Removed shebangs from all Python modules.
+- Cleaned builder.py module.
+
+***
+
+**Date:** Sat, 9 Apr 2022 19:39:34 -0300<br/>
+**Commit:** [28cb492](https://gitlab.com/Odyseus/CinnamonTools/commit/28cb492)<br/>
+**Author:** Odyseus<br/>
+
+### Python modules
+
+- Removed shebangs from all Python modules.
+
+***
+
+**Date:** Sat, 9 Apr 2022 19:38:24 -0300<br/>
+**Commit:** [13aefda](https://gitlab.com/Odyseus/CinnamonTools/commit/13aefda)<br/>
+**Author:** Odyseus<br/>
+
+### All xlets
+
+- Minor cleanup.
+
+***
+
 **Date:** Mon, 14 Mar 2022 19:50:54 -0300<br/>
-**Commit:** [735007d](https://gitlab.com/Odyseus/CinnamonTools/commit/735007d)<br/>
+**Commit:** [2e12102](https://gitlab.com/Odyseus/CinnamonTools/commit/2e12102)<br/>
 **Author:** Odyseus<br/>
 
 ### General
