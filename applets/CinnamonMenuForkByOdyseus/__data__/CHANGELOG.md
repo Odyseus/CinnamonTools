@@ -4,6 +4,14 @@
 
 ***
 
+**Date:** Sat, 9 Apr 2022 19:38:53 -0300<br/>
+**Commit:** [978fd16](https://gitlab.com/Odyseus/CinnamonTools/commit/978fd16)<br/>
+**Author:** Odyseus<br/>
+
+- Fixed blatant error that caused the menu search to not display any results.
+
+***
+
 **Date:** Sat, 12 Mar 2022 22:54:05 -0300<br/>
 **Commit:** [1a45975](https://gitlab.com/Odyseus/CinnamonTools/commit/1a45975)<br/>
 **Author:** Odyseus<br/>

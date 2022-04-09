@@ -4,6 +4,15 @@
 
 ***
 
+**Date:** Sun, 13 Mar 2022 04:00:07 -0300<br/>
+**Commit:** [db480ea](https://gitlab.com/Odyseus/CinnamonTools/commit/db480ea)<br/>
+**Author:** Odyseus<br/>
+
+- Fixed Daltonizer and Color Inspector keybindings broken due to *"a typo"*.
+- Fixed Color Inspector UI not displaying correctly due to some experiments left in place of the functional code that was commented out.
+
+***
+
 **Date:** Sat, 12 Mar 2022 22:55:43 -0300<br/>
 **Commit:** [d06f6b5](https://gitlab.com/Odyseus/CinnamonTools/commit/d06f6b5)<br/>
 **Author:** Odyseus<br/>
