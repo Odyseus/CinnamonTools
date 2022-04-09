@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """Slimmed down and functional module to handle gsettings from an xlet settings window.
 

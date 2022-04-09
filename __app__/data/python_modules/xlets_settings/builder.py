@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """Settings page definitions builder.
 
@@ -62,9 +61,7 @@ LOGGING_LEVEL_TOOLTIP = "\n".join([
 class Widget():
     """Widget definition.
     """
-    widget_type = str
-    widget_type2 = str
-    widget_type: str
+    widget_type: str = ""
     pref_key: str = ""
     widget_kwargs: dict = field(default_factory=dict)
     compatible: bool = True
@@ -78,7 +75,7 @@ class Label():
     widget_kwargs: dict = field(default_factory=dict)
     compatible: bool = True
     widget_type: str = "label"
-    pref_key: str = None
+    pref_key: str = ""
 
 
 @dataclass(order=True, frozen=True)
@@ -88,7 +85,7 @@ class ButtonsGroup():
     widget_kwargs: dict = field(default_factory=dict)
     compatible: bool = True
     widget_type: str = "buttonsgroup"
-    pref_key: str = None
+    pref_key: str = ""
 
 
 @dataclass(order=True, frozen=True)
