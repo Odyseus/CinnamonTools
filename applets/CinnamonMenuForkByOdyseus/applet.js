@@ -1980,7 +1980,7 @@ class CinnamonMenuForkByOdyseus extends getBaseAppletClass(Applet.TextIconApplet
     }
 
     _storeAppSearchData(aApp, aCategories) {
-        this.$.schedule_manager.idleCall("store_app_search_data", function() {
+        this.$.schedule_manager.idleCall(aApp.get_id(), function() {
             const haystacks = [];
 
             let s = SEARCH_DATA.length;
